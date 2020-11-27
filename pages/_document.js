@@ -8,9 +8,9 @@ export default class Document extends NextDocument {
 
   render() {
     return (
-      <Html lang="en" className="fixed overflow-hidden h-full">
+      <Html lang="en">
         <Head />
-        <body className="fixed overflow-hidden w-full min-h-full flex text-gray-900 dark:text-white bg-white dark:bg-gray-900">
+        <body>
           <Main />
           <NextScript />
         </body>

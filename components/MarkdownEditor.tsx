@@ -1,6 +1,6 @@
 import * as React from "react";
 import ReactMde from "react-mde";
-import ReactMarkdown from "react-markdown";
+//import ReactMarkdown from "react-markdown";
 //import "react-mde/lib/styles/css/react-mde-all.css";
 
 function loadSuggestions(text) {
@@ -22,6 +22,9 @@ type markdownEditorProps = {
     setValue: (value: string) => void;
 }
 
+const ReactMarkdown = ({ source }) => {
+  return <div>{source}</div>
+}
 
 const MarkdownEditor: React.FC<markdownEditorProps> = ({value,setValue}) => {
   const [selectedTab, setSelectedTab] = React.useState("write");
