@@ -5,7 +5,6 @@ const Index = () => {
   return (
     <>
       <h1 className={`${isSessionLoading ? 'animate-pulse': ''}`}>
-    
         Hi {isLoggedIn ? userDisplayName : 'Roy'}
       </h1>
     </>
