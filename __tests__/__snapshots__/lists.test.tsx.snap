@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ItemSingle matches snapshot 1`] = `
+<div>
+  <div>
+    <div>
+      <h2>
+        <a
+          href="/two"
+        >
+          One Two Time
+        </a>
+      </h2>
+      <a
+        href="/two"
+      >
+        Read More
+      </a>
+    </div>
+    <hr />
+  </div>
+</div>
+`;
+
+exports[`PostList matches snapshot 1`] = `
+<div>
+  <section
+    class="text-gray-700 body-font overflow-hidden"
+  >
+    <div>
+      <div />
+      <h1
+        class="text-2xl font-medium text-gray-900 title-font mb-2"
+      >
+        The Title
+      </h1>
+      <article>
+        <div
+          class="w-full px-4 md:px-6 text-xl text-grey-darkest leading-normal"
+          style="font-family: Georgia,serif;"
+        >
+          <div
+            class="font-sans"
+          >
+            <h2
+              class="font-sans break-normal text-black pt-6 pb-2 text-3xl md:text-4xl"
+            >
+              <a
+                href="/one"
+              >
+                One Time
+              </a>
+            </h2>
+          </div>
+          <div
+            class="py-6"
+          >
+            One
+          </div>
+        </div>
+      </article>
+      <article>
+        <div
+          class="w-full px-4 md:px-6 text-xl text-grey-darkest leading-normal"
+          style="font-family: Georgia,serif;"
+        >
+          <div
+            class="font-sans"
+          >
+            <h2
+              class="font-sans break-normal text-black pt-6 pb-2 text-3xl md:text-4xl"
+            >
+              <a
+                href="/two"
+              >
+                One Two Time
+              </a>
+            </h2>
+          </div>
+          <div
+            class="py-6"
+          >
+            Two
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>
+`;
