@@ -5,7 +5,7 @@ const Index = () => {
   const {isLoggedIn,userDisplayName,isSessionLoading} = useIsLoggedIn()
   return (
     <>
-      <NoteApp />
+      <NoteApp isLoggedIn={isLoggedIn} userDisplayName={userDisplayName} />
     </>
   )
 }

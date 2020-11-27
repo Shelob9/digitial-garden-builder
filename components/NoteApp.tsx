@@ -1,5 +1,5 @@
 
-import React,{useEffect,useState,useMemo} from 'react'
+import React,{useEffect,useState,useMemo, FC} from 'react'
 
 import Layout from '../components/Layout';
 import Note from '../components/Note';
@@ -77,7 +77,7 @@ const noteReducer = (state, action) => {
       break;
   }
 }
-const NoteApp = () => {
+const NoteApp: FC<{ noteSlug?: string, isLoggedIn: boolean; userDisplayName?:string;}>= ({noteSlug,userDisplayName,isLoggedIn}) => {
   
   const [currentNotes, dispatchNotesAction] = React.useReducer(
     noteReducer,
