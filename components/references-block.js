@@ -1,7 +1,7 @@
 import React from "react";
 import Reference from "./reference";
 
-import "./references-block.css";
+import "./ReferenceBlocks.module.css";
 
 const ReferencesBlock = ({ references }) => {
   if (!references.length) {

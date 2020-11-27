@@ -1,4 +1,4 @@
-import "./note.css";
+import "./Note.module.css";
 import unified from 'unified'
 import parse from 'remark-parse'
 import remark2react from 'remark-react'

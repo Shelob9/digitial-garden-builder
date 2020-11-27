@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./reference.css";
+import "./Reference.module.css";
 import NoteLink from './NoteLink';
 const Reference = ({ reference }) => {
   return (
