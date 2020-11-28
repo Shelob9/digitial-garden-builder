@@ -101,6 +101,9 @@ const noteReducer = (
 			break
 
 		case 'removeNote':
+			let _state = Object.assign({}, state)
+			delete _state[action.notePosition]
+			return _state
 			break
 		default:
 			return state

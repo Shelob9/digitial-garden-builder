@@ -91,4 +91,24 @@ describe('noteReducer', () => {
 			open: true,
 		})
 	})
+
+	test('Removes note', () => {
+		const state = noteReducer(
+			{
+				one: {
+					noteId: 1,
+					open: true,
+				},
+				two: {
+					noteId: 2,
+					open: false,
+				},
+			},
+			{
+				type: 'removeNote',
+				notePosition: 'two',
+			}
+		)
+		expect(state.hasOwnProperty('two')).toEqual(false)
+	})
 })
