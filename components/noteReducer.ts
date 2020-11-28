@@ -59,9 +59,12 @@ type noteReducerActions =
 	  }
 	| {
 			type: 'addNote'
+			notePosition: notePostions
+			noteId: number
 	  }
 	| {
 			type: 'removeNote'
+			notePosition: notePostions
 	  }
 const noteReducer = (
 	state: NoteReducerState,
@@ -88,6 +91,13 @@ const noteReducer = (
 			break
 
 		case 'addNote':
+			return {
+				...state,
+				[action.notePosition]: {
+					noteId: action.noteId,
+					open: true,
+				},
+			}
 			break
 
 		case 'removeNote':
