@@ -1,13 +1,23 @@
+import { FC } from "react";
 import DarkModeToggle from "./DarkModeToggle";
-const Header = () => {
+const Header: FC<{
+  BeforeControls?: () => JSX.Element;
+  pageDisplayTitle: string;
+  statusMessage?: string;
+
+}> = ({ BeforeControls,pageDisplayTitle,statusMessage }) => {
 
   return (
       <>
         <header id="header">
-              <a aria-current="page" className="" href="/gatsby-digital-garden/">
-                <h3>Digital Garden</h3>
-              </a>
-              <DarkModeToggle />
+          <a aria-current="page" className="" href="/gatsby-digital-garden/">
+            <h3>{pageDisplayTitle}</h3>
+        </a>
+        {statusMessage && <span>{statusMessage}</span>}
+        {BeforeControls && <BeforeControls /> }
+          <div className={'controls'}>
+            <DarkModeToggle />
+          </div>
         </header>
       <style jsx>{`
         #header {

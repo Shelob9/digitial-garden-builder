@@ -19,7 +19,6 @@ const Page = ({ noteOne,noteTwo,noteThree,note }) => {
               noteThreeSlug={noteThree}
             />
          </NoteLayoutProvider>
-          
         </NotesProvider> 
       </>
     )

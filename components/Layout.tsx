@@ -1,14 +1,20 @@
+import { FC } from 'react';
 import Header from './Header';
-const Layout = ({children}) => {
+const Layout: FC<{
+  BeforeControls?: () => JSX.Element;
+  pageDisplayTitle?: string;
+  children: any;
+  statusMessage?: string;
+}> = ({ children, BeforeControls,pageDisplayTitle,statusMessage}) => {
   
     return (
       <div className="layout">
-          <Header />
-          <div className={'note-columns-scrolling-container'}>
-            <div className={'note-columns-container'}>
-                {children}
-            </div>
-          </div>
+        <Header
+          BeforeControls={BeforeControls}
+          pageDisplayTitle={pageDisplayTitle ?? 'Digital Gardens' }
+          statusMessage={statusMessage}
+        />
+          {children} 
       </div>
     )
 }

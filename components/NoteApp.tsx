@@ -89,29 +89,34 @@ const NoteApp: FC<{
   return (
     <>
       <Layout >
-        {notes ? (
-          <>
-            <NoteWrap
-              noteId={currentNotes.one.noteId}
-              isOpen={isNoteOpen('one')}
-              toggleBox={() => toggleBox('one')}
-              position={"one"}
-            />
-            {hasNote('two') && <NoteWrap
-              noteId={currentNotes.two.noteId}
-              isOpen={isNoteOpen('two')}
-              toggleBox={() => toggleBox('two')}
-              position={"two"}
+      <div className={'note-columns-scrolling-container'}>
+          <div className={'note-columns-container'}>
+            {notes ? (
+            <>
+              <NoteWrap
+                noteId={currentNotes.one.noteId}
+                isOpen={isNoteOpen('one')}
+                toggleBox={() => toggleBox('one')}
+                position={"one"}
+              />
+              {hasNote('two') && <NoteWrap
+                noteId={currentNotes.two.noteId}
+                isOpen={isNoteOpen('two')}
+                toggleBox={() => toggleBox('two')}
+                position={"two"}
 
-            />}
-            {hasNote('three') && <NoteWrap
-              noteId={currentNotes.three.noteId}
-              isOpen={isNoteOpen('three')}
-              toggleBox={() => toggleBox('three')}
-              position={"three"}
-            />}
-          </>
-          ) : <div>Loading</div>}
+              />}
+              {hasNote('three') && <NoteWrap
+                noteId={currentNotes.three.noteId}
+                isOpen={isNoteOpen('three')}
+                toggleBox={() => toggleBox('three')}
+                position={"three"}
+              />}
+            </>
+            ) : <div>Loading</div>}
+          </div>
+        </div>
+        
         </Layout>
     </>
   ) 
