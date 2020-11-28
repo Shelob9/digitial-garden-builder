@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
-import noteLayoutReducer, { NotePostion } from "./noteLayoutReducer";
+import noteLayoutReducer, { NotePostion, notePostions } from "./noteLayoutReducer";
 
 const NoteLayoutContext = createContext(null);
 let intitalState = {
@@ -43,7 +43,7 @@ export default function useNoteLayout() {
           });
         }
     }
-    const addNote = (notePosition: NotePostion, noteId: number) => {
+    const addNote = (notePosition: notePostions, noteId: number) => {
         dispatchNotesAction({
             notePosition,
             noteId,
@@ -51,7 +51,7 @@ export default function useNoteLayout() {
         })
     };
 
-    const removeNote = (notePosition: NotePostion, noteId: number) => {
+    const removeNote = (notePosition: notePostions, noteId: number) => {
         dispatchNotesAction({
             notePosition,
             noteId,

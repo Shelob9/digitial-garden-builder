@@ -21,12 +21,19 @@ export const NotesProvider = ({ children }) => {
 
 const useNotes = () => {
     const { notes, getNote } = useContext(NotesContext);
-    return { notes, getNote }
+    const findBySlug = (noteSlug: string):INote|undefined => {
+        if( notes && notes.length) {
+            return notes.find(n => noteSlug === n.slug); 
+        }
+        return undefined;
+    }
+    return { notes, getNote,findBySlug }
 }
 
 export const useNote = (props: { noteId: number }) => {
     const { noteId } = props;
-    const { getNote,notes } = useContext(NotesContext);
+    const { getNote, notes } = useContext(NotesContext);
+    
     const note = useMemo<INote | undefined>(() => {
         return getNote(noteId);
     },[noteId,notes])

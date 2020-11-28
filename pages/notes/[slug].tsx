@@ -1,6 +1,7 @@
-import NoteApp from "../components/NoteApp";
-import { NotesProvider } from "../components/useNotes";
-import useIsLoggedInAuthorized from "../hooks/useIsLoggedAuthorized";
+import NoteApp from "../../components/NoteApp";
+import { NoteLayoutProvider } from "../../components/useNoteLayout";
+import { NotesProvider } from "../../components/useNotes";
+import useIsLoggedInAuthorized from "../../hooks/useIsLoggedAuthorized";
 
 const Page = ({ slug }) => {
 
@@ -8,13 +9,15 @@ const Page = ({ slug }) => {
     return (
       <>
         <NotesProvider>
+          <NoteLayoutProvider>
           <NoteApp
             isLoggedIn={isLoggedIn}
             userDisplayName={userDisplayName}
             noteSlug={slug}
           />
-        </NotesProvider>
-        
+         </NoteLayoutProvider>
+          
+        </NotesProvider> 
       </>
     )
     

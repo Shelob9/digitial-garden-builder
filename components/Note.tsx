@@ -5,17 +5,41 @@ import toc from 'remark-toc';
 import ReferencesBlock from "./references-block";
 import { FC, useMemo } from 'react';
 import useNotes from './useNotes';
+import NoteLink from './NoteLink';
+import useNoteLayout from './useNoteLayout';
 export interface INote {
 	id: number;
 	title: string;
 	content: string;
+	slug: string;
 	references?: [
 		{noteId:number}
 	]
   }
-const v = (c) => {
-    console.log(c);
-    return c;
+
+const Link: FC<{ href: string;children:any}> = ({ href, children }) => {
+	let internal = href.startsWith('/notes/');
+	const { findBySlug } = useNotes();
+	const { addNote } = useNoteLayout();
+	let slug = href.substr('/notes/'.length);
+	console.log(slug);
+	let note = findBySlug(slug);
+	if (internal&&note) {
+		const onClick = () => {
+			addNote(
+				"three",
+				note.id,
+			)
+		}
+		return <NoteLink
+				onClick={onClick}
+				className={'reference'}
+			slug={slug}
+		>
+			{children}
+		</NoteLink>
+	}
+	return <a href={href}>{children}</a>
 }
 const Note: FC<{
 	note: INote; onCollapseButton: () => void;
@@ -24,10 +48,10 @@ const Note: FC<{
 	let { content, references } = note;
 	const { getNote } = useNotes();
 	let noteReferences = useMemo(() => {
-		if (!note.references) {
+		if (!references) {
 			return [];
 		}
-		return Object.values(note.references).map(({ noteId }) => {
+		return Object.values(references).map(({ noteId }) => {
 			let note = getNote(noteId);
 			return {
 				...note,
@@ -53,9 +77,7 @@ const Note: FC<{
                                 .use(parse)
                                 .use(remark2react,{
                                     remarkReactComponents: {
-                                        a: ({href,children}) => {
-                                            return <a href={href}>{children}</a>
-                                        },
+                                        a: Link,
                                     }
                                 })
                                 .use(toc)

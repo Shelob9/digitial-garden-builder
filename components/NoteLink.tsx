@@ -1,6 +1,23 @@
+import { FC } from "react";
 
-const NoteLink = ({ slug,children,className}) => {
-    return <a href={`/notes/${slug}`} className={className}>{children}</a>
+const NoteLink: FC<{
+    slug: string;
+    className?: string;
+    onClick?: () => void;
+    children: any;
+}> = ({ slug,children,className,onClick}) => {
+    
+    return <a
+        onClick={(e) => {
+            if (onClick) {
+                e.preventDefault();
+                onClick();
+            }
+        }}
+        href={`/notes/${slug}`}
+        className={className}>
+        {children}
+    </a>
 }
 
 export default NoteLink;

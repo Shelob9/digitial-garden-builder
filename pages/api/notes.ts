@@ -6,8 +6,9 @@ let notes: INote[] = [
 	{
 		id: 1,
 		content:
-			'# Hi Roy \n One **One** [two](/two) \n ## H2 \n Arms \n ## H22 \n a',
+			'# Hi Roy \n One **One** [two](/notes/two) \n ## H2 \n Arms \n ## H22 \n a \n [external](https://hiroy.club)',
 		title: 'Note One ',
+		slug: 'oner',
 		references: [
 			{
 				noteId: 2,
@@ -16,6 +17,7 @@ let notes: INote[] = [
 	},
 	{
 		id: 2,
+		slug: 'two',
 		content: '# Roots \n Two **One**',
 		title: 'Note Two',
 	},
