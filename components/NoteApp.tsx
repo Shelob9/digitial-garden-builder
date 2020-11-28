@@ -1,6 +1,6 @@
 
 import React,{useEffect,useState,useMemo, FC} from 'react'
-
+import noteReducer from './noteReducer'
 import Layout from '../components/Layout';
 import Note from '../components/Note';
 
@@ -21,18 +21,6 @@ let allNotes = [
   
   ];
 
-const addNoteAction = (notePosition) => {
-  return {
-    type: 'addNote',
-    notePosition
-  }
-}
-const removeNoteAction = (notePosition) => {
-  return {
-    type: 'removeNote',
-    notePosition
-  }
-}
 
 let intitalState = {
   one: {
@@ -45,38 +33,7 @@ let intitalState = {
   }
 
 }
-const noteReducer = (state, action) => {
-  switch (action.type) {
-    case 'collapseNote':
-      return {
-        ...state,
-        [action.notePosition]: {
-          ...state[action.notePosition],
-          open:false
-        }
-      }
-      break;
-    case 'expandNote':
-      return {
-        ...state,
-        [action.notePosition]: {
-          ...state[action.notePosition],
-          open: true
-        }
-      };
-      break;
 
-      case 'addNote':
-      break;
-    
-      case 'removeNote':
-      break;
-    case 'reset': 
-    default:
-      return state;
-      break;
-  }
-}
 const NoteApp: FC<{ noteSlug?: string, isLoggedIn: boolean; userDisplayName?:string;}>= ({noteSlug,userDisplayName,isLoggedIn}) => {
   
   const [currentNotes, dispatchNotesAction] = React.useReducer(
