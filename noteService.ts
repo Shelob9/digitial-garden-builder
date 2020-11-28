@@ -40,6 +40,10 @@ class NoteService {
 	getNoteBySlug = (slug: string): INote | undefined => {
 		return notes.find((note) => slug === note.slug)
 	}
+
+	getNoteById = (noteId: number): INote | undefined => {
+		return notes.find((note) => noteId === note.id)
+	}
 }
 
 export default NoteService

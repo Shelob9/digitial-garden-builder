@@ -79,6 +79,28 @@ const nextPosition = (position: notePostions) => {
 			return "one";
 	}
 }
+
+export const NoteMarkdown: FC<{
+	content: string;
+	a?: (props: { href: string; children: any }) => JSX.Element,
+}> = ({ content, a }) => {
+	a = a ? a : ({ href, children }) => <a href={href}>{children}</a>
+	return (
+		<>
+			{
+				unified()
+					.use(parse)
+					.use(remark2react,{
+						remarkReactComponents: {
+							a
+						}
+					})
+					.use(toc)
+				.processSync(content).result
+			}
+		</>
+	)
+}
 const Note: FC<{
 	note: INote;
 	toggleBox: () => void;
@@ -116,22 +138,14 @@ const Note: FC<{
                 </button>
                 {isOpen &&
                     <div className={"note-content"}>
-                    < >
-                        {
-                            unified()
-                                .use(parse)
-                                .use(remark2react,{
-                                    remarkReactComponents: {
-										a: (props) => <Link
+					<NoteMarkdown content={content}
+						a={(props) => <Link
 											{...props}
 											openPosition={nextPosition(position)}
-										/>,
-                                    }
-                                })
-                                .use(toc)
-                            .processSync(content).result
-                        }
-                    </>
+					/>}
+					/>
+                       
+                    
                     <>
                         <ReferencesBlock references={noteReferences}/>  
                     </>

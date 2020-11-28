@@ -3,9 +3,7 @@ import { NoteLayoutProvider } from "../../components/useNoteLayout";
 import { NotesProvider } from "../../components/useNotes";
 import useIsLoggedInAuthorized from "../../hooks/useIsLoggedAuthorized";
 import NoteService from "../../noteService";
-
 const Page = ({ noteOne,noteTwo,noteThree,note }) => {
-
     const { isLoggedIn, userDisplayName, isSessionLoading } = useIsLoggedInAuthorized();
     return (
       <>

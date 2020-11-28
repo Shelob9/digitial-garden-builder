@@ -1,7 +1,7 @@
 import * as React from "react";
 import ReactMde from "react-mde";
-//import ReactMarkdown from "react-markdown";
-//import "react-mde/lib/styles/css/react-mde-all.css";
+import "react-mde/lib/styles/css/react-mde-all.css";
+import { NoteMarkdown } from "./Note";
 
 function loadSuggestions(text) {
   return new Promise((accept, reject) => {
@@ -59,7 +59,7 @@ const MarkdownEditor: React.FC<markdownEditorProps> = ({value,setValue}) => {
         selectedTab={selectedTab as 'write'|'preview'}
         onTabChange={setSelectedTab}
         generateMarkdownPreview={(markdown) =>
-          Promise.resolve(<ReactMarkdown source={markdown} />)
+          Promise.resolve(<NoteMarkdown content={markdown} />)
         }
         //@ts-ignore
         loadSuggestions={loadSuggestions}
