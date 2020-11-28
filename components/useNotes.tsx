@@ -1,11 +1,32 @@
-import { createContext, useContext, useMemo } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import { INote } from "./Note";
 
 const NotesContext = createContext(null);
 
 export const NotesProvider = ({ children }) => {
-    const { data: notes } = useSWR('/api/notes',(url) => fetch(url).then(r => r.json()));
+    const { data: noteIndex } = useSWR('/api/notes', (url) => fetch(url).then(r => r.json()).then(
+        r => {
+            return r.noteIndex;
+        }
+    ));
+
+    const [notes, setNotes] = useState<INote[]>([]);
+    
+    const addNote = (note: INote) => setNotes([...notes, note]);
+    const fetchNote = (apiUrl: string) => {
+        return fetch(apiUrl).then(r => r.json());
+    }
+    useEffect(() => {
+        if (noteIndex) {
+            noteIndex.forEach(function  ({ apiUrl }) {
+                fetchNote(apiUrl).then(
+                    ({ note }) => addNote(note)
+                )
+                
+            })
+        }
+    }, [noteIndex]);
 
     const getNote = (noteId): INote|undefined => {
       return notes && notes.find(note => noteId === note.id);

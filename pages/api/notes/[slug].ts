@@ -1,11 +1,12 @@
 import { getSession } from 'next-auth/client'
-import { NextApiRequest, NextApiResponse } from 'next'
-import NotesApiService from '../../NotesApiService'
-import GitApi from '../../lib/GitApi'
-
+import { NextApiResponse } from 'next'
+import { NextApiRequest } from 'next'
+import GitApi from '../../../lib/GitApi'
+import NotesApiService from '../../../NotesApiService'
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	res.setHeader('Content-Type', 'application/json')
 	res.setHeader('Cache-Control', 's-maxage=86400')
+	const { slug } = req.query
 	const session = await getSession({ req })
 	if (!session) {
 		return res.status(403).json({ allowed: false })
@@ -16,6 +17,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		session.authToken
 	)
 	let noteService = new NotesApiService(client)
-	let noteIndex = await noteService.fetchNoteIndex()
-	res.status(200).json({ noteIndex })
+	await noteService.fetchNoteIndex()
+	let note = await noteService.fetchNote(slug as string)
+	res.status(200).json({ note })
 }
