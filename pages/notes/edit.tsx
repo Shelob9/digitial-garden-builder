@@ -4,7 +4,7 @@ import MarkdownEditor from "../../components/MarkdownEditor";
 import { INote } from "../../components/Note";
 import { NotesProvider } from "../../components/useNotes";
 import useIsLoggedInAuthorized from "../../hooks/useIsLoggedAuthorized";
-import NoteService from "../../noteService";
+import NoteService from "../../NoteService";
 
 const Page: FC<{ note?: INote,noteId:number}> = ({ note,noteId }) => {
     const { isLoggedIn, userDisplayName, isSessionLoading } = useIsLoggedInAuthorized();

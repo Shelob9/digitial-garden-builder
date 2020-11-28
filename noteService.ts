@@ -33,16 +33,25 @@ let notes: INote[] = [
 	},
 ]
 class NoteService {
+	notes: INote[]
+
+	constructor() {
+		this.notes = notes
+	}
+
+	setNotes = (notes: INote[]) => {
+		this.notes = notes
+	}
 	getNotes = (): INote[] => {
-		return notes
+		return this.notes
 	}
 
 	getNoteBySlug = (slug: string): INote | undefined => {
-		return notes.find((note) => slug === note.slug)
+		return this.notes.find((note) => slug === note.slug)
 	}
 
 	getNoteById = (noteId: number): INote | undefined => {
-		return notes.find((note) => noteId === note.id)
+		return this.notes.find((note) => noteId === note.id)
 	}
 }
 
