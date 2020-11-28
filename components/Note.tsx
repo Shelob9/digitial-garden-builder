@@ -3,11 +3,22 @@ import parse from 'remark-parse'
 import remark2react from 'remark-react'
 import toc from 'remark-toc';
 import ReferencesBlock from "./references-block";
+import { FC } from 'react';
+import { NotePostion } from './noteReducer';
+export interface INote {
+	id: number;
+	title: string;
+	content: string;
+  }
 const v = (c) => {
     console.log(c);
     return c;
 }
-const Note = ({ content, isOpen,onCollapseButton,position }) => {
+const Note: FC<{
+	note: INote; onCollapseButton: () => void;
+	isOpen: boolean
+}> = ({ note, onCollapseButton, isOpen }) => {
+	let { content } = note;
     return (
         <>
             <div
@@ -32,7 +43,6 @@ const Note = ({ content, isOpen,onCollapseButton,position }) => {
                                     }
                                 })
                                 .use(toc)
-                                .use(v)
                             .processSync(content).result
                         }
                     </>

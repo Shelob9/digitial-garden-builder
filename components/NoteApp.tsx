@@ -2,24 +2,11 @@
 import React,{useEffect,useState,useMemo, FC} from 'react'
 import noteReducer from './noteReducer'
 import Layout from '../components/Layout';
-import Note from '../components/Note';
+import Note, { INote } from '../components/Note';
 import useSWR, { SWRConfig } from 'swr'
 
-let allNotes = [
-    {
-      id: 1,
-      content: '# Hi Roy \n One **One** [two](/two) \n ## H2 \n Arms \n ## H22 \n a',
-      title: 'Note One ',
-    },
-    {
-      id: 2,
-      content: '# Roots \n Two **One**',
-      title: 'Note Two',
-    },
 
 
-  
-  ];
 
 
 let intitalState = {
@@ -42,21 +29,26 @@ const NoteApp: FC<{ noteSlug?: string, isLoggedIn: boolean; userDisplayName?:str
   );
 
   const { data: allNotes } = useSWR('/api/notes');
-  console.log(allNotes)
 
-  const getNote = (noteId) => {
+  const getNote = (noteId): INote|undefined => {
     return allNotes && allNotes.find(note => noteId === note.id);
   }
 
-  const noteOne = useMemo(() => {
-    if (currentNotes.one) {
-      return getNote(currentNotes.one.noteId)
+  const noteOne = useMemo<INote>(() => {
+    let note = currentNotes.one ?
+      getNote(currentNotes.one.noteId) : undefined;
 
+    if (!note) {
+      note = {
+        id: 10000,
+        title: 'Default Note',
+        content: 'Need to have this'
+      }
     }
-    return undefined;
+    return note;
   }, [currentNotes,allNotes]);
 
-  const noteTwo = useMemo(() => {
+  const noteTwo = useMemo<INote|undefined>(() => {
     if (currentNotes.two) {
       return getNote(currentNotes.two.noteId)
 
@@ -64,7 +56,7 @@ const NoteApp: FC<{ noteSlug?: string, isLoggedIn: boolean; userDisplayName?:str
     return undefined;
   }, [currentNotes,allNotes]);
 
-  const noteThree = useMemo(() => {
+  const noteThree = useMemo<INote|undefined>(() => {
     if (currentNotes.three) {
       return getNote(currentNotes.three.noteId)
 
@@ -74,8 +66,7 @@ const NoteApp: FC<{ noteSlug?: string, isLoggedIn: boolean; userDisplayName?:str
 
   const isNoteOpen = (notePosition) => currentNotes.hasOwnProperty(notePosition) &&currentNotes[notePosition].open;
   
-  const toggleBox = (notePosition, note) => {
-   
+  const toggleBox = (notePosition) => {
     if (! isNoteOpen(notePosition)) {
       dispatchNotesAction({
         notePosition,
@@ -103,22 +94,19 @@ const NoteApp: FC<{ noteSlug?: string, isLoggedIn: boolean; userDisplayName?:str
           {allNotes ? (<>
             
             <Note
-              content={noteOne ? noteOne.content : ''}
-              position={'one'}
+              note={noteOne}
               isOpen={isNoteOpen('one')}
-              onCollapseButton={() => toggleBox('one', noteOne)}
+              onCollapseButton={() => toggleBox('one')}
             />
             {noteTwo && <Note
-              content={noteTwo.content}
-              position={'two'}
+              note={noteTwo}
               isOpen={isNoteOpen('two')}
-              onCollapseButton={() => toggleBox('two', noteTwo)}
+              onCollapseButton={() => toggleBox('two')}
             />}
             {noteThree && <Note
-              content={noteThree.content}
-              position={'three'}
+              note={noteThree}
               isOpen={isNoteOpen('three')}
-              onCollapseButton={() => toggleBox('three', noteThree)}
+              onCollapseButton={() => toggleBox('three')}
 
             />}
           </>) : <div>Loading</div>}
