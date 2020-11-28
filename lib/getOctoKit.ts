@@ -1,11 +1,12 @@
-import { Octokit } from "@octokit/rest";
+import { Octokit } from '@octokit/rest'
 
 export type gitRepoDetails = {
-	owner: string;
-	repo: string;
-};
+	owner: string
+	repo: string
+}
 export function getOctokit(): Octokit {
 	return new Octokit({
-		auth: process.env.GITHUB_API_TOKEN,
-	});
+		auth: `db9469c99f780686801d74281dee053c1d25710a`,
+		//auth: process.env.GITHUB_API_TOKEN,
+	})
 }

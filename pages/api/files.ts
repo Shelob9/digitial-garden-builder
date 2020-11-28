@@ -12,7 +12,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	let git = GitApi(repo, 'master')
 	try {
 		let files = await git.getFiles(undefined, 'md')
-		res.status(202).json({ files })
+		res.status(202).json({ files, session })
 	} catch (error) {
 		console.log(error)
 		res.status(500).json({ error })
