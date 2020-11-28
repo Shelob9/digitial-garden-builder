@@ -3,8 +3,8 @@ import React,{useEffect,useState,useMemo, FC} from 'react'
 import noteReducer from './noteReducer'
 import Layout from '../components/Layout';
 import Note from '../components/Note';
+import useSWR, { SWRConfig } from 'swr'
 
-let defaultNote = '';
 let allNotes = [
     {
       id: 1,
@@ -41,8 +41,11 @@ const NoteApp: FC<{ noteSlug?: string, isLoggedIn: boolean; userDisplayName?:str
     intitalState
   );
 
+  const { data: allNotes } = useSWR('/api/notes');
+  console.log(allNotes)
+
   const getNote = (noteId) => {
-    return allNotes.find(note => noteId === note.id);
+    return allNotes && allNotes.find(note => noteId === note.id);
   }
 
   const noteOne = useMemo(() => {
@@ -51,7 +54,7 @@ const NoteApp: FC<{ noteSlug?: string, isLoggedIn: boolean; userDisplayName?:str
 
     }
     return undefined;
-  }, [currentNotes]);
+  }, [currentNotes,allNotes]);
 
   const noteTwo = useMemo(() => {
     if (currentNotes.two) {
@@ -59,7 +62,7 @@ const NoteApp: FC<{ noteSlug?: string, isLoggedIn: boolean; userDisplayName?:str
 
     }
     return undefined;
-  }, [currentNotes]);
+  }, [currentNotes,allNotes]);
 
   const noteThree = useMemo(() => {
     if (currentNotes.three) {
@@ -67,7 +70,7 @@ const NoteApp: FC<{ noteSlug?: string, isLoggedIn: boolean; userDisplayName?:str
 
     }
     return undefined;
-  }, [currentNotes]);
+  }, [currentNotes,allNotes]);
 
   const isNoteOpen = (notePosition) => currentNotes.hasOwnProperty(notePosition) &&currentNotes[notePosition].open;
   
@@ -90,29 +93,38 @@ const NoteApp: FC<{ noteSlug?: string, isLoggedIn: boolean; userDisplayName?:str
 
 
   return (
-      <>
-      <Layout >
-        <Note
-          content={noteOne ? noteOne.content : ''}
-          position={'one'}
-          isOpen={isNoteOpen('one') }
-          onCollapseButton={() => toggleBox('one',noteOne)}
-        />
-        {noteTwo && <Note
-          content={noteTwo.content}
-          position={'two'}
-          isOpen={isNoteOpen('two')}
-          onCollapseButton={() => toggleBox('two',noteTwo)}
-        />}
-        {noteThree && <Note
-          content={noteThree.content}
-          position={'three'}
-          isOpen={isNoteOpen('three')}
-          onCollapseButton={() => toggleBox('three',noteThree)}
+    <>
+       <SWRConfig
+        value={{
+          fetcher: (url: string,args?:any) => fetch(url,args).then(res => res.json())
+      }}
+    >
+        <Layout >
+          {allNotes ? (<>
+            
+            <Note
+              content={noteOne ? noteOne.content : ''}
+              position={'one'}
+              isOpen={isNoteOpen('one')}
+              onCollapseButton={() => toggleBox('one', noteOne)}
+            />
+            {noteTwo && <Note
+              content={noteTwo.content}
+              position={'two'}
+              isOpen={isNoteOpen('two')}
+              onCollapseButton={() => toggleBox('two', noteTwo)}
+            />}
+            {noteThree && <Note
+              content={noteThree.content}
+              position={'three'}
+              isOpen={isNoteOpen('three')}
+              onCollapseButton={() => toggleBox('three', noteThree)}
 
-        />}
-      </Layout>
-      </>
+            />}
+          </>) : <div>Loading</div>}
+        </Layout>
+      </SWRConfig>
+    </>
     )
   
 }
