@@ -1,4 +1,5 @@
 import NoteApp from '../components/NoteApp';
+import { NoteLayoutProvider } from '../components/useNoteLayout';
 import { NotesProvider } from '../components/useNotes';
 import useIsLoggedIn from '../hooks/useIsLoggedAuthorized'
 
@@ -7,7 +8,9 @@ const Index = () => {
   return (
     <>
       <NotesProvider>
-        <NoteApp isLoggedIn={isLoggedIn} userDisplayName={userDisplayName} />
+        <NoteLayoutProvider>
+          <NoteApp isLoggedIn={isLoggedIn} userDisplayName={userDisplayName} />
+        </NoteLayoutProvider>
       </NotesProvider>
     </>
   )

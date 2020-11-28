@@ -1,26 +1,12 @@
 
-import React,{useEffect,useState,useMemo, FC, Fragment} from 'react'
-import noteReducer from './noteReducer'
+import React,{ FC, Fragment} from 'react'
+import noteLayoutReducer from './noteLayoutReducer'
 import Layout from '../components/Layout';
 import Note, { INote } from '../components/Note';
-import useSWR, { SWRConfig } from 'swr'
 import useNotes, { useNote } from './useNotes';
+import useNoteLayout from './useNoteLayout';
 
 
-
-
-
-let intitalState = {
-  one: {
-    noteId: 1,
-    open: true,
-  },
-  two: {
-    noteId: 2,
-    open:false,
-  }
-
-}
 
 const NoteWrap: FC<{
   noteId: number;
@@ -40,29 +26,9 @@ const NoteWrap: FC<{
 
 const NoteApp: FC<{ noteSlug?: string, isLoggedIn: boolean; userDisplayName?:string;}>= ({noteSlug,userDisplayName,isLoggedIn}) => {
   
-  const [currentNotes, dispatchNotesAction] = React.useReducer(
-    noteReducer,
-    intitalState
-  );
+  const { currentNotes,toggleBox,isNoteOpen,hasNote } = useNoteLayout();
 
   const { notes } = useNotes();
-  const hasNote = (notePosition) => currentNotes.hasOwnProperty(notePosition);
-  const isNoteOpen = (notePosition) => hasNote(notePosition) &&currentNotes[notePosition].open;
-  
-  const toggleBox = (notePosition) => {
-    if (! isNoteOpen(notePosition)) {
-      dispatchNotesAction({
-        notePosition,
-        type:'expandNote'
-      });
-    } else {
-      dispatchNotesAction({
-        notePosition,
-        type:'collapseNote'
-      });
-
-    }
-  }
 
   return (
     <>

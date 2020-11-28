@@ -66,7 +66,7 @@ type noteReducerActions =
 			type: 'removeNote'
 			notePosition: notePostions
 	  }
-const noteReducer = (
+const noteLayoutReducer = (
 	state: NoteReducerState,
 	action: noteReducerActions
 ): NoteReducerState => {
@@ -111,4 +111,4 @@ const noteReducer = (
 	}
 }
 
-export default noteReducer
+export default noteLayoutReducer

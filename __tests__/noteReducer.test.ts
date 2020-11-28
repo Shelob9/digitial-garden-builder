@@ -1,10 +1,10 @@
 import * as React from 'react'
 //import { render } from '@testing-library/react'
-import noteReducer from '../components/noteReducer'
+import noteLayoutReducer from '../components/noteLayoutReducer'
 describe('noteReducer', () => {
 	test('Expands note', () => {
 		expect(
-			noteReducer(
+			noteLayoutReducer(
 				{
 					one: {
 						noteId: 1,
@@ -24,7 +24,7 @@ describe('noteReducer', () => {
 	})
 	test('Collapse note', () => {
 		expect(
-			noteReducer(
+			noteLayoutReducer(
 				{
 					one: {
 						noteId: 1,
@@ -44,7 +44,7 @@ describe('noteReducer', () => {
 	})
 	test('Adds note to empty slot', () => {
 		expect(
-			noteReducer(
+			noteLayoutReducer(
 				{
 					one: {
 						noteId: 1,
@@ -69,7 +69,7 @@ describe('noteReducer', () => {
 
 	test('Adds note replaces note slot', () => {
 		expect(
-			noteReducer(
+			noteLayoutReducer(
 				{
 					one: {
 						noteId: 1,
@@ -93,7 +93,7 @@ describe('noteReducer', () => {
 	})
 
 	test('Removes note', () => {
-		const state = noteReducer(
+		const state = noteLayoutReducer(
 			{
 				one: {
 					noteId: 1,

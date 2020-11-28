@@ -4,9 +4,7 @@ import remark2react from 'remark-react'
 import toc from 'remark-toc';
 import ReferencesBlock from "./references-block";
 import { FC, useMemo } from 'react';
-import { NotePostion } from './noteReducer';
 import useNotes from './useNotes';
-import notes from '../pages/api/notes';
 export interface INote {
 	id: number;
 	title: string;

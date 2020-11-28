@@ -2,7 +2,6 @@ import React from "react";
 
 import NoteLink from './NoteLink';
 const Reference = ({ reference }) => {
-  console.log(reference);
   return (
     <div>
       <NoteLink slug={reference.slug} className="reference">
