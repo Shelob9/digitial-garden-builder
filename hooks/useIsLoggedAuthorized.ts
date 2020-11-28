@@ -14,7 +14,6 @@ const useIsLoggedInAuthorized = () => {
 		if (!isLoggedIn) {
 			return ''
 		}
-
 		return session.user.name
 	}, [session, loading])
 

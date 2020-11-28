@@ -12,6 +12,7 @@ const NoteWrap: FC<{
   isOpen: boolean;
   toggleBox: () => void,
   position: notePostions
+  isLoggedIn: boolean;
 }> = (props) => {
   const note = useNote({ noteId: props.noteId });
   const { setFocusNote, focusNote, expandBox } = useNoteLayout();
@@ -36,7 +37,6 @@ const NoteApp: FC<{
   noteOneSlug?: string;
   noteTwoSlug?: string;
   noteThreeSlug?: string;
-
   isLoggedIn: boolean;
   userDisplayName?: string;
 }> = ({ noteOneSlug,noteTwoSlug,noteThreeSlug, userDisplayName, isLoggedIn }) => {
@@ -93,20 +93,25 @@ const NoteApp: FC<{
           <div className={'note-columns-container'}>
             {notes ? (
             <>
-              <NoteWrap
+                <NoteWrap
+                  isLoggedIn={isLoggedIn}
                 noteId={currentNotes.one.noteId}
                 isOpen={isNoteOpen('one')}
                 toggleBox={() => toggleBox('one')}
                 position={"one"}
               />
-              {hasNote('two') && <NoteWrap
+                {hasNote('two') && <NoteWrap
+                                    isLoggedIn={isLoggedIn}
+
                 noteId={currentNotes.two.noteId}
                 isOpen={isNoteOpen('two')}
                 toggleBox={() => toggleBox('two')}
                 position={"two"}
 
               />}
-              {hasNote('three') && <NoteWrap
+                {hasNote('three') && <NoteWrap
+                                    isLoggedIn={isLoggedIn}
+
                 noteId={currentNotes.three.noteId}
                 isOpen={isNoteOpen('three')}
                 toggleBox={() => toggleBox('three')}

@@ -8,6 +8,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	if (!session) {
 		return res.status(403).json({ allowed: false })
 	}
+
 	let repo = getRepo()
 	let git = GitApi(repo, 'master')
 	try {

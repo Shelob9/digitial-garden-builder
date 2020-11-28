@@ -8,6 +8,7 @@ import useNotes from './useNotes';
 import NoteLink from './NoteLink';
 import useNoteLayout from './useNoteLayout';
 import { notePostions } from './noteLayoutReducer';
+import Link from 'next/link'
 export interface INote {
 	id: number;
 	title: string;
@@ -18,7 +19,7 @@ export interface INote {
 	]
   }
 
-const Link: FC<{ href: string; children: any, openPosition: notePostions }> = ({
+const NoteMarkdownLink: FC<{ href: string; children: any, openPosition: notePostions }> = ({
 	href,
 	children,
 	openPosition
@@ -108,7 +109,8 @@ const Note: FC<{
 	position: notePostions,
 	onNoteFocus: (note:notePostions) => void;
 	focusNote: notePostions,
-}> = ({ note, toggleBox, isOpen,position,focusNote,onNoteFocus }) => {
+	isLoggedIn: boolean;
+}> = ({ note, toggleBox, isOpen,position,focusNote,onNoteFocus,isLoggedIn }) => {
 	let { content, references } = note;
 	const { getNote } = useNotes();
 	let noteReferences = useMemo(() => {
@@ -128,18 +130,39 @@ const Note: FC<{
     return (
         <>
 			<div
-				onClick={() => onNoteFocus(position)}
+				
                 className={`note-container ${isOpen ? 'note-open' : 'note-closed'} ${focusNote === position ? 'note-focus': ''}`}
-            >
-                <button onClick={
-                    () => toggleBox()
-                }>
-                    {isOpen ? '-' : '+'}
-                </button>
+			>
+				<div className={'note-buttons'}>
+					<button
+						onClick={
+						() => toggleBox()
+					}>
+						{isOpen ? '-' : '+'}
+					</button>
+					{isOpen &&
+						<Link
+							href={ isLoggedIn ? `/notes/edit?noteId=${note.id}` : '/login' }
+						>
+							<a
+								className={'edit-note'}	
+							>
+									{'Edit'}
+							</a>
+						</Link>
+						
+					}
+				</div>
+                
+				
                 {isOpen &&
-                    <div className={"note-content"}>
-					<NoteMarkdown content={content}
-						a={(props) => <Link
+					<div
+						className={"note-content"}
+						onClick={() => onNoteFocus(position)}
+					>
+					<NoteMarkdown
+						content={content}
+						a={(props) => <NoteMarkdownLink
 											{...props}
 											openPosition={nextPosition(position)}
 					/>}

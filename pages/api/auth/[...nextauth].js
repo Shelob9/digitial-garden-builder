@@ -4,7 +4,8 @@ import Providers from 'next-auth/providers'
 
 const allowedUser = (userId) => [
   //Shelob0
-  1994311
+  1994311,
+  '1994311'
 ].includes(userId);
 const options = {
   // Configure one or more authentication providers
@@ -37,25 +38,33 @@ const options = {
     },
     session: async (session, user, sessionToken) => {
       session.foo = 'r';
-      console.log(40, sessionToken)
       if (sessionToken && sessionToken.hasOwnProperty('accessToken')) {
         session.accessToken = sessionToken.accessToken;
       }
+      console.log(sessionToken);
       return Promise.resolve(session)
     },
     jwt: async (token, user, account, profile, isNewUser) => {
       const isSignIn = (user) ? true : false
       // Add auth_time to token on signin in
-      console.log(47,account);
       if (isSignIn) {
         token.auth_time = Math.floor(Date.now() / 1000);
       }
       if (account) {
-        token.accessToken = accessToken;
+        token.accessToken = account.accessToken;
       }
       return Promise.resolve(token)
     }
-    
+  },
+  session: { jwt: true },
+  events: {
+    session: async ({ session, jwt }) => { 
+      if (jwt.accessToken) {
+        session.accessToken = jwt.accessToken;
+      }
+      return Promise.resolve(session)
+     },
+   
   }
   
 
