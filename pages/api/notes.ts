@@ -17,5 +17,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	)
 	let noteService = new NotesApiService(client)
 	let noteIndex = await noteService.fetchNoteIndex()
+	res.setHeader('Content-Type', 'application/json')
+	res.setHeader('Cache-Control', 's-maxage=3600')
 	res.status(200).json({ noteIndex })
 }
