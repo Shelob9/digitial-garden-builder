@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer, useState } from "react";
 import noteLayoutReducer, { NotePostion, notePostions } from "./noteLayoutReducer";
 
 const NoteLayoutContext = createContext(null);
@@ -18,10 +18,15 @@ export const NoteLayoutProvider = ({ children }) => {
     const [currentNotes, dispatchNotesAction] = useReducer(
         noteLayoutReducer,
         intitalState
-      );
+  );
+  const [focusNote, setFocusNote] = useState<notePostions>("one");
+
     return (
         <NoteLayoutContext.Provider value={{
-            currentNotes, dispatchNotesAction
+          currentNotes,
+          dispatchNotesAction,
+          focusNote,
+          setFocusNote
         }}>
             {children}
         </NoteLayoutContext.Provider>
@@ -29,13 +34,24 @@ export const NoteLayoutProvider = ({ children }) => {
 }
 
 export default function useNoteLayout() {
-    const { currentNotes, dispatchNotesAction } = useContext(NoteLayoutContext);
+  const {
+    currentNotes,
+    dispatchNotesAction,
+    focusNote,
+    setFocusNote
+  } = useContext(NoteLayoutContext);
+  
+  const expandBox = (notePosition) => {
+    dispatchNotesAction({
+      notePosition,
+      type: 'expandNote'
+    });
+  }
     const toggleBox = (notePosition) => {
         if (! isNoteOpen(notePosition)) {
-          dispatchNotesAction({
+          expandBox(
             notePosition,
-            type:'expandNote'
-          });
+          );
         } else {
           dispatchNotesAction({
             notePosition,
@@ -51,22 +67,46 @@ export default function useNoteLayout() {
         })
     };
 
-    const removeNote = (notePosition: notePostions, noteId: number) => {
+    const removeNote = (notePosition: notePostions) => {
         dispatchNotesAction({
             notePosition,
-            noteId,
             type: 'removeNote'
         })
     };
     const hasNote = (notePosition) => currentNotes.hasOwnProperty(notePosition);
-    const isNoteOpen = (notePosition) => hasNote(notePosition) &&currentNotes[notePosition].open;
-    return {
-        currentNotes,
-        dispatchNotesAction,
-        toggleBox,
-        hasNote,
-        isNoteOpen,
-        addNote,
-        removeNote
-    };
+  const isNoteOpen = (notePosition) => hasNote(notePosition) && currentNotes[notePosition].open;
+  
+  const getPositionByNoteId = (noteId: number): notePostions|undefined => {
+    let found = undefined;
+    Object.keys(currentNotes).forEach(
+      (position) => {
+        if (hasNote(position) && noteId === currentNotes[position].noteId) {
+          found = position;
+        }
+      }
+    )
+    return found;
+  }
+  const isNoteIdOpen = (noteId: number) => {
+    const position = getPositionByNoteId(noteId);
+    return position && isNoteOpen(position);
+  }
+
+  
+
+
+  return {
+    currentNotes,
+    dispatchNotesAction,
+    toggleBox,
+    hasNote,
+    isNoteOpen,
+    addNote,
+    removeNote,
+    isNoteIdOpen,
+    getPositionByNoteId,
+    expandBox,
+    focusNote,
+    setFocusNote
+  };
 }
