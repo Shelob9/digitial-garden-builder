@@ -8,12 +8,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	if (!session) {
 		return res.status(403).json({ allowed: false })
 	}
-
 	let repo = getRepo()
-	let git = GitApi(repo, 'master')
+	let git = GitApi(repo, 'master', session.authToken)
 	try {
 		let files = await git.getFiles(undefined, 'md')
-		res.status(202).json({ files, session })
+		res.status(202).json({ files })
 	} catch (error) {
 		console.log(error)
 		res.status(500).json({ error })

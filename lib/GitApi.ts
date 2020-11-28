@@ -11,8 +11,8 @@ export const getRepos = async () => {
 	return await getOctokit().repos.listForAuthenticatedUser()
 }
 
-function GitApi(gitRepo: gitRepoDetails, branch: string) {
-	let octo = getOctokit()
+function GitApi(gitRepo: gitRepoDetails, branch: string, authToken?: string) {
+	let octo = getOctokit(authToken)
 	const saveFile = async (
 		content: string,
 		fullFilePath: string,
