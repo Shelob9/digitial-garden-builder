@@ -6,8 +6,6 @@ import Note, { INote } from '../components/Note';
 import useNotes, { useNote } from './useNotes';
 import useNoteLayout from './useNoteLayout';
 
-
-
 const NoteWrap: FC<{
   noteId: number;
   isOpen: boolean;

@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
-import noteLayoutReducer from "./noteLayoutReducer";
+import noteLayoutReducer, { NotePostion } from "./noteLayoutReducer";
 
 const NoteLayoutContext = createContext(null);
 let intitalState = {
@@ -41,10 +41,32 @@ export default function useNoteLayout() {
             notePosition,
             type:'collapseNote'
           });
-    
         }
     }
+    const addNote = (notePosition: NotePostion, noteId: number) => {
+        dispatchNotesAction({
+            notePosition,
+            noteId,
+            type: 'addNote'
+        })
+    };
+
+    const removeNote = (notePosition: NotePostion, noteId: number) => {
+        dispatchNotesAction({
+            notePosition,
+            noteId,
+            type: 'removeNote'
+        })
+    };
     const hasNote = (notePosition) => currentNotes.hasOwnProperty(notePosition);
     const isNoteOpen = (notePosition) => hasNote(notePosition) &&currentNotes[notePosition].open;
-    return { currentNotes, dispatchNotesAction,toggleBox,hasNote,isNoteOpen };
+    return {
+        currentNotes,
+        dispatchNotesAction,
+        toggleBox,
+        hasNote,
+        isNoteOpen,
+        addNote,
+        removeNote
+    };
 }
