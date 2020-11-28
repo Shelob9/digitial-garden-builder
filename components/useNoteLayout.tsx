@@ -87,13 +87,11 @@ export default function useNoteLayout() {
     )
     return found;
   }
+
   const isNoteIdOpen = (noteId: number) => {
     const position = getPositionByNoteId(noteId);
     return position && isNoteOpen(position);
   }
-
-  
-
 
   return {
     currentNotes,
