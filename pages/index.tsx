@@ -1,11 +1,14 @@
 import NoteApp from '../components/NoteApp';
+import { NotesProvider } from '../components/useNotes';
 import useIsLoggedIn from '../hooks/useIsLoggedAuthorized'
 
 const Index = () => {
   const {isLoggedIn,userDisplayName,isSessionLoading} = useIsLoggedIn()
   return (
     <>
-      <NoteApp isLoggedIn={isLoggedIn} userDisplayName={userDisplayName} />
+      <NotesProvider>
+        <NoteApp isLoggedIn={isLoggedIn} userDisplayName={userDisplayName} />
+      </NotesProvider>
     </>
   )
 }

@@ -3,12 +3,17 @@ import parse from 'remark-parse'
 import remark2react from 'remark-react'
 import toc from 'remark-toc';
 import ReferencesBlock from "./references-block";
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { NotePostion } from './noteReducer';
+import useNotes from './useNotes';
+import notes from '../pages/api/notes';
 export interface INote {
 	id: number;
 	title: string;
 	content: string;
+	references?: [
+		{noteId:number}
+	]
   }
 const v = (c) => {
     console.log(c);
@@ -18,7 +23,20 @@ const Note: FC<{
 	note: INote; onCollapseButton: () => void;
 	isOpen: boolean
 }> = ({ note, onCollapseButton, isOpen }) => {
-	let { content } = note;
+	let { content, references } = note;
+	const { getNote } = useNotes();
+	let noteReferences = useMemo(() => {
+		if (!note.references) {
+			return [];
+		}
+		return Object.values(note.references).map(({ noteId }) => {
+			let note = getNote(noteId);
+			return {
+				...note,
+				slug:noteId
+			}
+		});
+	},[note]);
     return (
         <>
             <div
@@ -47,12 +65,7 @@ const Note: FC<{
                         }
                     </>
                     <>
-                        <ReferencesBlock references={[{
-                            title: 'Ref 1 Title',
-                            content: 'Ref 11',
-                            slug: 'poos',
-                            id:1
-                        }] }/>  
+                        <ReferencesBlock references={noteReferences}/>  
                     </>
                 </div>
                 }

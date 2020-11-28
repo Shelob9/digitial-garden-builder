@@ -2,13 +2,11 @@ import React from "react";
 
 import NoteLink from './NoteLink';
 const Reference = ({ reference }) => {
+  console.log(reference);
   return (
     <div>
-      <NoteLink to={reference.slug} className="reference">
-        <div>
-          <h5>{reference.title}</h5>
-            {reference.content}
-        </div>
+      <NoteLink slug={reference.slug} className="reference">
+          {reference.title}
       </NoteLink>
       <style jsx>{`
         .reference {

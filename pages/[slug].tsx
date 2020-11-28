@@ -1,4 +1,5 @@
 import NoteApp from "../components/NoteApp";
+import { NotesProvider } from "../components/useNotes";
 import useIsLoggedInAuthorized from "../hooks/useIsLoggedAuthorized";
 
 const Page = ({ slug }) => {
@@ -6,7 +7,14 @@ const Page = ({ slug }) => {
     const { isLoggedIn, userDisplayName, isSessionLoading } = useIsLoggedInAuthorized();
     return (
       <>
-        <NoteApp isLoggedIn={isLoggedIn} userDisplayName={userDisplayName}  noteSlug={slug} />
+        <NotesProvider>
+          <NoteApp
+            isLoggedIn={isLoggedIn}
+            userDisplayName={userDisplayName}
+            noteSlug={slug}
+          />
+        </NotesProvider>
+        
       </>
     )
     
