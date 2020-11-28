@@ -1,26 +1,21 @@
-import { createContext, useContext, useReducer, useState } from "react";
+import { createContext, FC, useContext, useReducer, useState } from "react";
 import noteLayoutReducer, { NotePostion, notePostions } from "./noteLayoutReducer";
 
 const NoteLayoutContext = createContext(null);
-let intitalState = {
-    one: {
-      noteId: 1,
-      open: true,
-    },
-    two: {
-      noteId: 2,
-      open:false,
-    }
+
   
-  }
-  
-export const NoteLayoutProvider = ({ children }) => {
+export const NoteLayoutProvider: FC<{ noteId?: number; children: any }> = ({ children, noteId }) => {
+    
     const [currentNotes, dispatchNotesAction] = useReducer(
         noteLayoutReducer,
-        intitalState
+        {
+          one: {
+            noteId: noteId ?? 1,
+            open: true,
+          },
+        }
   );
   const [focusNote, setFocusNote] = useState<notePostions>("one");
-
     return (
         <NoteLayoutContext.Provider value={{
           currentNotes,

@@ -2,19 +2,24 @@ import NoteApp from "../../components/NoteApp";
 import { NoteLayoutProvider } from "../../components/useNoteLayout";
 import { NotesProvider } from "../../components/useNotes";
 import useIsLoggedInAuthorized from "../../hooks/useIsLoggedAuthorized";
+import NoteService from "../../noteService";
 
-const Page = ({ slug }) => {
+const Page = ({ noteOne,noteTwo,noteThree,note }) => {
 
     const { isLoggedIn, userDisplayName, isSessionLoading } = useIsLoggedInAuthorized();
     return (
       <>
         <NotesProvider>
-          <NoteLayoutProvider>
-          <NoteApp
-            isLoggedIn={isLoggedIn}
-            userDisplayName={userDisplayName}
-            noteSlug={slug}
-          />
+          <NoteLayoutProvider
+            noteId={note.id}
+          >
+            <NoteApp
+              isLoggedIn={isLoggedIn}
+              userDisplayName={userDisplayName}
+              noteOneSlug={noteOne}
+              noteTwoSlug={noteTwo}
+              noteThreeSlug={noteThree}
+            />
          </NoteLayoutProvider>
           
         </NotesProvider> 
@@ -24,9 +29,18 @@ const Page = ({ slug }) => {
 }
 
 export default Page;
-export async function getServerSideProps({ params }) {
-    const { slug } = params;
+export async function getServerSideProps({ params, query }) {
+  const { slug } = params;
+  const { noteThree, noteTwo } = query;
+  const notes = new NoteService();
+  let note = notes.getNoteBySlug(slug);
     return {
-      props: {slug},
-    }
+      props: {
+        note,
+        slug,
+        noteOne: slug,
+        noteTwo: noteTwo ?? '',
+        noteThree: noteThree ?? ''
+    },
   }
+}

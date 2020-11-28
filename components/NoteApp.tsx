@@ -15,8 +15,6 @@ const NoteWrap: FC<{
 }> = (props) => {
   const note = useNote({ noteId: props.noteId });
   const { setFocusNote, focusNote, expandBox } = useNoteLayout();
-  
-  
   if (note) {
     return <Note
       {...{
@@ -34,15 +32,43 @@ const NoteWrap: FC<{
   return <Fragment />
 }
 
-const NoteApp: FC<{ noteSlug?: string, isLoggedIn: boolean; userDisplayName?: string; }> = ({ noteSlug, userDisplayName, isLoggedIn }) => {
+const NoteApp: FC<{
+  noteOneSlug?: string;
+  noteTwoSlug?: string;
+  noteThreeSlug?: string;
+
+  isLoggedIn: boolean;
+  userDisplayName?: string;
+}> = ({ noteOneSlug,noteTwoSlug,noteThreeSlug, userDisplayName, isLoggedIn }) => {
   //https://nextjs.org/docs/api-reference/next/router
   const router = useRouter()
   //Controls the three note slots
-  const { currentNotes,toggleBox,isNoteOpen,hasNote } = useNoteLayout();
-
+  const { currentNotes,toggleBox,isNoteOpen,hasNote,addNote } = useNoteLayout();
   //The actual notes
-  const { notes,getNote } = useNotes();
+  const { notes, getNote,findBySlug } = useNotes();
+  useEffect(() => {
+    if (noteOneSlug) {
+      let note = findBySlug(noteOneSlug);
+      if (note) {
+        addNote("one", note.id);
+      }
+    }
+    if (noteTwoSlug) {
+      let note = findBySlug(noteTwoSlug);
+      if (note) {
+        addNote("two", note.id);
+      }
+    }
+    if (noteThreeSlug) {
+      let note = findBySlug(noteThreeSlug);
+      if (note) {
+        addNote("three", note.id);
+      }
+    }
+  },[notes])
 
+  //When current notes change
+  //Reset the href
   useEffect(() => {
     let noteOne = hasNote('one') ? getNote(currentNotes.one.noteId) : undefined;
     if (!noteOne) {
@@ -58,7 +84,6 @@ const NoteApp: FC<{ noteSlug?: string, isLoggedIn: boolean; userDisplayName?: st
       href = `${href}&noteThree=${noteThree.slug}`;
     }
     router.push(href);
-  
   }, [currentNotes]);
 
   return (
@@ -84,7 +109,6 @@ const NoteApp: FC<{ noteSlug?: string, isLoggedIn: boolean; userDisplayName?: st
               isOpen={isNoteOpen('three')}
               toggleBox={() => toggleBox('three')}
               position={"three"}
-
             />}
           </>
           ) : <div>Loading</div>}
