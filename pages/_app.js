@@ -3,6 +3,8 @@ import App from 'next/app'
 import {SSRProvider} from '@react-aria/ssr';
 import "../styles/theme.css";
 import "../styles/stacked-layout.css";
+import "../styles/note-layout.css";
+
 class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props
