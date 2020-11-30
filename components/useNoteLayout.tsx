@@ -19,7 +19,7 @@ export const NoteLayoutProvider: FC<{
           },
         }
   );
-  
+
   const [focusNote, setFocusNote] = useState<notePostions>("one");
     return (
         <NoteLayoutContext.Provider value={{
@@ -59,10 +59,10 @@ export default function useNoteLayout() {
           });
         }
     }
-    const addNote = (notePosition: notePostions, noteId: number) => {
+    const addNote = (notePosition: notePostions, noteSlug: string) => {
         dispatchNotesAction({
             notePosition,
-            noteId,
+            noteSlug,
             type: 'addNote'
         })
     };
@@ -76,22 +76,20 @@ export default function useNoteLayout() {
     const hasNote = (notePosition) => currentNotes.hasOwnProperty(notePosition);
   const isNoteOpen = (notePosition) => hasNote(notePosition) && currentNotes[notePosition].open;
   
-  const getPositionByNoteId = (noteId: number): notePostions|undefined => {
-    let found = undefined;
+
+  const findNotePostion = (noteSlug: string) => {
+    let notePosition: notePostions | false= false;
     Object.keys(currentNotes).forEach(
-      (position) => {
-        if (hasNote(position) && noteId === currentNotes[position].noteId) {
-          found = position;
+      (pos:notePostions) => {
+        if (noteSlug === currentNotes[pos].noteSlug) {
+          notePosition = pos;
         }
       }
-    )
-    return found;
+    );
+    return notePosition;
   }
-
-  const isNoteIdOpen = (noteId: number) => {
-    const position = getPositionByNoteId(noteId);
-    return position && isNoteOpen(position);
-  }
+ 
+  
 
   return {
     currentNotes,
@@ -101,10 +99,9 @@ export default function useNoteLayout() {
     isNoteOpen,
     addNote,
     removeNote,
-    isNoteIdOpen,
-    getPositionByNoteId,
     expandBox,
     focusNote,
-    setFocusNote
+    setFocusNote,
+    findNotePostion
   };
 }

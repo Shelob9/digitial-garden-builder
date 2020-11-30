@@ -2,8 +2,8 @@
 import React,{ FC, Fragment, useEffect} from 'react'
 import { notePostions } from './noteLayoutReducer'
 import Layout from '../components/Layout';
-import Note, { INote } from '../components/Note';
-import useNotes, { useNote } from './useNotes';
+import Note from '../components/Note';
+import useNotes from './useNotes';
 import useNoteLayout from './useNoteLayout';
 import { useRouter } from 'next/router'
 
@@ -74,8 +74,8 @@ const NoteApp: FC<{
                   isLoggedIn={isLoggedIn}
                   slug={currentNotes.one.noteSlug}
                   isOpen={isNoteOpen('one')}
-                 toggleBox={() => toggleBox('one')}
-                position={"one"}
+                  toggleBox={() => toggleBox('one')}
+                  position={"one"}
               />
                 {hasNote('two') &&
                   <Note

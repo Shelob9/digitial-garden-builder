@@ -41,15 +41,6 @@ const useNotes = () => {
     return { notes, getNote,findBySlug }
 }
 
-//@TODO REMOVE THIS
-export const useNote = (props: { noteId: number }) => {
-    const { noteId } = props;
-    const { getNote, notes } = useContext(NotesContext);
-    const note = useMemo<INote | undefined>(() => {
-        return getNote(noteId);
-    },[noteId,notes])
-    return note;
-}
 export default useNotes;
 
 //Fetch function for single note via local API

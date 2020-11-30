@@ -9,7 +9,7 @@ const Page = ({ noteOne,noteTwo,noteThree,note }) => {
       <>
         <NotesProvider>
           <NoteLayoutProvider
-            noteId={note.id}
+            noteSlug={noteOne}
           >
             <NoteApp
               isLoggedIn={isLoggedIn}

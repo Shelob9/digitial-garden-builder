@@ -25,15 +25,20 @@ const NoteMarkdownLink: FC<{ href: string; children: any, openPosition: notePost
 	openPosition
 }) => {
 	let internal = href.startsWith('/notes/');
-	const { findBySlug, } = useNotes();
-	const { addNote,removeNote,getPositionByNoteId, expandBox,setFocusNote} = useNoteLayout();
 	let slug = href.substr('/notes/'.length);
-	let note = findBySlug(slug);
+	const note = useSingleNote({slug})
+	const {
+		addNote,
+		removeNote,
+		hasNote,
+		findNotePostion,
+		expandBox,
+		setFocusNote
+	} = useNoteLayout();
 	if (internal && note) {
 		const onClick = () => {
-			//Is note already in layout?
-			const pos = getPositionByNoteId(note.id);
-			if (pos) {
+			const pos = findNotePostion(slug);
+			if (pos && hasNote(pos)) {
 				expandBox(pos)
 				setFocusNote(pos)
 			} else {
@@ -50,7 +55,7 @@ const NoteMarkdownLink: FC<{ href: string; children: any, openPosition: notePost
 				}
 				addNote(
 					openPosition,
-					note.id,
+					note.slug
 				)
 				setFocusNote(openPosition);
 			}
@@ -61,7 +66,7 @@ const NoteMarkdownLink: FC<{ href: string; children: any, openPosition: notePost
 		return <NoteLink
 				onClick={onClick}
 				className={'reference'}
-			slug={slug}
+				slug={slug}
 		>
 			{children}
 		</NoteLink>
@@ -122,8 +127,7 @@ const Note: FC<{
 		return <div>Loading</div>
 	}
 
-	let { content, references } = note;
-
+	let { content } = note;
 
     return (
         <>
@@ -153,16 +157,17 @@ const Note: FC<{
                 {isOpen &&
 					<div
 						className={"note-content"}
-						onClick={() => focusNote(position)}
+						onClick={() => setFocusNote(position)}
 					>
 						<NoteMarkdown
 							content={content}
-							a={(props) => <NoteMarkdownLink
-											{...props}
-								openPosition={nextPosition(position)}
+							a={(props) => (
+								<NoteMarkdownLink
+									{...props}
+									openPosition={nextPosition(position)}
+								/>)
+								}
 							/>
-							}
-						/>
 						<>
 							<ReferencesBlock references={noteReferences}/>  
 						</>
