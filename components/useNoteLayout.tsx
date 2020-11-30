@@ -3,18 +3,23 @@ import noteLayoutReducer, { NotePostion, notePostions } from "./noteLayoutReduce
 
 const NoteLayoutContext = createContext(null);
 
-  
-export const NoteLayoutProvider: FC<{ noteId?: number; children: any }> = ({ children, noteId }) => {
+//@todo setting for this
+let defaultNote = 'one';
+export const NoteLayoutProvider: FC<{
+  children: any;
+  noteSlug?: string;
+}> = ({ children, noteSlug }) => {
     
     const [currentNotes, dispatchNotesAction] = useReducer(
         noteLayoutReducer,
         {
           one: {
-            noteId: noteId ?? 1,
+            noteSlug: noteSlug ?? defaultNote,
             open: true,
           },
         }
   );
+  
   const [focusNote, setFocusNote] = useState<notePostions>("one");
     return (
         <NoteLayoutContext.Provider value={{

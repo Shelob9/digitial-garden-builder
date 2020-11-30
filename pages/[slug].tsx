@@ -1,7 +1,10 @@
 import { FC } from "react";
 import { INote } from "../components/Note";
-import { useSingleNote } from "../components/useNotes";
-import NoteService from "../NoteService";
+import { NoteLayoutProvider } from "../components/useNoteLayout";
+import { NotesProvider, useSingleNote } from "../components/useNotes";
+import { useSession, getSession } from 'next-auth/client'
+
+import { noteApiServicefactory } from "../serviceFactories";
 
 const SingleNote: FC<{
     note: INote;
@@ -10,24 +13,32 @@ const SingleNote: FC<{
     const { slug } = props;
     const note = useSingleNote({ slug, note:props.note });
     return (
-        <div>
-            <p>{slug}</p>
-            <p>{note ? note.slug : 'Loading'}</p>
-        </div>
+      <NotesProvider>
+        <NoteLayoutProvider noteSlug={slug}>  
+          <div>
+              <p>{slug}</p>
+              <p>{note ? note.slug : 'Loading'}</p>
+          </div>
+        </NoteLayoutProvider>
+      </NotesProvider>
+        
+      
     )
-
 }
-export async function getServerSideProps({ params }) {
-    const { slug } = params;
+export async function getServerSideProps(context) {
+  const session = await getSession(context)
+
+    const { slug } = context.params;
+    let noteService = await noteApiServicefactory(session.authToken);
     
-    const notes = new NoteService();
-    let note = notes.getNoteBySlug(slug);
+    let note = await noteService.fetchNote(slug);
       return {
         props: {
           note,
           slug,
       },
-    }
+  }
+  
   }
 
 export default SingleNote;

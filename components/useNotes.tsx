@@ -17,19 +17,6 @@ export const NotesProvider = ({ children }) => {
     const fetchNote = (apiUrl: string) => {
         return fetch(apiUrl).then(r => r.json());
     }
-    //put individual notes in state
-    //@todo undo this, get notes closer to note.
-    //Also, use useSwr
-    useEffect(() => {
-        if (noteIndex) {
-            noteIndex.forEach(function  ({ apiUrl }) {
-                fetchNote(apiUrl).then(
-                    ({ note }) => addNote(note)
-                )
-                
-            })
-        }
-    }, [noteIndex]);
 
     const getNote = (noteId): INote|undefined => {
       return notes && notes.find(note => noteId === note.id);

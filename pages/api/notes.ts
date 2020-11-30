@@ -1,3 +1,4 @@
+import { noteApiServicefactory } from './../../serviceFactories'
 import { getSession } from 'next-auth/client'
 import { NextApiRequest, NextApiResponse } from 'next'
 import NotesApiService from '../../NotesApiService'
@@ -10,12 +11,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	if (!session) {
 		return res.status(403).json({ allowed: false })
 	}
-	let client = GitApi(
-		{ owner: 'shelob9', repo: 'garden-cms-test-data' },
-		'main',
-		session.authToken
-	)
-	let noteService = new NotesApiService(client)
+	let noteService = await noteApiServicefactory(session.authToken)
 	let noteIndex = await noteService.fetchNoteIndex()
 	res.setHeader('Content-Type', 'application/json')
 	res.setHeader('Cache-Control', 's-maxage=3600')
