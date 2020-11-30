@@ -41,7 +41,6 @@ const options = {
       if (sessionToken && sessionToken.hasOwnProperty('accessToken')) {
         session.accessToken = sessionToken.accessToken;
       }
-      console.log(sessionToken);
       return Promise.resolve(session)
     },
     jwt: async (token, user, account, profile, isNewUser) => {

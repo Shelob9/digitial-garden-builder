@@ -55,6 +55,7 @@ const useNotes = () => {
 }
 
 export const useNote = (props: { noteId: number }) => {
+    
     const { noteId } = props;
     const { getNote, notes } = useContext(NotesContext);
     
@@ -64,3 +65,19 @@ export const useNote = (props: { noteId: number }) => {
     return note;
 }
 export default useNotes;
+
+
+const fetcher = (url) => fetch(url).then(r => r.json());
+
+export const useSingleNote = (props: {
+    note?: INote;
+    slug: string;
+}
+) => {
+    const { data: note } = useSWR(
+        `/api/notes${props.slug}`,
+        fetcher,
+        { initialData: props.note }
+    );
+    return note;
+}
