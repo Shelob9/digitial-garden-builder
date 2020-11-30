@@ -9,7 +9,6 @@ const SingleNote: FC<{
 }> = (props) => {
     const { slug } = props;
     const note = useSingleNote({ slug, note:props.note });
-
     return (
         <div>
             <p>{slug}</p>

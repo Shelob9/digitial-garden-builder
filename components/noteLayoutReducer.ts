@@ -1,44 +1,5 @@
-let defaultNote = ''
-let allNotes = [
-	{
-		id: 1,
-		content:
-			'# Hi Roy \n One **One** [two](/two) \n ## H2 \n Arms \n ## H22 \n a',
-		title: 'Note One ',
-	},
-	{
-		id: 2,
-		content: '# Roots \n Two **One**',
-		title: 'Note Two',
-	},
-]
-
-const addNoteAction = (notePosition) => {
-	return {
-		type: 'addNote',
-		notePosition,
-	}
-}
-const removeNoteAction = (notePosition) => {
-	return {
-		type: 'removeNote',
-		notePosition,
-	}
-}
-
-let intitalState = {
-	one: {
-		noteId: 1,
-		open: true,
-	},
-	two: {
-		noteId: 2,
-		open: false,
-	},
-}
-
 export interface NotePostion {
-	noteId: number
+	noteSlug: string
 	open: boolean
 }
 
@@ -60,7 +21,7 @@ type noteReducerActions =
 	| {
 			type: 'addNote'
 			notePosition: notePostions
-			noteId: number
+			noteSlug: string
 	  }
 	| {
 			type: 'removeNote'
@@ -94,7 +55,7 @@ const noteLayoutReducer = (
 			return {
 				...state,
 				[action.notePosition]: {
-					noteId: action.noteId,
+					noteSlug: action.noteSlug,
 					open: true,
 				},
 			}

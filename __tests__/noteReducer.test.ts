@@ -7,11 +7,11 @@ describe('noteReducer', () => {
 			noteLayoutReducer(
 				{
 					one: {
-						noteId: 1,
+						noteSlug: 'one',
 						open: true,
 					},
 					two: {
-						noteId: 2,
+						noteSlug: 'two',
 						open: false,
 					},
 				},
@@ -27,11 +27,11 @@ describe('noteReducer', () => {
 			noteLayoutReducer(
 				{
 					one: {
-						noteId: 1,
+						noteSlug: 'one',
 						open: true,
 					},
 					two: {
-						noteId: 2,
+						noteSlug: 'two',
 						open: false,
 					},
 				},
@@ -47,18 +47,18 @@ describe('noteReducer', () => {
 			noteLayoutReducer(
 				{
 					one: {
-						noteId: 1,
+						noteSlug: 'one',
 						open: true,
 					},
 					two: {
-						noteId: 2,
+						noteSlug: 'two',
 						open: false,
 					},
 				},
 				{
 					type: 'addNote',
 					notePosition: 'three',
-					noteId: 5,
+					noteSlug: 'five',
 				}
 			).three
 		).toEqual({
@@ -72,22 +72,22 @@ describe('noteReducer', () => {
 			noteLayoutReducer(
 				{
 					one: {
-						noteId: 1,
+						noteSlug: 'one',
 						open: true,
 					},
 					two: {
-						noteId: 2,
+						noteSlug: 'two',
 						open: false,
 					},
 				},
 				{
 					type: 'addNote',
 					notePosition: 'two',
-					noteId: 5,
+					noteSlug: 'five',
 				}
 			).two
 		).toEqual({
-			noteId: 5,
+			noteSlug: 'five',
 			open: true,
 		})
 	})
