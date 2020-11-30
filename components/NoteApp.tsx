@@ -21,48 +21,38 @@ const NoteApp: FC<{
   //Controls the three note slots
   const { currentNotes,toggleBox,isNoteOpen,hasNote,addNote } = useNoteLayout();
   //The actual notes
-  const { notes, getNote,findBySlug } = useNotes();
+  const { notes, getNote, findBySlug } = useNotes();
+  
+  //load notes based on url parsing that happend server-side
   useEffect(() => {
     if (noteOneSlug) {
-      let note = findBySlug(noteOneSlug);
-      if (note) {
-        addNote("one", note.id);
-      }
+        addNote("one", noteOneSlug);
     }
     if (noteTwoSlug) {
-      let note = findBySlug(noteTwoSlug);
-      if (note) {
-        addNote("two", note.id);
-      }
+        addNote("two",noteTwoSlug);
     }
     if (noteThreeSlug) {
-      let note = findBySlug(noteThreeSlug);
-      if (note) {
-        addNote("three", note.id);
-      }
+        addNote("three", noteThreeSlug);
     }
-  },[notes])
+  },
+    [
+      //only run once please
+    ]
+  )
 
   //When current notes change
   //Reset the href
   useEffect(() => {
-    let noteOne = hasNote('one') ? getNote(currentNotes.one.noteId) : undefined;
-    if (!noteOne) {
-      return;
+    let href = `/notes/${currentNotes.one.noteSlug}`;
+    if (currentNotes.two) {
+      href = `${href}?noteTwo=${currentNotes.two.noteSlug}`;
     }
-    let noteTwo = hasNote('two') ? getNote(currentNotes.two.noteId) : undefined;
-    let noteThree = hasNote('three') ? getNote(currentNotes.three.noteId) : undefined;
-    let href = `/notes/${noteOne.slug}`;
-    if (noteTwo) {
-      href = `${href}?noteTwo=${noteTwo.slug}`;
-    }
-    if (noteThree) {
-      href = `${href}&noteThree=${noteThree.slug}`;
+    if (currentNotes.three) {
+      href = `${href}&noteThree=${currentNotes.three.noteSlug}`;
     }
     router.push(href);
   }, [currentNotes]);
 
-  console.log(currentNotes,currentNotes.one.noteSlug);
   return (
     <>
       <Layout >
