@@ -24,10 +24,17 @@ const Page: FC<{ note?: INote,noteId:number}> = ({ note,noteId }) => {
           <Layout
             pageDisplayTitle={`Edit Note`}
             statusMessage={isSaving ? 'Saving':undefined}
-            BeforeControls={() => <button onClick={handleSave}>Save</button>}>
-            <MarkdownEditor
-                value={value}
-                setValue={setValue} />
+            BeforeControls={() => <button onClick={handleSave}>Save</button>}
+          >
+              <div
+                  className={`note-container note-editor-container`}
+              >
+              
+                    <MarkdownEditor
+                      value={value}
+                      setValue={setValue}
+                    />
+              </div>
             </Layout>    
           </NotesProvider>
         </>
