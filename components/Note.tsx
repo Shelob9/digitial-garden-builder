@@ -269,6 +269,21 @@ const Note: FC<{
 					border: 1px solid var(--text);
 					background-color: var(--shadow)
 				}
+
+				.note-buttons {
+					float: right;
+					padding-bottom: 6px;
+					border-bottom: 1px solid black;
+				}
+				
+				.note-buttons button, .note-buttons a {
+					border: 2px solid black;
+					color: black;
+					padding:2px;
+					margin:4px;
+					background-color:white;
+					min-width: 30px;
+				}
             `}</style>
         </>
     )
