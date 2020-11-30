@@ -4,7 +4,7 @@ import remark2react from 'remark-react'
 import toc from 'remark-toc';
 import ReferencesBlock from "./references-block";
 import { FC, useMemo } from 'react';
-import useNotes from './useNotes';
+import useNotes, { useSingleNote } from './useNotes';
 import NoteLink from './NoteLink';
 import useNoteLayout from './useNoteLayout';
 import { notePostions } from './noteLayoutReducer';
@@ -103,34 +103,31 @@ export const NoteMarkdown: FC<{
 	)
 }
 const Note: FC<{
-	note: INote;
+	note?: INote;
+	slug: string;
 	toggleBox: () => void;
 	isOpen: boolean;
 	position: notePostions,
-	onNoteFocus: (note:notePostions) => void;
-	focusNote: notePostions,
 	isLoggedIn: boolean;
-}> = ({ note, toggleBox, isOpen,position,focusNote,onNoteFocus,isLoggedIn }) => {
-	let { content, references } = note;
-	const { getNote } = useNotes();
+}> = (props) => {
+	const { slug,toggleBox, isOpen, position, isLoggedIn } = props;
+	const note = useSingleNote({ note: props.note, slug });
+	const { focusNote,setFocusNote} = useNoteLayout();
+
 	let noteReferences = useMemo(() => {
-		if (!references) {
-			return [];
-		}
-		return Object.values(references).map(({ noteId }) => {
-			let note = getNote(noteId);
-			return {
-				...note,
-				slug:noteId
-			}
-		});
+		return [];
 	}, [note]);
 	
+	if (!note) {
+		return <div>Loading</div>
+	}
+
+	let { content, references } = note;
+
 
     return (
         <>
 			<div
-				
                 className={`note-container ${isOpen ? 'note-open' : 'note-closed'} ${focusNote === position ? 'note-focus': ''}`}
 			>
 				<div className={'note-buttons'}>
@@ -153,25 +150,22 @@ const Note: FC<{
 						
 					}
 				</div>
-                
-				
                 {isOpen &&
 					<div
 						className={"note-content"}
-						onClick={() => onNoteFocus(position)}
+						onClick={() => focusNote(position)}
 					>
-					<NoteMarkdown
-						content={content}
-						a={(props) => <NoteMarkdownLink
+						<NoteMarkdown
+							content={content}
+							a={(props) => <NoteMarkdownLink
 											{...props}
-											openPosition={nextPosition(position)}
-					/>}
-					/>
-                       
-                    
-                    <>
-                        <ReferencesBlock references={noteReferences}/>  
-                    </>
+								openPosition={nextPosition(position)}
+							/>
+							}
+						/>
+						<>
+							<ReferencesBlock references={noteReferences}/>  
+						</>
                 </div>
                 }
             </div>

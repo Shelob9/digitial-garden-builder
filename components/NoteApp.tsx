@@ -7,31 +7,7 @@ import useNotes, { useNote } from './useNotes';
 import useNoteLayout from './useNoteLayout';
 import { useRouter } from 'next/router'
 
-const NoteWrap: FC<{
-  noteId: number;
-  isOpen: boolean;
-  toggleBox: () => void,
-  position: notePostions
-  isLoggedIn: boolean;
-}> = (props) => {
-  const note = useNote({ noteId: props.noteId });
-  const { setFocusNote, focusNote, expandBox } = useNoteLayout();
-  if (note) {
-    return <Note
-      {...{
-        ...props, ...{
-          focusNote,
-          note
-        }
-      }}
-      onNoteFocus={(position) => {
-        expandBox(position);
-        setFocusNote(position);
-      }}
-    />
-  }
-  return <Fragment />
-}
+
 
 const NoteApp: FC<{
   noteOneSlug?: string;
@@ -86,6 +62,7 @@ const NoteApp: FC<{
     router.push(href);
   }, [currentNotes]);
 
+  console.log(currentNotes,currentNotes.one.noteSlug);
   return (
     <>
       <Layout >
@@ -93,30 +70,31 @@ const NoteApp: FC<{
           <div className={'note-columns-container'}>
             {notes ? (
             <>
-                <NoteWrap
+                <Note
                   isLoggedIn={isLoggedIn}
-                noteId={currentNotes.one.noteId}
-                isOpen={isNoteOpen('one')}
-                toggleBox={() => toggleBox('one')}
+                  slug={currentNotes.one.noteSlug}
+                  isOpen={isNoteOpen('one')}
+                 toggleBox={() => toggleBox('one')}
                 position={"one"}
               />
-                {hasNote('two') && <NoteWrap
-                                    isLoggedIn={isLoggedIn}
-
-                noteId={currentNotes.two.noteId}
-                isOpen={isNoteOpen('two')}
-                toggleBox={() => toggleBox('two')}
-                position={"two"}
-
-              />}
-                {hasNote('three') && <NoteWrap
-                                    isLoggedIn={isLoggedIn}
-
-                noteId={currentNotes.three.noteId}
-                isOpen={isNoteOpen('three')}
-                toggleBox={() => toggleBox('three')}
-                position={"three"}
-              />}
+                {hasNote('two') &&
+                  <Note
+                      isLoggedIn={isLoggedIn}
+                      slug={currentNotes.two.noteSlug}
+                      isOpen={isNoteOpen('two')}
+                      toggleBox={() => toggleBox('two')}
+                      position={"two"}   
+                  />
+                }
+                {hasNote('three') && 
+                  <Note
+                    isLoggedIn={isLoggedIn}
+                    slug={currentNotes.three.noteSlug}
+                    isOpen={isNoteOpen('three')}
+                    toggleBox={() => toggleBox('three')}
+                    position={"three"}
+                  />
+                }
             </>
             ) : <div>Loading</div>}
           </div>

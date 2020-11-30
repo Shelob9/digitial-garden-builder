@@ -6,18 +6,19 @@ import { useSession, getSession } from 'next-auth/client'
 
 import { noteApiServicefactory } from "../serviceFactories";
 
+
+
 const SingleNote: FC<{
     note: INote;
     slug: string;
 }> = (props) => {
     const { slug } = props;
-    const note = useSingleNote({ slug, note:props.note });
     return (
       <NotesProvider>
         <NoteLayoutProvider noteSlug={slug}>  
           <div>
               <p>{slug}</p>
-              <p>{note ? note.slug : 'Loading'}</p>
+              
           </div>
         </NoteLayoutProvider>
       </NotesProvider>

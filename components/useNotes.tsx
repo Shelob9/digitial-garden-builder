@@ -4,6 +4,8 @@ import { INote } from "./Note";
 
 const NotesContext = createContext(null);
 
+//Context provider for note index
+//TODO Type for note index, different from INOTE
 export const NotesProvider = ({ children }) => {
     const { data: noteIndex } = useSWR('/api/notes', (url) => fetch(url).then(r => r.json()).then(
         r => {
@@ -12,12 +14,8 @@ export const NotesProvider = ({ children }) => {
     ));
 
     const [notes, setNotes] = useState<INote[]>([]);
-    
-    const addNote = (note: INote) => setNotes([...notes, note]);
-    const fetchNote = (apiUrl: string) => {
-        return fetch(apiUrl).then(r => r.json());
-    }
 
+    //Not an INote actually.
     const getNote = (noteId): INote|undefined => {
       return notes && notes.find(note => noteId === note.id);
     }
@@ -30,6 +28,8 @@ export const NotesProvider = ({ children }) => {
     </NotesContext.Provider>
 }
 
+//State of note index
+//@TODO rename this useNoteIndex
 const useNotes = () => {
     const { notes, getNote } = useContext(NotesContext);
     const findBySlug = (noteSlug: string):INote|undefined => {
@@ -41,11 +41,10 @@ const useNotes = () => {
     return { notes, getNote,findBySlug }
 }
 
+//@TODO REMOVE THIS
 export const useNote = (props: { noteId: number }) => {
-    
     const { noteId } = props;
     const { getNote, notes } = useContext(NotesContext);
-    
     const note = useMemo<INote | undefined>(() => {
         return getNote(noteId);
     },[noteId,notes])
@@ -53,16 +52,22 @@ export const useNote = (props: { noteId: number }) => {
 }
 export default useNotes;
 
-
-const fetcher = (url) => fetch(url).then(r => r.json());
-
+//Fetch function for single note via local API
+const fetcher = (url) => fetch(url)
+    .then(r => r.json())
+    .then(r => {
+        return r.note;
+    })
+//Hook for single notes, via local API
 export const useSingleNote = (props: {
+    //optional, initial note data.
     note?: INote;
+    //slug of note
     slug: string;
 }
 ) => {
     const { data: note } = useSWR(
-        `/api/notes${props.slug}`,
+        `/api/notes/${props.slug}`,
         fetcher,
         { initialData: props.note }
     );
