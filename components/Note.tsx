@@ -20,7 +20,11 @@ export interface INote {
 	references?: NoteReferences
   }
 
-const NoteMarkdownLink: FC<{ href: string; children: any, openPosition: notePostions }> = ({
+const NoteMarkdownLink: FC<{
+	href: string;
+	children: any,
+	openPosition: notePostions
+}> = ({
 	href,
 	children,
 	openPosition

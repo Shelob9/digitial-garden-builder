@@ -1,7 +1,12 @@
 import React, { FC } from "react";
 import { NoteReferences } from "../lib/findReferences";
+import { notePostions } from "./noteLayoutReducer";
 import Reference from "./Reference";
-const ReferencesBlock : FC<{references:NoteReferences}> = ({ references }) => {
+const ReferencesBlock: FC<{
+  references: NoteReferences;
+  openPosition: notePostions
+
+}> = ({ references,openPosition}) => {
   if (!references.length) {
     return null;
   }
@@ -11,7 +16,10 @@ const ReferencesBlock : FC<{references:NoteReferences}> = ({ references }) => {
       <h3>Referred in</h3>
       <div>
         {references.map((reference) => (
-          <Reference reference={reference} key={reference.slug} />
+          <Reference
+            reference={reference}
+            key={reference.slug}
+            openPosition={openPosition} />
         ))}
       </div>
       <style jsx>{`

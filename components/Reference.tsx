@@ -1,9 +1,13 @@
 import React, { FC, Fragment } from "react";
 import { NoteReference, NoteReferences } from "../lib/findReferences";
+import { notePostions } from "./noteLayoutReducer";
 
 import NoteLink from './NoteLink';
 import { useSingleNote } from "./useNotes";
-const Reference: FC<{ reference: NoteReference}> = ({ reference }) => {
+const Reference: FC<{
+  reference: NoteReference,
+  openPosition: notePostions
+}> = ({ reference,openPosition }) => {
   let note = useSingleNote({ slug: reference.slug });
  
   return (
