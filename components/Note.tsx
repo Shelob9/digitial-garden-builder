@@ -2,14 +2,13 @@ import unified from 'unified'
 import parse from 'remark-parse'
 import remark2react from 'remark-react'
 import toc from 'remark-toc';
-import ReferencesBlock from "./references-block";
+import ReferencesBlock from "./ReferencesBlock";
 import { FC, useMemo } from 'react';
 import useNotes, { useSingleNote } from './useNotes';
 import NoteLink from './NoteLink';
 import useNoteLayout from './useNoteLayout';
 import { notePostions } from './noteLayoutReducer';
 import Link from 'next/link'
-import doubleBrackets from '../lib/doubleBracketPlugin'
 import { NoteReferences } from '../lib/findReferences';
 const { wikiLinkPlugin } = require('remark-wiki-link');
 
@@ -130,10 +129,6 @@ const Note: FC<{
 	const { slug,toggleBox, isOpen, position, isLoggedIn } = props;
 	const note = useSingleNote({ note: props.note, slug });
 	const { focusNote,setFocusNote} = useNoteLayout();
-
-	let noteReferences = useMemo(() => {
-		return [];
-	}, [note]);
 	
 	if (!note) {
 		return <div>Loading</div>
@@ -181,7 +176,7 @@ const Note: FC<{
 								}
 							/>
 						<>
-							<ReferencesBlock references={noteReferences}/>  
+						{note.references && <ReferencesBlock references={note.references} />}
 						</>
                 </div>
                 }

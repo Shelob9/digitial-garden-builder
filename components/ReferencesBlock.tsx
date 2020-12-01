@@ -1,6 +1,7 @@
-import React from "react";
-import Reference from "./reference";
-const ReferencesBlock = ({ references }) => {
+import React, { FC } from "react";
+import { NoteReferences } from "../lib/findReferences";
+import Reference from "./Reference";
+const ReferencesBlock : FC<{references:NoteReferences}> = ({ references }) => {
   if (!references.length) {
     return null;
   }
@@ -10,7 +11,7 @@ const ReferencesBlock = ({ references }) => {
       <h3>Referred in</h3>
       <div>
         {references.map((reference) => (
-          <Reference reference={reference} key={reference.id} />
+          <Reference reference={reference} key={reference.slug} />
         ))}
       </div>
       <style jsx>{`

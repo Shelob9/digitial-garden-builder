@@ -1,11 +1,18 @@
-import React from "react";
+import React, { FC, Fragment } from "react";
+import { NoteReference, NoteReferences } from "../lib/findReferences";
 
 import NoteLink from './NoteLink';
-const Reference = ({ reference }) => {
+import { useSingleNote } from "./useNotes";
+const Reference: FC<{ reference: NoteReference}> = ({ reference }) => {
+  let note = useSingleNote({ slug: reference.slug });
+ 
   return (
     <div>
-      <NoteLink slug={reference.slug} className="reference">
-          {reference.title}
+      <NoteLink slug={reference.slug}
+        href={reference.url}
+        className="reference"
+      >
+          {note ? note.title : reference.slug}
       </NoteLink>
       <style jsx>{`
         .reference {

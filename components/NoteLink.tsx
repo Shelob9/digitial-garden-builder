@@ -4,8 +4,9 @@ const NoteLink: FC<{
     slug: string;
     className?: string;
     onClick?: () => void;
+    href?: string;
     children: any;
-}> = ({ slug,children,className,onClick}) => {
+}> = ({ href,slug,children,className,onClick}) => {
     
     return <a
         onClick={(e) => {
@@ -14,7 +15,7 @@ const NoteLink: FC<{
                 onClick();
             }
         }}
-        href={`/notes/${slug}`}
+        href={href ??`/notes/${slug}`}
         className={className}>
         {children}
     </a>

@@ -67,7 +67,7 @@ export const useSingleNote = (props: {
     //slug of note
     slug: string;
 }
-) => {
+) : INote|undefined => {
     const { data: note } = useSWR(
         `/api/notes/${props.slug}`,
         fetcher,

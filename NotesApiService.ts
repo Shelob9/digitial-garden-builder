@@ -1,4 +1,5 @@
 import { INote } from './components/Note'
+import findReferences from './lib/findReferences'
 import GitApi from './lib/GitApi'
 import NoteService from './NoteService'
 const fm = require('front-matter')
@@ -57,11 +58,13 @@ class NotesApiService {
 			}
 			let matter = fm(content)
 			let { title, id } = matter.attributes
+			let references = findReferences(content, this.noteIndex)
 			let note: INote = {
 				id,
 				title,
 				content,
 				slug: _note.slug,
+				references,
 			}
 			this.noteService.setNotes([...this.noteService.getNotes(), note])
 			return note
