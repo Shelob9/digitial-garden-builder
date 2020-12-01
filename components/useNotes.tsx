@@ -13,6 +13,7 @@ export const NotesProvider = ({ children }) => {
         }
     ));
 
+    //should be noteIndex type
     const [notes, setNotes] = useState<INote[]>([]);
 
     //Not an INote actually.

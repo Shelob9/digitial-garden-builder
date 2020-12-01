@@ -15,7 +15,7 @@ function rand(min = 1, max = 10000) {
 	return Math.floor(randomNum)
 }
 
-type noteIndex = noteIndexItem[]
+export type noteIndex = noteIndexItem[]
 
 class NotesApiService {
 	noteService: NoteService
