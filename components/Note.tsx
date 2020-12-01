@@ -10,6 +10,7 @@ import useNoteLayout from './useNoteLayout';
 import { notePostions } from './noteLayoutReducer';
 import Link from 'next/link'
 import doubleBrackets from '../lib/doubleBracketPlugin'
+import { NoteReferences } from '../lib/findReferences';
 const { wikiLinkPlugin } = require('remark-wiki-link');
 
 export interface INote {
@@ -17,9 +18,7 @@ export interface INote {
 	title: string;
 	content: string;
 	slug: string;
-	references?: [
-		{noteId:number}
-	]
+	references?: NoteReferences
   }
 
 const NoteMarkdownLink: FC<{ href: string; children: any, openPosition: notePostions }> = ({
