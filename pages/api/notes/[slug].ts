@@ -2,8 +2,7 @@ import { noteApiServicefactory } from './../../../serviceFactories'
 import { getSession } from 'next-auth/client'
 import { NextApiResponse } from 'next'
 import { NextApiRequest } from 'next'
-import GitApi from '../../../lib/GitApi'
-import NotesApiService from '../../../NotesApiService'
+
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	res.setHeader('Content-Type', 'application/json')
 	res.setHeader('Cache-Control', 's-maxage=86400')

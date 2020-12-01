@@ -24,4 +24,16 @@ describe('NoteService', () => {
 		service.setNotes(notes)
 		expect(service.getNoteBySlug('one').id).toEqual(1)
 	})
+
+	test('Find references', () => {
+		let service = new NoteService()
+		service.setNotes([
+			{
+				id: 3,
+				title: '13',
+				content: '[one](/notes/one) \n',
+				slug: 'three',
+			},
+		])
+	})
 })

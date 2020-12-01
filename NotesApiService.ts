@@ -39,7 +39,7 @@ class NotesApiService {
 					slug,
 					path,
 					name,
-					url: `/notes/${path}`,
+					url: `/notes/${slug}`,
 					apiUrl: `/api/notes/${slug}`,
 				}
 			})

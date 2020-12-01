@@ -9,6 +9,9 @@ import NoteLink from './NoteLink';
 import useNoteLayout from './useNoteLayout';
 import { notePostions } from './noteLayoutReducer';
 import Link from 'next/link'
+import doubleBrackets from '../lib/doubleBracketPlugin'
+const { wikiLinkPlugin } = require('remark-wiki-link');
+
 export interface INote {
 	id: number;
 	title: string;
@@ -90,7 +93,9 @@ export const NoteMarkdown: FC<{
 	content: string;
 	a?: (props: { href: string; children: any }) => JSX.Element,
 }> = ({ content, a }) => {
-	a = a ? a : ({ href, children }) => <a href={href}>{children}</a>
+	const { allNoteLinks } = useNotes();
+	a = a ? a : ({ href, children }) => <a href={href}>{children}</a>;
+
 	return (
 		<>
 			{
@@ -101,7 +106,15 @@ export const NoteMarkdown: FC<{
 							a
 						}
 					})
-					.use(toc)
+					.use(wikiLinkPlugin,
+						{
+							permalinks: allNoteLinks,
+							hrefTemplate: (permalink: string) => {
+								return `/notes/${permalink}`
+							}
+						}
+					)
+					//.use(doubleBrackets)
 				.processSync(content).result
 			}
 		</>

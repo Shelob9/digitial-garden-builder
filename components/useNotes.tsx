@@ -19,10 +19,12 @@ export const NotesProvider = ({ children }) => {
     const getNote = (noteId): INote|undefined => {
       return notes && notes.find(note => noteId === note.id);
     }
+
+   
   
     return <NotesContext.Provider value={{
         notes,
-        getNote
+        getNote,
     }}>
         {children}
     </NotesContext.Provider>
@@ -38,7 +40,15 @@ const useNotes = () => {
         }
         return undefined;
     }
-    return { notes, getNote,findBySlug }
+
+    const allSlugs = useMemo(() => {
+        return notes.map(({ slug }) => slug);
+    }, [notes]);
+
+    const allNoteLinks = useMemo(() => {
+        return notes.map(({ url }) => url);
+    },[notes]);
+    return { notes, getNote,findBySlug,allSlugs,allNoteLinks }
 }
 
 export default useNotes;
