@@ -16,7 +16,7 @@ function rand(min = 1, max = 10000) {
 }
 
 type noteIndex = noteIndexItem[]
-let i = 1
+
 class NotesApiService {
 	noteService: NoteService
 	client
