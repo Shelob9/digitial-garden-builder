@@ -21,7 +21,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			console.log(error)
 			return res.status(500).json({ error })
 		}
-	} else if (['PUT', 'POST'].includes(req.method)) {
+	}
+
+	if (!session) {
+		return res.status(403).json({ allowed: false })
+	}
+	if (['PUT', 'POST'].includes(req.method)) {
 		try {
 			let r = await git.saveFile(content, filePath, `Save ${filePath}`)
 			res.json({ r })

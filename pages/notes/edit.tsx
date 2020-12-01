@@ -29,11 +29,10 @@ const Page: FC<{ note?: INote,noteId:number}> = ({ note,noteId }) => {
               <div
                   className={`note-container note-editor-container`}
               >
-              
-                    <MarkdownEditor
-                      value={value}
-                      setValue={setValue}
-                    />
+                  <MarkdownEditor
+                    value={value}
+                    setValue={setValue}
+                  />
               </div>
             </Layout>    
           </NotesProvider>
