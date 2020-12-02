@@ -1,3 +1,4 @@
+import { noteIndex } from '../NotesApiService'
 import { getOctokit, gitRepoDetails } from './getOctoKit'
 import {
 	createBlobForFile,
@@ -11,7 +12,20 @@ export const getRepos = async () => {
 	return await getOctokit().repos.listForAuthenticatedUser()
 }
 
-function GitApi(gitRepo: gitRepoDetails, branch: string, authToken?: string) {
+export interface IGitApi {
+	saveFile: (
+		content: string,
+		fullFilePath: string,
+		commitMessage: string
+	) => Promise<{ commitSha: string }>
+	getFile: (filePath: string) => Promise<{ content }>
+	getFiles: (path: string | undefined, extension: 'md') => Promise<noteIndex>
+}
+function GitApi(
+	gitRepo: gitRepoDetails,
+	branch: string,
+	authToken?: string
+): IGitApi {
 	let octo = getOctokit(authToken)
 	const saveFile = async (
 		content: string,

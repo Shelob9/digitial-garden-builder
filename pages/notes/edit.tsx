@@ -1,30 +1,44 @@
-import { FC, useState } from "react";
+import { FC, useRef, useState } from "react";
 import Layout from "../../components/Layout";
 import MarkdownEditor from "../../components/MarkdownEditor";
 import { INote } from "../../components/Note";
-import { NotesProvider } from "../../components/useNotes";
+import  { NotesProvider, useSingleNote } from "../../components/useNotes";
 import useIsLoggedInAuthorized from "../../hooks/useIsLoggedAuthorized";
-import NoteService from "../../NoteService";
 
-const Page: FC<{ note?: INote,noteId:number}> = ({ note,noteId }) => {
-    const { isLoggedIn, userDisplayName, isSessionLoading } = useIsLoggedInAuthorized();
-    
+
+const Inner: FC<{
+  note: INote,
+  saveNote: (note: INote) => Promise<INote>
+}>= ({note,saveNote}) => {
   let [value, setValue] = useState(note.content);
   let [isSaving, setIsSaving] = useState(false);
+  let titleRef = useRef<HTMLInputElement>();
+  const BeforeControls = () => (
+    <>
+      <div>
+        <label htmlFor={'title'}>
+          Title
+        </label>
+        <input ref={titleRef} id={'title'} name={'title'} defaultValue={note.title || ''} />
+      </div>
+      <button onClick={handleSave}>Save</button>
+    </>
+  );
 
-  const handleSave = () => {
+  const handleSave = async () => {
     setIsSaving(true);
-    setTimeout(() => {
-      setIsSaving(false)
-    },3000);
+    saveNote({
+      ...note,
+      content: value,
+      title: titleRef.current.value
+    }).then(() => setIsSaving(false));
   }
-    return (
-      <>
-        <NotesProvider>
-          <Layout
+
+  return (
+    <Layout
             pageDisplayTitle={`Edit Note`}
             statusMessage={isSaving ? 'Saving':undefined}
-            BeforeControls={() => <button onClick={handleSave}>Save</button>}
+            BeforeControls={BeforeControls}
           >
               <div
                   className={`note-container note-editor-container`}
@@ -34,20 +48,39 @@ const Page: FC<{ note?: INote,noteId:number}> = ({ note,noteId }) => {
                     setValue={setValue}
                   />
               </div>
-            </Layout>    
+            </Layout>  
+  )
+}
+const NotesEditor = (props: {
+  note?: INote;
+  slug: string;
+}) => {
+  let { note,saveNote } = useSingleNote({ note: props.note, slug: props.slug });
+  if (note) {
+    return <Inner note={note} saveNote={saveNote} />
+  }
+  return <div>Loading</div>
+  
+}
+const Page: FC<{ note?: INote,slug:string}> = (props) => {
+    const { isLoggedIn, userDisplayName, isSessionLoading } = useIsLoggedInAuthorized();
+    return (
+      <>
+        <NotesProvider>
+          <NotesEditor  {...props} />
           </NotesProvider>
         </>
     )
 }
 export default Page;
-export async function getServerSideProps({  query }) {
-  const noteId = parseInt(query.noteId, 10);
-  const notes = new NoteService();
-  let note = notes.getNoteById(noteId);
+
+export async function getServerSideProps(context) {
+  //do not get note server side to make sure its fresh in editor.
+  let slug = context.query.note;
     return {
       props: {
-            noteId,
-            note
+          slug,
+
     },
   }
 }

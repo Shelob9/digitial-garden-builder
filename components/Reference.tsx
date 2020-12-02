@@ -8,7 +8,7 @@ const Reference: FC<{
   reference: NoteReference,
   openPosition: notePostions
 }> = ({ reference,openPosition }) => {
-  let note = useSingleNote({ slug: reference.slug });
+  let { note } = useSingleNote({ slug: reference.slug });
  
   return (
     <div>

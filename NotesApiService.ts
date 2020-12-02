@@ -1,6 +1,7 @@
 import { INote } from './components/Note'
 import findReferences from './lib/findReferences'
-import GitApi from './lib/GitApi'
+import findTitle from './lib/findTitle'
+import GitApi, { IGitApi } from './lib/GitApi'
 import NoteService from './NoteService'
 const fm = require('front-matter')
 type noteIndexItem = {
@@ -18,16 +19,29 @@ function rand(min = 1, max = 10000) {
 
 export type noteIndex = noteIndexItem[]
 
+const extractMatter = (content: string): { title: string; slug: string } => {
+	let matter = fm(content)
+	let { title, slug } = matter.attributes
+	return { title, slug }
+}
+
+const maybeUpdateTitle = (content: string) => {
+	let title = findTitle(content)
+	if (title) {
+		content = content.replace(title.match, `# ${title.title}`)
+	}
+	return content
+}
 class NotesApiService {
 	noteService: NoteService
-	client
+	client: IGitApi
 	noteIndex: noteIndex
-	constructor(client) {
+	constructor(client: IGitApi) {
 		this.noteService = new NoteService()
 		this.client = client
 	}
 
-	findNoteInIndex = (slug) => {
+	findNoteInIndex = (slug: string) => {
 		return this.noteIndex.find((n) => n.slug === slug)
 	}
 
@@ -50,25 +64,33 @@ class NotesApiService {
 
 	fetchNote = async (slug: string) => {
 		let path = `/notes/${slug}.md`
-
 		return this.client.getFile(path).then(({ content }) => {
 			let _note = this.findNoteInIndex(slug)
 			if (!_note) {
 				throw new Error('Fuck')
 			}
 			let matter = fm(content)
-			let { title, id } = matter.attributes
 			let references = findReferences(content, this.noteIndex)
 			let note: INote = {
-				id,
-				title,
-				content,
+				title: matter.attributes.title,
+				content: maybeUpdateTitle(matter.body),
 				slug: _note.slug,
 				references,
 			}
 			this.noteService.setNotes([...this.noteService.getNotes(), note])
 			return note
 		})
+	}
+
+	saveNote = async (note: INote) => {
+		let nI = this.findNoteInIndex(note.slug)
+		let mattterString = `---\ntitle: ${note.title} \nslug: ${note.slug}\n---\n`
+		note.content = maybeUpdateTitle(note.content)
+		return await this.client.saveFile(
+			`${mattterString} ${note.content}`,
+			nI.path,
+			`Update ${note.title}`
+		)
 	}
 }
 

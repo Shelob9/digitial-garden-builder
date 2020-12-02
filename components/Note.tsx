@@ -13,7 +13,6 @@ import { NoteReferences } from '../lib/findReferences';
 const { wikiLinkPlugin } = require('remark-wiki-link');
 
 export interface INote {
-	id: number;
 	title: string;
 	content: string;
 	slug: string;
@@ -31,7 +30,7 @@ const NoteMarkdownLink: FC<{
 }) => {
 	let internal = href.startsWith('/notes/');
 	let slug = href.substr('/notes/'.length);
-	const note = useSingleNote({slug})
+	const { note } = useSingleNote({slug})
 	const {
 		addNote,
 		removeNote,
@@ -131,7 +130,7 @@ const Note: FC<{
 	isLoggedIn: boolean;
 }> = (props) => {
 	const { slug,toggleBox, isOpen, position, isLoggedIn } = props;
-	const note = useSingleNote({ note: props.note, slug });
+	const { note } = useSingleNote({ note: props.note, slug });
 	const { focusNote,setFocusNote} = useNoteLayout();
 	
 	if (!note) {
@@ -154,7 +153,7 @@ const Note: FC<{
 					</button>
 					{isOpen &&
 						<Link
-							href={ isLoggedIn ? `/notes/edit?noteId=${note.id}` : '/login' }
+							href={ isLoggedIn ? `/notes/edit?note=${encodeURIComponent(note.slug)}` : '/login' }
 						>
 							<a
 								className={'edit-note'}	

@@ -67,11 +67,34 @@ export const useSingleNote = (props: {
     //slug of note
     slug: string;
 }
-) : INote|undefined => {
-    const { data: note } = useSWR(
+): {
+        note: INote | undefined;
+        saveNote: (note:INote) => Promise<INote>
+} => {
+    
+    const { data: note,mutate  } = useSWR(
         `/api/notes/${props.slug}`,
         fetcher,
         { initialData: props.note }
     );
-    return note;
+    const saveNote = async (note: INote) => {
+        delete note.references;
+        console.log(note);
+
+        mutate(note);
+        return fetch(`/api/notes/${props.slug}`, {
+            method: 'POST',
+            body: JSON.stringify({ note }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+
+        })
+            .then(r => r.json())
+            .then(r => {
+                mutate(r.note);
+                return r.note;
+        })
+    }
+    return { note,saveNote };
 }
