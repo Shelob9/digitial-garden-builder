@@ -1,13 +1,30 @@
 
-import React,{ FC, Fragment, useEffect, useLayoutEffect} from 'react'
-import { notePostions } from './noteLayoutReducer'
+import React,{ FC, Fragment, useEffect, useMemo} from 'react'
 import Layout from '../components/Layout';
-import Note from '../components/Note';
-import useNotes from './useNotes';
+import Note, { INote } from '../components/Note';
+import useNotes, { useSingleNote } from './useNotes';
 import useNoteLayout from './useNoteLayout';
 import { useRouter } from 'next/router'
+import { NextSeo } from 'next-seo';
 
 
+const NoteSeo: FC<{ slug: string }> = ({ slug })=> {
+  const { note } = useSingleNote({ slug });
+  let description = useMemo(() => note ? note.content.substring(0, 240) : '',[note])
+  return note ? (
+    <NextSeo
+        title={note.title}
+        description={description}
+        //canonical="https://www.canonical.ie/"
+        openGraph={{
+          //url: 'https://www.url.ie/a',
+          title: note.title,
+          description
+        }}
+      />
+  ): <Fragment />
+
+}
 
 const NoteApp: FC<{
   noteOneSlug?: string;
@@ -56,6 +73,7 @@ const NoteApp: FC<{
 
   return (
     <>
+      <NoteSeo slug={currentNotes.one.slug} />
       <Layout >
       <div className={'note-columns-scrolling-container'}>
           <div className={'note-columns-container'}>
