@@ -20,10 +20,15 @@ export const NotesProvider = ({ children }) => {
     const getNote = (noteId): INote|undefined => {
       return notes && notes.find(note => noteId === note.id);
     }
+
+    const addNote = (note) => {
+        setNotes([...notes, note]);
+    }
   
     return <NotesContext.Provider value={{
         notes,
         getNote,
+        addNote
     }}>
         {children}
     </NotesContext.Provider>
@@ -32,7 +37,7 @@ export const NotesProvider = ({ children }) => {
 //State of note index
 //@TODO rename this useNoteIndex
 const useNotes = () => {
-    const { notes, getNote } = useContext(NotesContext);
+    const { notes, getNote,addNote } = useContext(NotesContext);
     const findBySlug = (noteSlug: string):INote|undefined => {
         if( notes && notes.length) {
             return notes.find(n => noteSlug === n.slug); 
@@ -47,7 +52,7 @@ const useNotes = () => {
     const allNoteLinks = useMemo(() => {
         return notes.map(({ url }) => url);
     },[notes]);
-    return { notes, getNote,findBySlug,allSlugs,allNoteLinks }
+    return { notes, getNote,findBySlug,allSlugs,allNoteLinks,addNote }
 }
 
 export default useNotes;
@@ -67,7 +72,7 @@ export const useSingleNote = (props: {
 }
 ): {
         note: INote | undefined;
-        saveNote: (note:INote) => Promise<INote>
+        saveNote: (note: INote) => Promise<INote>;
 } => {
     
     const { data: note,mutate  } = useSWR(
@@ -77,8 +82,6 @@ export const useSingleNote = (props: {
     );
     const saveNote = async (note: INote) => {
         delete note.references;
-        console.log(note);
-
         mutate(note);
         return fetch(`/api/notes/${props.slug}`, {
             method: 'POST',
@@ -94,5 +97,6 @@ export const useSingleNote = (props: {
                 return r.note;
         })
     }
+    
     return { note,saveNote };
 }

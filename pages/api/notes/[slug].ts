@@ -15,10 +15,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	await noteService.fetchNoteIndex()
 	switch (req.method) {
 		case 'POST':
+			if (!session) {
+				return res.status(203).json({ allowed: false })
+			}
 			note = req.body.note
-
 			let { commitSha } = await noteService.saveNote(note)
 			res.status(201).json({ note, commitSha })
+			break
 		case 'GET':
 		default:
 			let { slug } = req.query

@@ -99,6 +99,17 @@ class NotesApiService {
 			`Update ${note.title}`
 		)
 	}
+
+	createNote = async (note: INote) => {
+		let mattterString = `---\ntitle: ${note.title} \nslug: ${note.slug}\n---\n`
+		note.content = maybeUpdateTitle(note.content)
+		let commitSha = await this.client.saveFile(
+			`${mattterString} ${note.content}`,
+			`notes/${note.slug}.md`,
+			`Create ${note.title}`
+		)
+		return { note, commitSha }
+	}
 }
 
 export default NotesApiService

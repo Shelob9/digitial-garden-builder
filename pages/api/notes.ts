@@ -12,7 +12,25 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		session && session.authToken ? session.authToken : null
 	)
 	let noteIndex = await noteService.fetchNoteIndex()
-	res.setHeader('Content-Type', 'application/json')
-	res.setHeader('Cache-Control', 's-maxage=3600')
-	res.status(200).json({ noteIndex })
+	switch (req.method) {
+		case 'GET':
+			res.setHeader('Cache-Control', 's-maxage=3600')
+			res.status(200).json({ noteIndex })
+			break
+		case 'PUT':
+			if (!session) {
+				return res.status(203).json({ allowed: false })
+			}
+			let note = req.body.note
+			let result = await noteService.createNote(note)
+			res.status(201).json({
+				note: result.note,
+				commitSha: result.commitSha,
+			})
+			break
+
+		default:
+			res.status(405).json({})
+			break
+	}
 }

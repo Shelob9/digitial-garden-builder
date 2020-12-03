@@ -1,12 +1,15 @@
-import { FC } from "react";
+import Link from "next/link";
+import { FC, Fragment } from "react";
+import useIsLoggedInAuthorized from "../hooks/useIsLoggedAuthorized";
 import DarkModeToggle from "./DarkModeToggle";
+
 const Header: FC<{
   BeforeControls?: () => JSX.Element;
   pageDisplayTitle: string;
   statusMessage?: string;
 
 }> = ({ BeforeControls,pageDisplayTitle,statusMessage }) => {
-
+  const { isLoggedIn,isSessionLoading } = useIsLoggedInAuthorized();
   return (
       <>
         <header id="header">
@@ -16,7 +19,10 @@ const Header: FC<{
         {statusMessage && <span>{statusMessage}</span>}
         {BeforeControls && <BeforeControls /> }
           <div className={'controls'}>
-            <DarkModeToggle />
+          <DarkModeToggle />
+          {isSessionLoading
+            ? <span style={{ width: '42px' }} /> : <Link href={isLoggedIn ? '/notes/new' : '/login'}><button>{isLoggedIn ? "New" : "Login"}</button></Link>
+          }
           </div>
         </header>
       <style jsx>{`
