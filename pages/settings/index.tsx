@@ -1,35 +1,91 @@
-import useIsLoggedIn from '../../hooks/useIsLoggedAuthorized'
 import { getSession } from 'next-auth/client'
-import { noteApiServicefactory } from '../../serviceFactories';
+import {settingsApiServiceFactory } from '../../serviceFactories';
 import {useTextField} from '@react-aria/textfield'
-import { useRef } from 'react';
+import { FC, forwardRef, useRef, useState } from 'react';
 import Layout from '../../components/Layout';
-function TextField(props) {
-    let {label} = props;
-    let ref = useRef();
-    let {labelProps, inputProps} = useTextField(props, ref);
+import { GardenConfig } from '../../ConfigApiService';
+const TextField = forwardRef((props: { label: string; defaultValue?: string;}, ref) => {
+    let { label } = props;
+    let { labelProps, inputProps } = useTextField(
+        props,
+        //@ts-ignore
+        ref
+    );
   
     return (
         <div style={{ display: 'flex', flexDirection: 'column', width: 200 }}>
             <label {...labelProps}>{label}</label>
-            <input {...inputProps} ref={ref} />
-      </div>
+            <input {...inputProps}
+                //@ts-ignore
+                ref={ref} />
+        </div>
     );
-  }
-const Page = () => {
+});
+
+const saveSettings = async (settings: GardenConfig) => {
+    return fetch('/api/settings', {
+        method: 'POST',
+        body: JSON.stringify({ settings })
+    }).then(r => {
+        r.json()
+    }).then(r => console.log(r));
+}
+const Page: FC<{ settings: GardenConfig }> = ({ settings }) => {
+    const siteNameRef = useRef();
+    const siteTwitterRef = useRef();
+    const authorNameRef = useRef();
+    const authorTwitterRef = useRef();
+    let [isSaving, setIsSaving] = useState(false);
+    const onSave = () => {
+        setIsSaving(true);
+        let data = Object.assign(settings,{
+            siteName: siteNameRef.current.value,
+            siteTwitter: siteTwitterRef.current.value,
+            authorName: authorNameRef.current.value,
+            authorTwitterRef: authorTwitterRef.current.value,
+        })
+        saveSettings(data).then(
+            () => setIsSaving(false)
+        );
+    }
     return (
         <>
           <Layout pageDisplayTitle={'Settings'}>
-                <div id={"settings"}>
+                <form id={"settings"} onSubmit={e => {
+                    e.preventDefault();
+                    onSave();
+                }}>
                 <section>
-                        <TextField label={'Site Name'}></TextField>
-                        <TextField label={'Site Twitter'}></TextField>
+                        <TextField
+                            ref={siteNameRef}
+                            label={'Site Name'}
+                            defaultValue={settings.siteName}
+                        />
+                        <TextField
+                            ref={siteTwitterRef}
+                            label={'Site Twitter'}
+                            defaultValue={settings.siteTwitter}
+                        />
                 </section>
                 <section>
-                        <TextField label={'Author Name'}></TextField>
-                        <TextField label={'Author Twitter'}></TextField>
-                </section>              
-            </div>
+                        <TextField
+                            ref={authorNameRef}
+                            label={'Author Name'}
+                            defaultValue={settings.authorName}
+                        />
+                        <TextField
+                            ref={authorTwitterRef}
+                            label={'Author Twitter'}
+                            defaultValue={settings.authorTwitter}
+                        />
+                    </section> 
+                    <section>
+                        <button onClick={(e) => {
+                             e.preventDefault();
+                             onSave();
+                        }}>Save</button>
+                    </section>    
+            </form>
             </Layout>
             <style jsx>{`
                 #settings {
@@ -54,13 +110,15 @@ export async function getServerSideProps(context) {
     }
 
   
-    let noteService = await noteApiServicefactory(
+    let settingsService = await settingsApiServiceFactory(
         session && session.authToken ? session.authToken : null
     );
+
+    let settings = settingsService.getSettings();
     
     return {
         props: {
-            session
+            settings
         }
     }
 }
