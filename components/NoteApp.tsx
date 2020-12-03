@@ -5,26 +5,7 @@ import Note, { INote } from '../components/Note';
 import useNotes, { useSingleNote } from './useNotes';
 import useNoteLayout from './useNoteLayout';
 import { useRouter } from 'next/router'
-import { NextSeo } from 'next-seo';
 
-
-const NoteSeo: FC<{ slug: string }> = ({ slug })=> {
-  const { note } = useSingleNote({ slug });
-  let description = useMemo(() => note ? note.content.substring(0, 240) : '',[note])
-  return note ? (
-    <NextSeo
-        title={note.title}
-        description={description}
-        //canonical="https://www.canonical.ie/"
-        openGraph={{
-          //url: 'https://www.url.ie/a',
-          title: note.title,
-          description
-        }}
-      />
-  ): <Fragment />
-
-}
 
 const NoteApp: FC<{
   noteOneSlug?: string;
@@ -32,7 +13,15 @@ const NoteApp: FC<{
   noteThreeSlug?: string;
   isLoggedIn: boolean;
   userDisplayName?: string;
-}> = ({ noteOneSlug,noteTwoSlug,noteThreeSlug, userDisplayName, isLoggedIn }) => {
+  initialNote?:INote
+}> = ({
+  noteOneSlug,
+  noteTwoSlug,
+  noteThreeSlug,
+  userDisplayName,
+  isLoggedIn,
+  initialNote
+}) => {
   //https://nextjs.org/docs/api-reference/next/router
   const router = useRouter()
   //Controls the three note slots
@@ -73,13 +62,13 @@ const NoteApp: FC<{
 
   return (
     <>
-      <NoteSeo slug={currentNotes.one.slug} />
       <Layout >
       <div className={'note-columns-scrolling-container'}>
           <div className={'note-columns-container'}>
             {notes ? (
             <>
                 <Note
+                  note={initialNote}
                   isLoggedIn={isLoggedIn}
                   slug={currentNotes.one.noteSlug}
                   isOpen={isNoteOpen('one')}

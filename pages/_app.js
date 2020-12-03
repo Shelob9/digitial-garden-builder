@@ -22,6 +22,7 @@ class MyApp extends App {
         
         <SSRProvider>
           <DefaultSeo
+            title={site_name}
             titleTemplate={ `%s | ${site_name}`}
             openGraph={{
               type: 'website',
