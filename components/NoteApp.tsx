@@ -1,5 +1,5 @@
 
-import React,{ FC, Fragment, useEffect} from 'react'
+import React,{ FC, Fragment, useEffect, useLayoutEffect} from 'react'
 import { notePostions } from './noteLayoutReducer'
 import Layout from '../components/Layout';
 import Note from '../components/Note';
@@ -23,6 +23,7 @@ const NoteApp: FC<{
   //The actual notes
   const { notes, getNote, findBySlug } = useNotes();
   
+
   //load notes based on url parsing that happend server-side
   useEffect(() => {
     if (noteOneSlug) {

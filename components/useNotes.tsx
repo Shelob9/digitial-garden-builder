@@ -20,8 +20,6 @@ export const NotesProvider = ({ children }) => {
     const getNote = (noteId): INote|undefined => {
       return notes && notes.find(note => noteId === note.id);
     }
-
-   
   
     return <NotesContext.Provider value={{
         notes,

@@ -9,7 +9,6 @@ export const NoteLayoutProvider: FC<{
   children: any;
   noteSlug?: string;
 }> = ({ children, noteSlug }) => {
-    
     const [currentNotes, dispatchNotesAction] = useReducer(
         noteLayoutReducer,
         {

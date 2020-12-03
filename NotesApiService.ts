@@ -1,3 +1,4 @@
+import { resolve } from 'path'
 import { INote } from './components/Note'
 import findReferences from './lib/findReferences'
 import findTitle from './lib/findTitle'
@@ -59,6 +60,12 @@ class NotesApiService {
 				}
 			})
 			return this.noteIndex
+		})
+	}
+
+	getDefaultNoteSlug = async () => {
+		return new Promise((resolve) => {
+			resolve('two')
 		})
 	}
 

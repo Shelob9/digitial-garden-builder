@@ -2,8 +2,8 @@ import NoteApp from "../../components/NoteApp";
 import { NoteLayoutProvider } from "../../components/useNoteLayout";
 import { NotesProvider } from "../../components/useNotes";
 import useIsLoggedInAuthorized from "../../hooks/useIsLoggedAuthorized";
-import NoteService from "../../NoteService";
-const Page = ({ noteOne,noteTwo,noteThree,note }) => {
+
+const Page = ({ noteOne,noteTwo,noteThree }) => {
     const { isLoggedIn, userDisplayName, isSessionLoading } = useIsLoggedInAuthorized();
     return (
       <>
@@ -26,14 +26,12 @@ const Page = ({ noteOne,noteTwo,noteThree,note }) => {
 }
 
 export default Page;
-export async function getServerSideProps({ params, query }) {
+export async function getServerSideProps(context) {
+  const { params, query } = context;
   const { slug } = params;
   const { noteThree, noteTwo } = query;
-  const notes = new NoteService();
-  let note = notes.getNoteBySlug(slug);
-    return {
+  return {
       props: {
-        note,
         slug,
         noteOne: slug,
         noteTwo: noteTwo ?? '',
