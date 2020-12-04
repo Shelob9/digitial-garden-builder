@@ -6,10 +6,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	res.setHeader('Content-Type', 'application/json')
 	res.setHeader('Cache-Control', 's-maxage=86400')
 	const session = await getSession({ req })
-	if (!session || !session.authToken) {
-		return res.status(203).json({ allowed: false })
+	console.log(session)
+	if (!session || !session.accessToken) {
+		return res.status(403).json({ allowed: false, session })
 	}
-	let settingsService = await settingsApiServiceFactory(session.authToken)
+	let settingsService = await settingsApiServiceFactory(session.accessToken)
 	let settings = await settingsService.getSettings()
 	switch (req.method) {
 		case 'GET':
@@ -18,7 +19,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			break
 		case 'POST':
 			if (!session) {
-				return res.status(203).json({ allowed: false })
+				return res.status(403).json({ allowed: false })
 			}
 			settings = req.body.settings
 			await settingsService.saveConfig(settings)

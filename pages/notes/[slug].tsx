@@ -63,7 +63,7 @@ export async function getServerSideProps(context) {
   const { noteThree, noteTwo } = query;
 
   let noteService = await noteApiServicefactory(
-    session && session.authToken ? session.authToken : null
+    session && session.accessToken ? session.accessToken : null
   );
   let note = await noteService.fetchNote(slug);
   return {

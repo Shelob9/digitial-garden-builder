@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import useIsLoggedInAuthorized from "../hooks/useIsLoggedAuthorized";
 import DarkModeToggle from "./DarkModeToggle";
 
@@ -10,7 +10,6 @@ const Header: FC<{
 
 }> = ({ BeforeControls,pageDisplayTitle,statusMessage }) => {
   const { isLoggedIn, isSessionLoading } = useIsLoggedInAuthorized();
-  console.log(12,isLoggedIn, isSessionLoading);
   return (
       <>
         <header id="header">

@@ -7,6 +7,7 @@ let repo = { owner: 'shelob9', repo: 'garden-cms-test-data' }
 const clientFactory = (authToken: string) => {
 	return GitApi(repo, 'main', authToken)
 }
+
 export const noteApiServicefactory = async (
 	authToken?: string
 ): Promise<NotesApiService> => {

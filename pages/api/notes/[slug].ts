@@ -9,7 +9,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	res.setHeader('Cache-Control', 's-maxage=86400')
 	const session = await getSession({ req })
 	let noteService = await noteApiServicefactory(
-		session && session.authToken ? session.authToken : null
+		session && session.accessToken ? session.accessToken : null
 	)
 	let note: INote
 	await noteService.fetchNoteIndex()

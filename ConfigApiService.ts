@@ -4,6 +4,7 @@ export interface GardenConfig {
 	siteTwitter?: string
 	authorName?: string
 	authorTwitter?: string
+	defaultNoteSlug?: string
 }
 
 class ConfigApiService {

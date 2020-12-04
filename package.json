@@ -8,6 +8,7 @@
 	},
 	"dependencies": {
 		"@octokit/rest": "^18.0.9",
+		"@react-aria/select": "^3.2.3",
 		"@react-aria/textfield": "^3.2.1",
 		"@testing-library/react": "^11.1.1",
 		"@types/next-seo": "^1.10.0",

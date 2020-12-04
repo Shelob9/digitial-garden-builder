@@ -3,7 +3,7 @@ import { NoteLayoutProvider } from '../components/useNoteLayout';
 import { NotesProvider } from '../components/useNotes';
 import useIsLoggedIn from '../hooks/useIsLoggedAuthorized'
 import { getSession } from 'next-auth/client'
-import { noteApiServicefactory } from '../serviceFactories';
+import { noteApiServicefactory,settingsApiServiceFactory } from '../serviceFactories';
 const Index = ({noteSlug}) => {
   const {isLoggedIn,userDisplayName} = useIsLoggedIn()
   return (
@@ -19,10 +19,9 @@ const Index = ({noteSlug}) => {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-  let noteService = await noteApiServicefactory(
-    session && session.authToken ? session.authToken : null
-  );
-  let noteSlug  = await noteService.getDefaultNoteSlug();
+  const authToken = session && session.authToken ? session.authToken : null;
+  let configService = await settingsApiServiceFactory(authToken)
+  let noteSlug = configService.config.defaultNoteSlug || 'one';
   return {
     props: {
       noteSlug

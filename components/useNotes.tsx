@@ -1,28 +1,25 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
+import { noteIndex, noteIndexItem } from "../NotesApiService";
 import { INote } from "./Note";
 
 const NotesContext = createContext(null);
 
 //Context provider for note index
-//TODO Type for note index, different from INOTE
 export const NotesProvider = ({ children }) => {
-    const { data: noteIndex } = useSWR('/api/notes', (url) => fetch(url).then(r => r.json()).then(
+    const { data: noteIndex,mutate } = useSWR('/api/notes', (url) => fetch(url).then(r => r.json()).then(
         r => {
             return r.noteIndex;
         }
     ));
 
-    //should be noteIndex type
-    const [notes, setNotes] = useState<INote[]>([]);
-
-    //Not an INote actually.
-    const getNote = (noteId): INote|undefined => {
-      return notes && notes.find(note => noteId === note.id);
+    let notes = useMemo(() => noteIndex ?? [], [noteIndex]);
+    const getNote = (slug): noteIndexItem|undefined => {
+      return notes && notes.find(note => slug === note.slug);
     }
 
     const addNote = (note) => {
-        setNotes([...notes, note]);
+        mutate([...notes, note]);
     }
   
     return <NotesContext.Provider value={{
@@ -51,7 +48,7 @@ const useNotes = () => {
 
     const allNoteLinks = useMemo(() => {
         return notes.map(({ url }) => url);
-    },[notes]);
+    }, [notes]);
     return { notes, getNote,findBySlug,allSlugs,allNoteLinks,addNote }
 }
 

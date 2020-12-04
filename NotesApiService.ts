@@ -1,11 +1,12 @@
 import { resolve } from 'path'
 import { INote } from './components/Note'
+import { GardenConfig } from './ConfigApiService'
 import findReferences from './lib/findReferences'
 import findTitle from './lib/findTitle'
 import GitApi, { IGitApi } from './lib/GitApi'
 import NoteService from './NoteService'
 const fm = require('front-matter')
-type noteIndexItem = {
+export type noteIndexItem = {
 	slug: string
 	path: string
 	name: string
@@ -60,12 +61,6 @@ class NotesApiService {
 				}
 			})
 			return this.noteIndex
-		})
-	}
-
-	getDefaultNoteSlug = async () => {
-		return new Promise((resolve) => {
-			resolve('two')
 		})
 	}
 
