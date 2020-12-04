@@ -1,6 +1,8 @@
 import React from 'react'
 import App from 'next/app';
-import {SSRProvider} from '@react-aria/ssr';
+import { SSRProvider } from '@react-aria/ssr';
+import { Provider } from 'next-auth/client'
+
 import "../styles/theme.css";
 import "../styles/stacked-layout.css";
 import "../styles/note-layout.css";
@@ -19,23 +21,24 @@ class MyApp extends App {
     const { Component, pageProps } = this.props
     return (
       <>
-        
-        <SSRProvider>
-          <DefaultSeo
-            title={site_name}
-            titleTemplate={ `%s | ${site_name}`}
-            openGraph={{
-              type: 'website',
-              ...openGraph
-            }}
-            twitter={{
-              handle: authorTwitter,
-              site: siteTwitter,
-              cardType: 'summary_large_image',
-            }}
-          />
-            <Component {...pageProps} />
-          </SSRProvider>
+        <Provider session={pageProps.session}>
+          <SSRProvider>
+            <DefaultSeo
+              title={site_name}
+              titleTemplate={ `%s | ${site_name}`}
+              openGraph={{
+                type: 'website',
+                ...openGraph
+              }}
+              twitter={{
+                handle: authorTwitter,
+                site: siteTwitter,
+                cardType: 'summary_large_image',
+              }}
+            />
+              <Component {...pageProps} />
+            </SSRProvider>
+        </Provider>
       </>
     );
   }

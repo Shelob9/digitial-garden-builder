@@ -9,7 +9,8 @@ const Header: FC<{
   statusMessage?: string;
 
 }> = ({ BeforeControls,pageDisplayTitle,statusMessage }) => {
-  const { isLoggedIn,isSessionLoading } = useIsLoggedInAuthorized();
+  const { isLoggedIn, isSessionLoading } = useIsLoggedInAuthorized();
+  console.log(12,isLoggedIn, isSessionLoading);
   return (
       <>
         <header id="header">
