@@ -125,7 +125,6 @@ export async function getServerSideProps(context) {
         context.res.writeHead(302, { Location: '/login' });
         context.res.end();
     }
-
   
     let settingsService = await settingsApiServiceFactory(
         session && session.authToken ? session.authToken : null
