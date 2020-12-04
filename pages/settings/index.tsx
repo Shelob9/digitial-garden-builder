@@ -4,8 +4,12 @@ import {useTextField} from '@react-aria/textfield'
 import { FC, forwardRef, useRef, useState } from 'react';
 import Layout from '../../components/Layout';
 import { GardenConfig } from '../../ConfigApiService';
-const TextField = forwardRef((props: { label: string; defaultValue?: string;}, ref) => {
-    let { label } = props;
+const TextField = forwardRef((props: {
+    label: string;
+    defaultValue?: string;
+    disabled?: boolean;
+}, ref) => {
+    let { label,disabled } = props;
     let { labelProps, inputProps } = useTextField(
         props,
         //@ts-ignore
@@ -16,8 +20,11 @@ const TextField = forwardRef((props: { label: string; defaultValue?: string;}, r
         <div style={{ display: 'flex', flexDirection: 'column', width: 200 }}>
             <label {...labelProps}>{label}</label>
             <input {...inputProps}
+                disabled={disabled}
                 //@ts-ignore
-                ref={ref} />
+                ref={ref}
+            
+            />
         </div>
     );
 });
@@ -61,11 +68,13 @@ const Page: FC<{ settings: GardenConfig }> = ({ settings }) => {
                 }}>
                 <section>
                         <TextField
+                            disabled={isSaving}
                             ref={siteNameRef}
                             label={'Site Name'}
                             defaultValue={settings.siteName}
                         />
                         <TextField
+                            disabled={isSaving}
                             ref={siteTwitterRef}
                             label={'Site Twitter'}
                             defaultValue={settings.siteTwitter}
@@ -73,21 +82,25 @@ const Page: FC<{ settings: GardenConfig }> = ({ settings }) => {
                 </section>
                 <section>
                         <TextField
+                            disabled={isSaving}
                             ref={authorNameRef}
                             label={'Author Name'}
                             defaultValue={settings.authorName}
                         />
                         <TextField
+                            disabled={isSaving}
                             ref={authorTwitterRef}
                             label={'Author Twitter'}
                             defaultValue={settings.authorTwitter}
                         />
                     </section> 
                     <section>
-                        <button onClick={(e) => {
+                        <button
+                             disabled={isSaving}
+                            onClick={(e) => {
                              e.preventDefault();
                              onSave();
-                        }}>Save</button>
+                        }}>{isSaving ? 'Save' : 'Saving'}</button>
                     </section>    
             </form>
             </Layout>
