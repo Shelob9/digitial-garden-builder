@@ -38,10 +38,14 @@ const Page: FC<{ settings: GardenConfig }> = ({ settings }) => {
     let [isSaving, setIsSaving] = useState(false);
     const onSave = () => {
         setIsSaving(true);
-        let data = Object.assign(settings,{
+        let data = Object.assign(settings, {
+            //@ts-ignore
             siteName: siteNameRef.current.value,
+            //@ts-ignore
             siteTwitter: siteTwitterRef.current.value,
+            //@ts-ignore
             authorName: authorNameRef.current.value,
+            //@ts-ignore
             authorTwitterRef: authorTwitterRef.current.value,
         })
         saveSettings(data).then(
