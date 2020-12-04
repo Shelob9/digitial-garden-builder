@@ -67,17 +67,16 @@ const NoteSelector = ({selectedNote,setSelectedNote}) => {
     )
 }
 const Settings: FC<{ settings: GardenConfig }> = ({ settings }) => {
-    console.log(settings);
     const siteNameRef = useRef();
     const siteTwitterRef = useRef();
     const authorNameRef = useRef();
     const authorTwitterRef = useRef();
-    let [defaultNote, setDefaultNote] = useState(settings.defaultNoteSlug ?? '');
+    let [defaultNote, setDefaultNote] = useState<string>(settings.defaultNote ?? '');
     let [isSaving, setIsSaving] = useState(false);
     const onSave = () => {
         setIsSaving(true);
         let data: GardenConfig = Object.assign(settings, {
-            defaultNoteSlug: defaultNote,
+            defaultNote,
             //@ts-ignore
             siteName: siteNameRef.current.value,
             //@ts-ignore
@@ -85,7 +84,7 @@ const Settings: FC<{ settings: GardenConfig }> = ({ settings }) => {
             //@ts-ignore
             authorName: authorNameRef.current.value,
             //@ts-ignore
-            authorTwitterRef: authorTwitterRef.current.value,
+            authorTwitter: authorTwitterRef.current.value,
         })
         saveSettings(data).then(
             () => setIsSaving(false)
@@ -128,7 +127,6 @@ const Settings: FC<{ settings: GardenConfig }> = ({ settings }) => {
                             />
                         </section> 
                     <section>
-                        {defaultNote}
                         <NoteSelector
                             selectedNote={defaultNote}
                             setSelectedNote={setDefaultNote} />
@@ -139,7 +137,9 @@ const Settings: FC<{ settings: GardenConfig }> = ({ settings }) => {
                                 onClick={(e) => {
                                 e.preventDefault();
                                 onSave();
-                            }}>{isSaving ? 'Save' : 'Saving'}</button>
+                            }}>
+                                {!isSaving ? 'Save' : 'Saving'}
+                            </button>
                         </section>          
                     </form>
                 </Layout>

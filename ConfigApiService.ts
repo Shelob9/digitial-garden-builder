@@ -4,9 +4,10 @@ export interface GardenConfig {
 	siteTwitter?: string
 	authorName?: string
 	authorTwitter?: string
-	defaultNoteSlug?: string
+	defaultNote?: string
 }
 
+let configPath = '/garden.json'
 class ConfigApiService {
 	client: IGitApi
 	config: GardenConfig
@@ -15,7 +16,7 @@ class ConfigApiService {
 	}
 
 	fetchConfig = async () => {
-		return this.client.getFile('/garden.json').then(({ content }) => {
+		return this.client.getFile(configPath).then(({ content }) => {
 			this.config = JSON.parse(content)
 			return this.config
 		})
@@ -26,12 +27,13 @@ class ConfigApiService {
 		return this.client
 			.saveFile(
 				JSON.stringify(settings),
-				'/garden.json',
+				'garden.json',
 				`Update Settings`
 			)
 			.then(() => {
 				return this.config
 			})
+			.catch((e) => console.log(e))
 	}
 	getGardenTitle = () => {
 		return this.config.siteName

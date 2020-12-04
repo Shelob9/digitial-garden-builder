@@ -11,7 +11,7 @@ const clientFactory = (authToken: string) => {
 export const noteApiServicefactory = async (
 	authToken?: string
 ): Promise<NotesApiService> => {
-	authToken = authToken ?? process.env.GITHUB_API_TOKEN
+	authToken = process.env.GITHUB_API_TOKEN
 	let noteService = new NotesApiService(clientFactory(authToken))
 	await noteService.fetchNoteIndex()
 	return noteService
@@ -20,6 +20,8 @@ export const noteApiServicefactory = async (
 export const settingsApiServiceFactory = async (
 	authToken: string
 ): Promise<ConfigApiService> => {
+	authToken = process.env.GITHUB_API_TOKEN
+
 	let service = new ConfigApiService(clientFactory(authToken))
 	await service.fetchConfig()
 	return service

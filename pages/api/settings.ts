@@ -6,7 +6,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	res.setHeader('Content-Type', 'application/json')
 	res.setHeader('Cache-Control', 's-maxage=86400')
 	const session = await getSession({ req })
-	console.log(session)
 	if (!session || !session.accessToken) {
 		return res.status(403).json({ allowed: false, session })
 	}
@@ -21,7 +20,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			if (!session) {
 				return res.status(403).json({ allowed: false })
 			}
-			settings = req.body.settings
+			settings = JSON.parse(req.body).settings
 			await settingsService.saveConfig(settings)
 			res.status(201).json({
 				settings,

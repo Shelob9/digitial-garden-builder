@@ -37,11 +37,13 @@ function GitApi(
 			...gitRepo,
 			branch,
 		})
+
 		let blob = await createBlobForFile({
 			octo,
 			...gitRepo,
 			content,
 		})
+
 		let newTree = await createNewTree({
 			octo,
 			...gitRepo,
