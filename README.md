@@ -34,6 +34,8 @@ creating-a-personal-access-token)
   - `GITHUB_SECRET`
 - Encryption and Decryption
   - `ENCRYPT_KEY` - Must be 32 charcters long.
+- JWT
+  - `JWT_SECRET_KEY`
 
 ### What It Is Built With
 
