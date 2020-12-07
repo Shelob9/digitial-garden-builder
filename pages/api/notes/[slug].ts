@@ -1,23 +1,20 @@
 import getSession from '../../../lib/getSession'
 import { INote } from './../../../components/Note'
-import { noteApiServicefactory } from './../../../serviceFactories'
+import { noteApiServicefactoryFromRequest } from './../../../serviceFactories'
 import { NextApiResponse } from 'next'
 import { NextApiRequest } from 'next'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	res.setHeader('Content-Type', 'application/json')
 	res.setHeader('Cache-Control', 's-maxage=86400')
-	const session = getSession(req)
-	console.log(session)
-	let noteService = await noteApiServicefactory(
-		session && session.accessToken ? session.accessToken : null
-	)
+	let session = getSession(req)
+	let noteService = await noteApiServicefactoryFromRequest(req)
 	let note: INote
 	await noteService.fetchNoteIndex()
 	switch (req.method) {
 		case 'POST':
 			if (!session) {
-				//return res.status(203).json({ allowed: false })
+				return res.status(203).json({ allowed: false })
 			}
 			note = req.body.note
 			let { commitSha } = await noteService.saveNote(note)

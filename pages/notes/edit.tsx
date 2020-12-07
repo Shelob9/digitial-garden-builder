@@ -3,7 +3,6 @@ import NoteEditor from '../../components/NoteEditor';
 import { INote } from "../../components/Note";
 import  { NotesProvider, useSingleNote } from "../../components/useNotes";
 import useIsLoggedInAuthorized from "../../hooks/useIsLoggedAuthorized";
-import { getSession } from 'next-auth/client';
 const Page: FC<{ note?: INote,slug:string}> = (props) => {
     const { isLoggedIn, userDisplayName, isSessionLoading } = useIsLoggedInAuthorized();
     return (
