@@ -1,7 +1,7 @@
 import { noteIndex } from './../NotesApiService'
 import findNoteSlugInLink from '../lib/findNoteSlugInLink'
 import findReferences, { findWikiLinks } from '../lib/findReferences'
-
+import { encrypt, decrypt } from '../lib/encryptDecrypt'
 describe('find note slug', () => {
 	it('Returns if found', () => {
 		expect(findNoteSlugInLink('/notes/fish')).toEqual('fish')
@@ -61,5 +61,23 @@ describe('findReferences', () => {
 		expect(findReferences(`hello [[five]] hello [[roy]]`, notes)).toEqual([
 			{ slug: 'five', url: '/notes/five' },
 		])
+	})
+})
+
+describe('encrypt, decrypt', () => {
+	it('encrypts', () => {
+		let hash = encrypt('Hi Roy')
+		expect(hash.hasOwnProperty('iv')).toBeTruthy()
+		expect(hash.hasOwnProperty('content')).toBeTruthy()
+	})
+
+	it('decrypts', () => {
+		expect(decrypt(encrypt('Hi Roy'))).toEqual('Hi Roy')
+	})
+
+	it('Requires valid iv', () => {
+		let hash = encrypt('Hi Roy')
+		hash.iv = '1234567890123456789012'
+		expect(decrypt(hash)).toBeFalsy()
 	})
 })
