@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
+import {getAccessTokenFromSession} from 'lib/sessionUtil'
 
 
 const allowedUser = (userId) => [
@@ -12,7 +13,8 @@ const options = {
   providers: [
     Providers.GitHub({
       clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET
+      clientSecret: process.env.GITHUB_SECRET,
+      scopes: ['user:email','repo']
     }),
   ],
   callbacks: {
@@ -24,7 +26,8 @@ const options = {
      *                           Return `false` to deny access
      */
     signIn: async (user, account, profile) => {
-      const isAllowedToSignIn = allowedUser(account.id)
+      const isAllowedToSignIn = allowedUser(account.id);
+      
       if (isAllowedToSignIn  ) {
         return Promise.resolve(true)
       } else {
@@ -37,7 +40,7 @@ const options = {
       }
     },
     session: async (session, user, sessionToken) => {
-      session.foo = 'r';
+      
       if (sessionToken && sessionToken.hasOwnProperty('accessToken')) {
         session.accessToken = sessionToken.accessToken;
       }
@@ -58,8 +61,9 @@ const options = {
   session: { jwt: true },
   events: {
     session: async ({ session, jwt }) => { 
-      if (jwt.accessToken) {
-        session.accessToken = jwt.accessToken;
+      let accessToken = getAccessTokenFromSession(jwt);
+      if (accessToken) {
+        session.accessToken = accessToken;
       }
       return Promise.resolve(session)
      },

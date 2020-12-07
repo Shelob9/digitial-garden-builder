@@ -7,6 +7,7 @@
 		"start": "next start"
 	},
 	"dependencies": {
+		"@octokit/auth-oauth-app": "^3.0.7",
 		"@octokit/rest": "^18.0.9",
 		"@react-aria/select": "^3.2.3",
 		"@react-aria/textfield": "^3.2.1",
