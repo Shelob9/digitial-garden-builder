@@ -7,6 +7,7 @@ import { FC } from "react";
 import { INote } from "../../components/Note";
 
 import { NextSeo } from 'next-seo';
+import getSession from "../../lib/getSession";
 
 
 const NoteSeo: FC<{ note: INote }> = ({ note })=> {
@@ -55,9 +56,9 @@ const Page: FC<
 export default Page;
 
 
-export async function getServerSideProps(context) {
-  const session = {accessToken:'1'};
-  const { params, query } = context;
+export async function getServerSideProps({req,params, query}) {
+  const session = getSession(req);
+  console.log(session);
   const { slug } = params;
   const { noteThree, noteTwo } = query;
 

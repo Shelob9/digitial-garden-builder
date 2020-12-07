@@ -42,6 +42,7 @@
 		"swr": "^0.3.8",
 		"ts-jest": "^26.4.3",
 		"unified": "^9.2.0",
+		"universal-cookie": "^4.0.4",
 		"use-swr": "^1.0.3"
 	},
 	"devDependencies": {
