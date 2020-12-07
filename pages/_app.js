@@ -1,7 +1,6 @@
 import React from 'react'
 import App from 'next/app';
 import { SSRProvider } from '@react-aria/ssr';
-import { Provider } from 'next-auth/client'
 
 import "../styles/theme.css";
 import "../styles/stacked-layout.css";
@@ -21,7 +20,7 @@ class MyApp extends App {
     const { Component, pageProps } = this.props
     return (
       <>
-        <Provider session={pageProps.session}>
+        <>
           <SSRProvider>
             <DefaultSeo
               title={site_name}
@@ -38,7 +37,7 @@ class MyApp extends App {
             />
               <Component {...pageProps} />
             </SSRProvider>
-        </Provider>
+        </>
       </>
     );
   }

@@ -1,11 +1,10 @@
 import { settingsApiServiceFactory } from './../../serviceFactories'
-import { getSession } from 'next-auth/client'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	res.setHeader('Content-Type', 'application/json')
 	res.setHeader('Cache-Control', 's-maxage=86400')
-	const session = await getSession({ req })
+	const session = { accessToken: '11' }
 	if (!session || !session.accessToken) {
 		return res.status(403).json({ allowed: false, session })
 	}

@@ -1,4 +1,3 @@
-import { getSession } from 'next-auth/client'
 import {settingsApiServiceFactory } from '../../serviceFactories';
 import {useTextField} from '@react-aria/textfield'
 import { FC, forwardRef, useMemo, useRef, useState } from 'react';
@@ -166,7 +165,7 @@ const Page: FC<{ settings: GardenConfig }> = ({ settings }) => {
 }
 
 export async function getServerSideProps(context) {
-    const session = await getSession(context);
+    const session = undefined;
     if (!session) {
         context.res.writeHead(302, { Location: '/login' });
         context.res.end();

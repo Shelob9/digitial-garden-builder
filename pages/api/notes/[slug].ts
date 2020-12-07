@@ -1,13 +1,12 @@
 import { INote } from './../../../components/Note'
 import { noteApiServicefactory } from './../../../serviceFactories'
-import { getSession } from 'next-auth/client'
 import { NextApiResponse } from 'next'
 import { NextApiRequest } from 'next'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	res.setHeader('Content-Type', 'application/json')
 	res.setHeader('Cache-Control', 's-maxage=86400')
-	const session = await getSession({ req })
+	const session = { accessToken: '11' }
 	let noteService = await noteApiServicefactory(
 		session && session.accessToken ? session.accessToken : null
 	)

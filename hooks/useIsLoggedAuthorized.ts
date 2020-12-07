@@ -1,7 +1,6 @@
 import { useMemo } from 'react'
-import { useSession } from 'next-auth/client'
 const useIsLoggedInAuthorized = () => {
-	const [session, loading] = useSession()
+	const [session, loading] = [{}, false]
 	let isLoggedIn = useMemo<boolean>(() => {
 		if (loading || !session || !session.hasOwnProperty('user')) {
 			return false

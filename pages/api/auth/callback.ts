@@ -1,21 +1,9 @@
-import { getAccessTokenFromSession } from './../../lib/sessionUtil'
+import { encodeUserJwt, userFromGithub } from './../../../UserService'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { createOAuthAppAuth } from '@octokit/auth-oauth-app'
-
 const clientId = process.env.GITHUB_ID
 const clientSecret = process.env.GITHUB_SECRET
-
-const auth = createOAuthAppAuth({
-	clientId,
-	clientSecret,
-})
-
 const scopes = `repo,user`
 const state = `12345`
-//@see https://docs.github.com/en/free-pro-team@latest/developers/apps/authorizing-oauth-apps#1-request-a-users-github-identity
-const authRedirectUrl = () => {
-	return `https://github.com/login/oauth/authorize?client_id=${clientId}&scopes=${scopes}&state=${state}`
-}
 
 //@see https://docs.github.com/en/free-pro-team@latest/developers/apps/authorizing-oauth-apps#2-users-are-redirected-back-to-your-site-by-github
 const getAccessToken = async (code: string) => {
@@ -44,19 +32,19 @@ const getUser = async (accessToken: string) => {
 		},
 	}).then((r) => r.json())
 }
-//Says Hi to Roy, or the logged in user.
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const { query } = req
 	if (query && query.code) {
 		const { code } = query
 		let accessToken = await getAccessToken(code as string)
-		const user = await getUser(accessToken)
-		return res.json({ accessToken, user })
+		try {
+			let user = await getUser(accessToken)
+			user = userFromGithub(user)
+			let token = encodeUserJwt(user.name, accessToken)
+			return res.json({ token, user })
+		} catch (error) {
+			res.status(500).json({ error })
+		}
 	}
-	const oauthAuthentication = await auth({ type: 'oauth', code: '123456' })
-
-	console.log(req.query)
-	//console.log(oauthAuthentication)
-	//res.setHeader('Cache-Control', 's-maxage=17')
-	res.json({ oauthAuthentication })
+	return res.status(400).json({ message: 'No Code' })
 }

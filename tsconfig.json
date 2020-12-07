@@ -26,7 +26,7 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx", "lib/gitUtil.js"
+    "**/*.tsx", "lib/gitUtil.js", "pages/api/auth/session.js"
   ],
   "exclude": [
     "node_modules"

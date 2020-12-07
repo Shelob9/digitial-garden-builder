@@ -2,7 +2,6 @@ import NoteApp from "../../components/NoteApp";
 import { NoteLayoutProvider } from "../../components/useNoteLayout";
 import { NotesProvider } from "../../components/useNotes";
 import useIsLoggedInAuthorized from "../../hooks/useIsLoggedAuthorized";
-import { getSession } from 'next-auth/client';
 import { noteApiServicefactory } from "../../serviceFactories";
 import { FC } from "react";
 import { INote } from "../../components/Note";
@@ -57,7 +56,7 @@ export default Page;
 
 
 export async function getServerSideProps(context) {
-  const session = await getSession(context);
+  const session = {accessToken:'1'};
   const { params, query } = context;
   const { slug } = params;
   const { noteThree, noteTwo } = query;

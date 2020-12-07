@@ -1,4 +1,3 @@
-import { userSession } from './UserService'
 import { decrypt, encrypt, hash } from './lib/encryptDecrypt'
 import { createJwtToken, decodeJwtToken } from './lib/jwt'
 export interface User {
