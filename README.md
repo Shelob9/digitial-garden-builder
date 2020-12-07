@@ -28,14 +28,12 @@ creating-a-personal-access-token)
 - Github API token
   - [Github Personal Access Token](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/)
   - `GITHUB_API_TOKEN`
-- Next Auth
-  - [Env Varibles](https://next-auth.js.org/configuration/options#environment-variables)
-  - [Github Provider](https://next-auth.js.org/providers/google)
-    - [Create a Github app](https://docs.github.com/en/free-pro-team@latest/developers/apps/creating-a-github-app)
+- Github oAuth App
+  - [Create a Github app](https://docs.github.com/en/free-pro-team@latest/developers/apps/creating-a-github-app)
   - `GITHUB_ID`
   - `GITHUB_SECRET`
-  - `NEXTAUTH_URL=http://localhost:3202/api/auth`
-  - `JWT_SIGNING_PRIVATE_KEY`
+- Encryption and Decryption
+  - `ENCRYPT_KEY` - Must be 32 charcters long.
 
 ### What It Is Built With
 

@@ -1,9 +1,13 @@
+/**
+ * Encrypt and decrypt a string
+ *
+ * @see https://attacomsian.com/blog/nodejs-encrypt-decrypt-data
+ */
 import * as crypto from 'crypto'
 
 const algorithm = 'aes-256-ctr'
-const secretKey = 'vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3'
+const secretKey = process.env.ENCRYPT_KEY || 'secretmustbe33longJestNeedEnvVar'
 const iv = crypto.randomBytes(16)
-
 export type hash = {
 	iv: string
 	content: string
