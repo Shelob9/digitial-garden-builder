@@ -51,7 +51,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		const { code } = query
 		let accessToken = await getAccessToken(code as string)
 		const user = await getUser(accessToken)
-		return res.json(user)
+		return res.json({ accessToken, user })
 	}
 	const oauthAuthentication = await auth({ type: 'oauth', code: '123456' })
 

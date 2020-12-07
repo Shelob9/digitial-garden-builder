@@ -16,7 +16,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	switch (req.method) {
 		case 'POST':
 			if (!session) {
-				return res.status(203).json({ allowed: false })
+				//return res.status(203).json({ allowed: false })
 			}
 			note = req.body.note
 			let { commitSha } = await noteService.saveNote(note)

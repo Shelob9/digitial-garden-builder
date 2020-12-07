@@ -17,11 +17,7 @@ const Page: FC<{ note?: INote,slug:string}> = (props) => {
 export default Page;
 
 export async function getServerSideProps(context) {
-  const session = await getSession(context);
-  if (!session) {
-      context.res.writeHead(302, { Location: '/login' });
-      context.res.end();
-  }
+ 
   //do not get note server side to make sure its fresh in editor.
   let slug = context.query.note;
     return {
