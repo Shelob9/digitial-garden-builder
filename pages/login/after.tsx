@@ -41,12 +41,13 @@ export async function getServerSideProps ({req,res,query}){
 		let accessToken = await getAccessToken(code)
 		try {
 			let user = await getUser(accessToken)
-			user = userFromGithub(user)
+			user = userFromGithub(user);
 			let token = encodeUserJwt(user.name, accessToken)
 			res.setHeader('Set-Cookie', `_garden_token=${token} `);
 			return {
 				props: {
-				  token
+					token,
+					user
 				}
 			  }
 		} catch (error) {
@@ -63,6 +64,7 @@ export async function getServerSideProps ({req,res,query}){
   }
   
 export default function After(props) {
+	console.log(props);
 	const { token } = useUserToken({ token: props.token });
 	return(<div>1</div>)
 };

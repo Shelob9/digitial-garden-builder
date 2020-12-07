@@ -28,12 +28,6 @@ export interface userJwtData {
 	name: string
 	session: hash
 }
-const createUserJwtData = (name: string, accessToken: string): userJwtData => {
-	return {
-		name,
-		session: encrypt(JSON.stringify(accessToken)),
-	}
-}
 
 export const encodeUserJwt = (name: string, accessToken: string): string => {
 	return createJwtToken({

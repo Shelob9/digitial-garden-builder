@@ -1,20 +1,37 @@
-import { useMemo } from 'react'
+import { useMemo, useState, useEffect } from 'react'
+import useUserCookie from './useUserCookie'
+
 const useIsLoggedInAuthorized = () => {
-	const [session, loading] = [{}, false]
-	let isLoggedIn = useMemo<boolean>(() => {
-		if (loading || !session || !session.hasOwnProperty('user')) {
-			return false
-		}
+	let [loading, setLoading] = useState(true)
+	let [isLoggedIn, setIsLoggedIn] = useState(true)
+	const { token } = useUserCookie({})
+	let [userDisplayName, setUserDisplayName] = useState<string | undefined>(
+		undefined
+	)
 
-		return true
-	}, [session, loading])
-
-	let userDisplayName = useMemo<string>(() => {
-		if (!isLoggedIn) {
-			return ''
-		}
-		return session.user.name
-	}, [session, loading])
+	useEffect(() => {
+		fetch('/api/auth/session', {
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json',
+				Authorization: token,
+			},
+		})
+			.then((r) => r.json())
+			.then((r) => {
+				if (r.session) {
+					setIsLoggedIn(true)
+				} else {
+					setIsLoggedIn(false)
+				}
+				if (r.name) {
+					setUserDisplayName(r.name)
+				} else {
+					setUserDisplayName(undefined)
+				}
+				setLoading(false)
+			})
+	}, [])
 
 	return {
 		isLoggedIn,
