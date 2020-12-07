@@ -62,7 +62,7 @@ describe('noteReducer', () => {
 				}
 			).three
 		).toEqual({
-			noteId: 5,
+			noteSlug: 'five',
 			open: true,
 		})
 	})
@@ -96,11 +96,11 @@ describe('noteReducer', () => {
 		const state = noteLayoutReducer(
 			{
 				one: {
-					noteId: 1,
+					noteSlug: 'one',
 					open: true,
 				},
 				two: {
-					noteId: 2,
+					noteSlug: 'two',
 					open: false,
 				},
 			},
