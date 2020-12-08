@@ -71,5 +71,8 @@ export const getAccessTokenFromSession = (
 		return false
 	}
 	let session = decryptSession(sessionData)
-	return session.accessToken ?? false
+	if (session) {
+		return session.accessToken ?? false
+	}
+	return false
 }

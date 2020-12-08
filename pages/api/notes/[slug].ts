@@ -1,20 +1,14 @@
 import getSession from '../../../lib/getSession'
 import { INote } from './../../../components/Note'
-import {
-	noteApiServicefactoryFromRequest,
-	noteApiServicefactory,
-} from './../../../serviceFactories'
+import factory from './../../../serviceFactories'
 import { NextApiResponse } from 'next'
 import { NextApiRequest } from 'next'
-import NotesApiService from 'NotesApiService'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	res.setHeader('Content-Type', 'application/json')
 	res.setHeader('Cache-Control', 's-maxage=86400')
 	let session = getSession(req)
-	let noteService: NotesApiService = session
-		? await noteApiServicefactoryFromRequest(req)
-		: await noteApiServicefactory()
+	let { noteService } = await factory(req)
 
 	let note: INote
 	await noteService.fetchNoteIndex()

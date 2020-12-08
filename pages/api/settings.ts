@@ -1,15 +1,12 @@
-import { settingsApiServiceFactory } from './../../serviceFactories'
+import factory from './../../serviceFactories'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-	res.setHeader('Content-Type', 'application/json')
-	res.setHeader('Cache-Control', 's-maxage=86400')
-	const session = { accessToken: '11' }
-	if (!session || !session.accessToken) {
+	const { session, configService } = await factory(req)
+	if (!session) {
 		return res.status(403).json({ allowed: false, session })
 	}
-	let settingsService = await settingsApiServiceFactory(session.accessToken)
-	let settings = await settingsService.getSettings()
+	let settings = await configService.getSettings()
 	switch (req.method) {
 		case 'GET':
 			res.setHeader('Cache-Control', 's-maxage=300')
@@ -20,7 +17,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				return res.status(403).json({ allowed: false })
 			}
 			settings = JSON.parse(req.body).settings
-			await settingsService.saveConfig(settings)
+			await configService.saveConfig(settings)
 			res.status(201).json({
 				settings,
 			})

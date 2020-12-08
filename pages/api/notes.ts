@@ -1,15 +1,7 @@
-import getSession from '../../lib/getSession'
-import {
-	noteApiServicefactory,
-	noteApiServicefactoryFromRequest,
-} from './../../serviceFactories'
+import factory from './../../serviceFactories'
 import { NextApiRequest, NextApiResponse } from 'next'
-import NotesApiService from 'NotesApiService'
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-	let session = getSession(req)
-	let noteService: NotesApiService = session
-		? await noteApiServicefactoryFromRequest(req)
-		: await noteApiServicefactory()
+	let { noteService, session } = await factory(req)
 	let noteIndex = await noteService.fetchNoteIndex()
 	switch (req.method) {
 		case 'GET':
