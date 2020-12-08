@@ -1,9 +1,7 @@
-import { resolve } from 'path'
 import { INote } from './components/Note'
-import { GardenConfig } from './ConfigApiService'
 import findReferences from './lib/findReferences'
 import findTitle from './lib/findTitle'
-import GitApi, { IGitApi } from './lib/GitApi'
+import { IGitApi } from './lib/GitApi'
 import NoteService from './NoteService'
 const fm = require('front-matter')
 export type noteIndexItem = {

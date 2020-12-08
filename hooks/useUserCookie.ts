@@ -8,8 +8,15 @@ const useUserToken = (props: { token?: string }) => {
 			setCookie('_garden_token', props.token, { path: '/' })
 		}
 	}, [cookies])
+
+	const removeCookie = () => {
+		setCookie('_garden_token', undefined, {
+			path: '/',
+			expires: new Date(3),
+		})
+	}
 	let token = useMemo(() => cookies._garden_token || undefined, [cookies])
-	return { token }
+	return { token, removeCookie }
 }
 
 export default useUserToken

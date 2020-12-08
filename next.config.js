@@ -16,6 +16,11 @@ module.exports = {
           destination: authRedirectUrl(),
           permanent: true,
         },
+        {
+          source: '/logout',
+          destination: `/login/logout`,
+          permanent: true,
+        },
       ]
     },
   }
