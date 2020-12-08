@@ -63,3 +63,13 @@ export const decodeUserJwt = (token: string): userSession | undefined => {
 
 	return decryptSession(decoded)
 }
+
+export const getAccessTokenFromSession = (
+	sessionData: userJwtData | undefined
+): string | false => {
+	if (!sessionData) {
+		return false
+	}
+	let session = decryptSession(sessionData)
+	return session.accessToken ?? false
+}

@@ -1,4 +1,11 @@
-import { userFromGithub, encodeUserJwt, decodeUserJwt } from '../UserService'
+import { encrypt } from '../lib/encryptDecrypt'
+import {
+	userFromGithub,
+	encodeUserJwt,
+	decodeUserJwt,
+	getAccessTokenFromSession,
+	decryptSession,
+} from '../UserService'
 
 describe('user functions', () => {
 	const data = {
@@ -21,5 +28,24 @@ describe('user functions', () => {
 			name,
 			accessToken,
 		})
+	})
+	test('decrypts session', () => {
+		let accessToken = 'fja1adh'
+		expect(
+			decryptSession({
+				name: 'Trover DuChamps',
+				session: encrypt(JSON.stringify({ accessToken })),
+			})
+		).toEqual({ name: 'Trover DuChamps', accessToken })
+	})
+
+	test('gets accessToken from session', () => {
+		let accessToken = 'aTokenFormSomething'
+		expect(
+			getAccessTokenFromSession({
+				name: 'Trover DuChamps',
+				session: encrypt(JSON.stringify({ accessToken })),
+			})
+		).toEqual(accessToken)
 	})
 })

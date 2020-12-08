@@ -1,15 +1,16 @@
-import { getSession } from '../../lib/getSession'
+import getSession from '../../lib/getSession'
 import { getAccessTokenFromSession } from './../../lib/sessionUtil'
-import { noteApiServicefactory } from './../../serviceFactories'
+import {
+	noteApiServicefactory,
+	noteApiServicefactoryFromRequest,
+} from './../../serviceFactories'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	res.setHeader('Content-Type', 'application/json')
 	res.setHeader('Cache-Control', 's-maxage=86400')
-	let user = getSession(req)
-	let noteService = await noteApiServicefactory(
-		getAccessTokenFromSession(session)
-	)
+	let session = getSession(req)
+	let noteService = await noteApiServicefactoryFromRequest(req)
 	let noteIndex = await noteService.fetchNoteIndex()
 	switch (req.method) {
 		case 'GET':
