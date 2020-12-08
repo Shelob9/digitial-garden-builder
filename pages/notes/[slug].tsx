@@ -2,13 +2,12 @@ import NoteApp from "../../components/NoteApp";
 import { NoteLayoutProvider } from "../../components/useNoteLayout";
 import { NotesProvider } from "../../components/useNotes";
 import useIsLoggedInAuthorized from "../../hooks/useIsLoggedAuthorized";
-import { noteApiServicefactoryFromRequest } from "../../serviceFactories";
+import factory from "../../serviceFactories";
 import { FC } from "react";
 import { INote } from "../../components/Note";
 
 import { NextSeo } from 'next-seo';
-import getSession from "../../lib/getSession";
-import { decrypt } from "../../lib/encryptDecrypt";
+
 
 
 const NoteSeo: FC<{ note: INote }> = ({ note })=> {
@@ -58,10 +57,9 @@ export default Page;
 
 
 export async function getServerSideProps({req,params, query}) {
-
   const { slug } = params;
   const { noteThree, noteTwo } = query;
-  let noteService = await noteApiServicefactoryFromRequest(req);
+  let { noteService } = await factory(req);
   let note = await noteService.fetchNote(slug);
   return {
     props: {

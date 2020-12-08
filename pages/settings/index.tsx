@@ -1,6 +1,6 @@
-import {settingsApiServiceFactory } from '../../serviceFactories';
+import factory from '../../serviceFactories';
 import {useTextField} from '@react-aria/textfield'
-import { FC, forwardRef, useMemo, useRef, useState } from 'react';
+import { FC, forwardRef, useRef, useState } from 'react';
 import Layout from '../../components/Layout';
 import { GardenConfig } from '../../ConfigApiService';
 import useNotes, { NotesProvider } from '../../components/useNotes';
@@ -164,19 +164,13 @@ const Page: FC<{ settings: GardenConfig }> = ({ settings }) => {
     )
 }
 
-export async function getServerSideProps(context) {
-    const session = undefined;
+export async function getServerSideProps({ req,res }) {
+    const { configService,session } = await factory(req);
     if (!session) {
-        context.res.writeHead(302, { Location: '/login' });
-        context.res.end();
+        res.writeHead(302, { Location: '/login' });
+        res.end();
     }
-  
-    let settingsService = await settingsApiServiceFactory(
-        session && session.authToken ? session.authToken : null
-    );
-
-    let settings = settingsService.getSettings();
-    
+    let settings = configService.getSettings();
     return {
         props: {
             settings

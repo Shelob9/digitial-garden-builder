@@ -64,5 +64,5 @@ export async function getServerSideProps ({req,res,query}){
   
 export default function After(props) {
 	const { token } = useUserToken({ token: props.token });
-	return (<div>Logged In with token {props.token}</div>)
+	return (<div>Logged In with token {token}</div>)
 };

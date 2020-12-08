@@ -1,3 +1,4 @@
+import { userJwtData } from './UserService'
 import { NextApiRequest } from 'next'
 import ConfigApiService from './ConfigApiService'
 import GitApi from './lib/GitApi'
@@ -41,4 +42,29 @@ export const settingsApiServiceFactory = async (
 	let service = new ConfigApiService(clientFactory(authToken))
 	await service.fetchConfig()
 	return service
+}
+
+/**
+ * Default factory to create both services from a request
+ */
+export default async function factory(
+	req: NextApiRequest
+): Promise<{
+	noteService: NotesApiService
+	configService: ConfigApiService
+	session: userJwtData | false
+}> {
+	let session = getSession(req)
+	return new Promise(async (resolve, reject) => {
+		let noteService: NotesApiService = session
+			? await noteApiServicefactoryFromRequest(req)
+			: await noteApiServicefactory()
+
+		let accessToken = session ? getAccessTokenFromSession(session) : false
+		if (!accessToken) {
+			accessToken = process.env.GITHUB_API_TOKEN
+		}
+		let configService = await settingsApiServiceFactory(accessToken)
+		resolve({ noteService, configService, session })
+	})
 }
