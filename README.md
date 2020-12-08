@@ -21,8 +21,13 @@ creating-a-personal-access-token)
 
 ### Env Variables
 
-This is documentation of the environment varibales required to make this work. It also explains some of how this works.
+This is documentation of the environment variables required to make this work. It also explains some of how this works.
 
+- What repo to use for storing content.
+  - `REPO_OWNER`: User or organization of the Github repo to use.
+    - Example: `REPO_OWNER=shelob9`
+  - `REPO_NAME`: Name of the Github repo to use.
+    - Example: `REPO_NAME=garden-cms-test-data`
 - Github API token
   - [Github Personal Access Token](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/)
   - `GITHUB_API_TOKEN`

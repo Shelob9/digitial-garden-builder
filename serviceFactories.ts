@@ -2,12 +2,10 @@ import { NextApiRequest } from 'next'
 import ConfigApiService from './ConfigApiService'
 import GitApi from './lib/GitApi'
 import NotesApiService from './NotesApiService'
-import { decrypt } from './lib/encryptDecrypt'
 import getSession from './lib/getSession'
 import { getAccessTokenFromSession } from 'UserService'
-import NoteService from 'NoteService'
 
-let repo = { owner: 'shelob9', repo: 'garden-cms-test-data' }
+let repo = { owner: process.env.REPO_OWNER, repo: process.env.REPO_NAME }
 
 const clientFactory = (authToken: string) => {
 	return GitApi(repo, 'main', authToken)
