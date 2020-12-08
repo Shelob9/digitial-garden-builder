@@ -36,24 +36,30 @@ export const encodeUserJwt = (name: string, accessToken: string): string => {
 	})
 }
 
-export const decodeUserJwt = (token: string): userSession | undefined => {
-	let decoded = decodeJwtToken(token)
-	if (!decoded) {
-		return undefined
-	}
-
-	if (decoded.name && decoded.session) {
-		let session = decrypt(decoded.session)
+//Decrypt session object from decoded jwt
+export const decryptSession = (
+	decodedJwtData: userJwtData
+): userSession | undefined => {
+	if (decodedJwtData.name && decodedJwtData.session) {
+		let session = decrypt(decodedJwtData.session)
 		if (session) {
 			session = JSON.parse(session)
 			//@ts-ignore
 			if (session.accessToken) {
 				return {
-					name: decoded.name,
+					name: decodedJwtData.name,
 					//@ts-ignore
 					accessToken: session.accessToken,
 				}
 			}
 		}
 	}
+}
+export const decodeUserJwt = (token: string): userSession | undefined => {
+	let decoded = decodeJwtToken(token)
+	if (!decoded) {
+		return undefined
+	}
+
+	return decryptSession(decoded)
 }

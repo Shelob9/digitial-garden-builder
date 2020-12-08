@@ -1,8 +1,9 @@
+import { userJwtData } from './../UserService'
 import { decodeJwtToken } from './jwt'
 import { NextApiRequest } from 'next'
 import Cookies from 'universal-cookie'
 
-const getSession = (req: NextApiRequest) => {
+const getSession = (req: NextApiRequest): userJwtData => {
 	let token = ''
 	if (req.headers.authorization) {
 		token = req.headers.authorization
@@ -10,9 +11,9 @@ const getSession = (req: NextApiRequest) => {
 		const cookies = new Cookies(req ? req.headers.cookie : null)
 		token = cookies.get('_garden_token')
 	}
-	let user = decodeJwtToken(token)
+	let session = decodeJwtToken(token)
 
-	return user
+	return session
 }
 
 export default getSession

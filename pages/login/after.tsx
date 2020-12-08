@@ -47,7 +47,6 @@ export async function getServerSideProps ({req,res,query}){
 			return {
 				props: {
 					token,
-					user
 				}
 			  }
 		} catch (error) {
@@ -64,7 +63,6 @@ export async function getServerSideProps ({req,res,query}){
   }
   
 export default function After(props) {
-	console.log(props);
 	const { token } = useUserToken({ token: props.token });
-	return(<div>1</div>)
+	return (<div>Logged In with token {props.token}</div>)
 };

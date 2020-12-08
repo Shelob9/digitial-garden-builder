@@ -1,3 +1,4 @@
+import { decryptSession } from './../UserService'
 import { noteIndex } from './../NotesApiService'
 import findNoteSlugInLink from '../lib/findNoteSlugInLink'
 import findReferences, { findWikiLinks } from '../lib/findReferences'
@@ -98,5 +99,15 @@ describe('jwt', () => {
 		expect(
 			decodeJwtToken('space turtles down to invisible turtles')
 		).toEqual(false)
+	})
+
+	it('decrypts session', () => {
+		let accessToken = 'fja1adh'
+		expect(
+			decryptSession({
+				name: 'Trover DuChamps',
+				session: encrypt(JSON.stringify({ accessToken })),
+			})
+		).toEqual({ name: 'Trover DuChamps', accessToken })
 	})
 })
