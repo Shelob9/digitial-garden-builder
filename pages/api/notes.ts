@@ -1,16 +1,15 @@
 import getSession from '../../lib/getSession'
-import { getAccessTokenFromSession } from './../../lib/sessionUtil'
 import {
 	noteApiServicefactory,
 	noteApiServicefactoryFromRequest,
 } from './../../serviceFactories'
 import { NextApiRequest, NextApiResponse } from 'next'
-
+import NotesApiService from 'NotesApiService'
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-	res.setHeader('Content-Type', 'application/json')
-	res.setHeader('Cache-Control', 's-maxage=86400')
 	let session = getSession(req)
-	let noteService = await noteApiServicefactoryFromRequest(req)
+	let noteService: NotesApiService = session
+		? await noteApiServicefactoryFromRequest(req)
+		: await noteApiServicefactory()
 	let noteIndex = await noteService.fetchNoteIndex()
 	switch (req.method) {
 		case 'GET':
@@ -28,7 +27,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				commitSha: result.commitSha,
 			})
 			break
-
 		default:
 			res.status(405).json({})
 			break
