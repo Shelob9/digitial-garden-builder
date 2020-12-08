@@ -1,12 +1,21 @@
+import useIsLoggedInAuthorized from 'hooks/useIsLoggedAuthorized';
 import { FC } from 'react';
 import Header from './Header';
+
+const Footer = () => {
+  const { userDisplayName } = useIsLoggedInAuthorized();
+  return (
+    <footer>
+      <p>Hi {userDisplayName}</p>
+    </footer >
+  );
+}
 const Layout: FC<{
   BeforeControls?: () => JSX.Element;
   pageDisplayTitle?: string;
   children: any;
   statusMessage?: string;
 }> = ({ children, BeforeControls,pageDisplayTitle,statusMessage}) => {
-  
     return (
       <div className="layout">
         <Header
@@ -14,7 +23,8 @@ const Layout: FC<{
           pageDisplayTitle={pageDisplayTitle ?? 'Digital Gardens' }
           statusMessage={statusMessage}
         />
-          {children} 
+        {children}
+        <Footer />
       </div>
     )
 }

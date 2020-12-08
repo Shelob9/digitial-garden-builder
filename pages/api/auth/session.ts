@@ -3,5 +3,5 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	let session = getSession(req)
-	res.json({ user: session })
+	res.json({ session })
 }

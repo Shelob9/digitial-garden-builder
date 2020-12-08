@@ -10,6 +10,9 @@ const useIsLoggedInAuthorized = () => {
 	)
 
 	useEffect(() => {
+		if (!token) {
+			return
+		}
 		fetch('/api/auth/session', {
 			method: 'POST',
 			headers: {
@@ -24,14 +27,14 @@ const useIsLoggedInAuthorized = () => {
 				} else {
 					setIsLoggedIn(false)
 				}
-				if (r.name) {
-					setUserDisplayName(r.name)
+				if (r.session.name) {
+					setUserDisplayName(r.session.name)
 				} else {
-					setUserDisplayName(undefined)
+					setUserDisplayName('Roy')
 				}
 				setLoading(false)
 			})
-	}, [])
+	}, [token])
 
 	return {
 		isLoggedIn,
