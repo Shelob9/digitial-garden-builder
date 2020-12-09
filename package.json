@@ -2,9 +2,11 @@
 	"name": "garden-cms",
 	"private": true,
 	"workspaces": [
-		"client"
+		"client",
+		"github-app"
 	],
 	"scripts": {
-		"client": "yarn workspace @garden-cms/client"
+		"client": "yarn workspace @garden-cms/client",
+		"gh": "yarn workspace @garden-cms/github-app"
 	}
 }

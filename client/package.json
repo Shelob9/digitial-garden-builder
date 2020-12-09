@@ -1,6 +1,7 @@
 {
 	"name": "@garden-cms/client",
 	"version": "0.0.2",
+	"license": "MIT",
 	"scripts": {
 		"test": "jest",
 		"dev": "next dev --port=3202",

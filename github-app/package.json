@@ -1,0 +1,41 @@
+{
+	"name": "@garden-cms/github-app",
+	"version": "0.0.1",
+	"private": true,
+	"description": "A Probot app",
+	"author": "Josh Pollock <josh@joshpress.net>",
+	"license": "MIT",
+	"repository": "https://github.com/Shelob9/garden-cms-github-app.git",
+	"homepage": "https://github.com/Shelob9/garden-cms-github-app",
+	"bugs": "https://github.com/Shelob9/garden-cms-github-app/issues",
+	"keywords": [
+		"probot",
+		"github",
+		"probot-app"
+	],
+	"scripts": {
+		"build": "tsc",
+		"start": "probot run ./lib/index.js",
+		"test": "jest"
+	},
+	"dependencies": {
+		"@octokit/fixtures": "^21.2.5",
+		"cross-fetch": "^3.0.6",
+		"probot": "^10.9.5"
+	},
+	"devDependencies": {
+		"@types/jest": "^26.0.9",
+		"@types/node": "^14.0.27",
+		"jest": "^26.4.0",
+		"nock": "^13.0.4",
+		"smee-client": "^1.1.0",
+		"ts-jest": "^26.2.0",
+		"typescript": "^3.9.7"
+	},
+	"engines": {
+		"node": ">= 10.13.0"
+	},
+	"jest": {
+		"testEnvironment": "node"
+	}
+}
