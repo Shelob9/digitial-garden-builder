@@ -6,13 +6,15 @@ const privateKey = fs.readFileSync("./private-key.pem").toString();
 const { createAppAuth } = require("@octokit/auth-app");
 const { Octokit } = require('@octokit/rest');
 
-export default auth = createAppAuth({
-	appId: 92086,
-	privateKey,
-	installationId: 123,
-	clientId,
-	clientSecret,
-});
+export function getAuth(){
+	return createAppAuth({
+		appId: 92086,
+		privateKey,
+		installationId: 123,
+		clientId,
+		clientSecret,
+	});
+}
 
 export function getOctokit(authToken) {
 	return new Octokit({

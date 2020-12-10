@@ -1,4 +1,5 @@
-const auth,{getOctokit} = require('../../auth');
+import { getOctokit, getAuth } from '../../../auth';
+let auth = getAuth();
 export default async (req, res) => {
     const { code } = req.query;
     try {
@@ -8,6 +9,6 @@ export default async (req, res) => {
         let repos = await octokit.apps.listInstallationsForAuthenticatedUser();
         res.json({ token, repos });
     } catch (error) {
-        res.status(400).json({ error });
+        res.status(400).json({ error: { name: error.name, status: error.status } });
     }
-});
+};

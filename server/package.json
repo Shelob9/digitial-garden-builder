@@ -1,28 +1,19 @@
 {
 	"name": "@garden-cms/server",
-	"version": "0.0.1",
-	"private": true,
+	"version": "1.0.0",
 	"scripts": {
-		"start": "node server.js",
-		"test": "jest",
-		"dev": "nodemon server.js"
+		"dev": "next",
+		"build": "next build",
+		"start": "next start"
 	},
 	"dependencies": {
 		"@octokit/auth-app": "^2.10.5",
 		"@octokit/rest": "^18.0.12",
+		"cors": "2.8.5",
 		"dotenv": "^8.2.0",
-		"express": "^4.17.1",
-		"nodemon": "^2.0.6"
+		"next": "latest",
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1"
 	},
-	"devDependencies": {
-		"jest": "^26.4.0",
-		"nock": "^13.0.4",
-		"smee-client": "^1.1.0"
-	},
-	"engines": {
-		"node": ">= 10.13.0"
-	},
-	"jest": {
-		"testEnvironment": "node"
-	}
+	"license": "MIT"
 }

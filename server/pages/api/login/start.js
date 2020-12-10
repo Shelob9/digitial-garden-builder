@@ -1,5 +1,5 @@
 let redirect =
-    process.env.GITHUB_REDIRECT || `http://localhost:3000/login/after`;
+    process.env.GITHUB_REDIRECT || `http://localhost:3000/api/login/after`;
     const clientId = process.env.GITHUB_ID;
 
 export default async (req, res) => {
@@ -9,4 +9,4 @@ export default async (req, res) => {
             redirect
         )}`
     );
-});
+};
