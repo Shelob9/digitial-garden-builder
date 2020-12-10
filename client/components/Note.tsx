@@ -123,7 +123,7 @@ const Note: FC<{
 	isLoggedIn: boolean;
 }> = (props) => {
 	const { slug,toggleBox, isOpen, position, isLoggedIn } = props;
-	const { note } = useSingleNote({ note: props.note, slug });
+	const { note } = useSingleNote({  slug });
 	const { focusNote,setFocusNote} = useNoteLayout();
 	
 	if (!note) {

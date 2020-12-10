@@ -3,7 +3,7 @@ import useUserCookie from './useUserCookie'
 
 let gardenServerUrl =
 	process.env.NEXT_PUBLIC_GARDEN_SERVER_URL ||
-	'https://garden-server.vercel.app/api/session'
+	'https://garden-server.vercel.app'
 const useIsLoggedInAuthorized = () => {
 	let [loading, setLoading] = useState(true)
 	let [isLoggedIn, setIsLoggedIn] = useState(true)
@@ -16,7 +16,7 @@ const useIsLoggedInAuthorized = () => {
 		if (!token) {
 			return
 		}
-		fetch(gardenServerUrl, {
+		fetch(`${gardenServerUrl}/api/session`, {
 			method: 'POST',
 			headers: {
 				'content-type': 'application/json',

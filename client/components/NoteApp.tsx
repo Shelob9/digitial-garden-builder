@@ -13,22 +13,18 @@ const NoteApp: FC<{
   noteTwoSlug?: string;
   noteThreeSlug?: string;
   isLoggedIn: boolean;
-  userDisplayName?: string;
-  initialNote?:INote
 }> = ({
   noteOneSlug,
   noteTwoSlug,
   noteThreeSlug,
-  userDisplayName,
   isLoggedIn,
-  initialNote
 }) => {
   //https://nextjs.org/docs/api-reference/next/router
   const router = useRouter()
   //Controls the three note slots
   const { currentNotes,toggleBox,isNoteOpen,hasNote,addNote } = useNoteLayout();
   //The actual notes
-  const { notes, getNote, findBySlug } = useNotes();
+  const { notes } = useNotes();
   
 
   //load notes based on url parsing that happend server-side
@@ -69,7 +65,6 @@ const NoteApp: FC<{
             {notes ? (
             <>
                 <Note
-                  note={initialNote}
                   isLoggedIn={isLoggedIn}
                   slug={currentNotes.one.noteSlug}
                   isOpen={isNoteOpen('one')}

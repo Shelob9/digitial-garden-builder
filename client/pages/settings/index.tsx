@@ -2,7 +2,7 @@ import {useTextField} from '@react-aria/textfield'
 import { FC, forwardRef, useRef, useState } from 'react';
 import Layout from '../../components/Layout';
 import { GardenConfig } from '../../../types/config';
-import useNotes, { NotesProvider } from '../../components/useNotes';
+import useNotes, { gardenFetcher, NotesProvider } from '../../components/useNotes';
 
 const FieldWrapper = ({ children }) => {
     return (
@@ -36,7 +36,7 @@ const TextField = forwardRef((props: {
 });
 
 const saveSettings = async (settings: GardenConfig) => {
-    return fetch('/api/settings', {
+    return gardenFetcher('/api/settings', {
         method: 'POST',
         body: JSON.stringify({ settings })
     }).then(r => {

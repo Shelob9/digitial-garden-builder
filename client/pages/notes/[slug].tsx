@@ -32,13 +32,12 @@ const Page: FC<
     const { isLoggedIn, userDisplayName } = useIsLoggedInAuthorized();
     return (
       <>
-        <NoteSeo note={note} />
+        {note && <NoteSeo note={note} />}
         <NotesProvider>
           <NoteLayoutProvider
             noteSlug={noteOne}
           >
             <NoteApp
-              initialNote={note}
               isLoggedIn={isLoggedIn}
               userDisplayName={userDisplayName}
               noteOneSlug={noteOne}

@@ -29,9 +29,9 @@ These commands should be run from root of monorepo as `yarn client dev` most of 
   - `NEXT_PUBLIC_GARDEN_SERVER_URL`
   - [Will be availble in the browser](https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser)
   - In production:
-    - `NEXT_PUBLIC_GARDEN_SERVER_URL=https://garden-server.vercel.app/api/session`
+    - `NEXT_PUBLIC_GARDEN_SERVER_URL=https://garden-server.vercel.app`
   - In development:
-    - `NEXT_PUBLIC_GARDEN_SERVER_URL=http://localhost:3000/api/session`
+    - `NEXT_PUBLIC_GARDEN_SERVER_URL=http://localhost:3000`
   
 ### What It Is Built With
 
