@@ -1,9 +1,8 @@
 import { decryptSession } from '../../services/UserService'
 import { NextApiRequest, NextApiResponse } from 'next'
-import factory from '../../services/serviceFactories'
-
+import getSession from '../../lib/getSession'
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-	let { session } = await factory(req)
+	let session = getSession(req)
 	let repo = {}
 	if (session) {
 		let _session = decryptSession(session)
