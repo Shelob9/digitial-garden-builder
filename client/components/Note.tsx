@@ -1,23 +1,16 @@
 import unified from 'unified'
 import parse from 'remark-parse'
 import remark2react from 'remark-react'
-import toc from 'remark-toc';
 import ReferencesBlock from "./ReferencesBlock";
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 import useNotes, { useSingleNote } from './useNotes';
 import NoteLink from './NoteLink';
 import useNoteLayout from './useNoteLayout';
 import { notePostions } from './noteLayoutReducer';
 import Link from 'next/link'
-import { NoteReferences } from '../lib/findReferences';
 const { wikiLinkPlugin } = require('remark-wiki-link');
+import {INote} from '../../types'
 
-export interface INote {
-	title: string;
-	content: string;
-	slug: string;
-	references?: NoteReferences
-  }
 
 const NoteMarkdownLink: FC<{
 	href: string;

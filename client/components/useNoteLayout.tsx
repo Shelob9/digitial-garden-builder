@@ -1,5 +1,5 @@
 import { createContext, FC, useContext, useReducer, useState } from "react";
-import noteLayoutReducer, { NotePostion, notePostions } from "./noteLayoutReducer";
+import noteLayoutReducer, {  notePostions } from "./noteLayoutReducer";
 
 const NoteLayoutContext = createContext(null);
 

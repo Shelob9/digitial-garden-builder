@@ -1,5 +1,5 @@
-import React, { FC, Fragment } from "react";
-import { NoteReference, NoteReferences } from "../lib/findReferences";
+import React, { FC } from "react";
+import { NoteReference } from "../lib/findReferences";
 import { notePostions } from "./noteLayoutReducer";
 
 import NoteLink from './NoteLink';

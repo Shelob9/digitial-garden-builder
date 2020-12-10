@@ -1,7 +1,6 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useMemo } from "react";
 import useSWR from "swr";
-import { noteIndex, noteIndexItem } from "../services/NotesApiService";
-import { INote } from "./Note";
+import {  noteIndexItem,INote } from "../../types";
 
 const NotesContext = createContext(null);
 

@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
-import { FC, forwardRef, Fragment, MutableRefObject, useRef, useState } from "react";
+import { FC, forwardRef, Fragment,  useRef, useState } from "react";
 const slugify = require('slugify')
 import Layout from "./Layout";
 import MarkdownEditor from "./MarkdownEditor";
-import { INote } from "./Note";
+import { INote } from "../../types";
 import useNotes, { useSingleNote } from "./useNotes";
 
 //editor for the title
