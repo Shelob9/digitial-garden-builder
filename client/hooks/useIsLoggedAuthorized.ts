@@ -13,7 +13,7 @@ const useIsLoggedInAuthorized = () => {
 		if (!token) {
 			return
 		}
-		fetch('/api/auth/session', {
+		fetch('https://garden-server.vercel.app/api/session', {
 			method: 'POST',
 			headers: {
 				'content-type': 'application/json',
@@ -22,6 +22,7 @@ const useIsLoggedInAuthorized = () => {
 		})
 			.then((r) => r.json())
 			.then((r) => {
+				console.log(r)
 				if (r.session) {
 					setIsLoggedIn(true)
 				} else {

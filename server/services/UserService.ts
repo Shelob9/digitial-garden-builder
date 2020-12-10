@@ -1,15 +1,7 @@
-import { gitRepoDetails } from './../../client/lib/getOctoKit'
+import { User, userJwtData, userSession } from '../../types/user'
+import { gitRepoDetails } from '../lib/getOctoKit'
 import { decrypt, encrypt, hash } from '../lib/encryptDecrypt'
 import { createJwtToken, decodeJwtToken } from '../lib/jwt'
-export interface User {
-	name: string
-	email?: string
-	avatarUrl?: string
-	providers: {
-		type: 'github'
-		id: number | string
-	}[]
-}
 
 export const userFromGithub = (data: any): User => {
 	return {
@@ -18,17 +10,6 @@ export const userFromGithub = (data: any): User => {
 		avatarUrl: data.avatar_url,
 		providers: [{ type: 'github', id: data.id }],
 	}
-}
-
-export interface userSession {
-	name: string
-	accessToken: string
-	repo: gitRepoDetails
-}
-
-export interface userJwtData {
-	name: string
-	session: hash
 }
 
 export const encodeUserJwt = (

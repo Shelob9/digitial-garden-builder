@@ -2,9 +2,8 @@ import NoteApp from "../../components/NoteApp";
 import { NoteLayoutProvider } from "../../components/useNoteLayout";
 import { NotesProvider } from "../../components/useNotes";
 import useIsLoggedInAuthorized from "../../hooks/useIsLoggedAuthorized";
-import factory from "../../services/serviceFactories";
 import { FC } from "react";
-import { INote } from "../../components/Note";
+import { INote } from "../../../types";
 
 import { NextSeo } from 'next-seo';
 
@@ -30,7 +29,7 @@ const NoteSeo: FC<{ note: INote }> = ({ note })=> {
 const Page: FC<
   { noteOne: string; noteTwo?: string; noteThree?: string; note?:INote }
 > = ({ noteOne, noteTwo, noteThree, note }) => {
-    const { isLoggedIn, userDisplayName, isSessionLoading } = useIsLoggedInAuthorized();
+    const { isLoggedIn, userDisplayName } = useIsLoggedInAuthorized();
     return (
       <>
         <NoteSeo note={note} />
@@ -59,11 +58,9 @@ export default Page;
 export async function getServerSideProps({req,params, query}) {
   const { slug } = params;
   const { noteThree, noteTwo } = query;
-  let { noteService } = await factory(req);
-  let note = await noteService.fetchNote(slug);
+
   return {
     props: {
-        note,
         slug,
         noteOne: slug,
         noteTwo: noteTwo ?? '',

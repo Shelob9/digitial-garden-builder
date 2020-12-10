@@ -10,6 +10,7 @@ export default function Hi({name}) {
 
 export async function getServerSideProps({ req }) {
     const session = getSession(req);
+    console.log(session);
     return {
         props: {
             name: session ? session.name : 'Roy'
