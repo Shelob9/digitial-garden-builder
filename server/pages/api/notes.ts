@@ -1,7 +1,11 @@
 import factory from '../../services/serviceFactories'
 import { NextApiRequest, NextApiResponse } from 'next'
+import createCorsMiddleWare from '../../lib/createCorsMiddleWare'
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+	const cors = createCorsMiddleWare(['GET', 'OPTIONS'])
+	await cors(req, res)
 	let { noteService, session } = await factory(req)
+
 	let noteIndex = await noteService.fetchNoteIndex()
 	switch (req.method) {
 		case 'GET':

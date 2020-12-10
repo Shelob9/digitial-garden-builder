@@ -27,6 +27,7 @@ These commands should be run from root of monorepo as `yarn client dev` most of 
     - Example: `REPO_NAME=garden-cms-test-data`
 - Url for garden server
   - `NEXT_PUBLIC_GARDEN_SERVER_URL`
+  - [Will be availble in the browser](https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser)
   - In production:
     - `NEXT_PUBLIC_GARDEN_SERVER_URL=https://garden-server.vercel.app/api/session`
   - In development:

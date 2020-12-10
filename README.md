@@ -12,6 +12,17 @@ This is an experiment [Josh](https://joshpress.net) made.
   - Do not use npm. Must use Yarn 1.x
   - `yarn`
 
+## Development
+
+- Start server:
+  - `yarn server dev`
+- Start client:
+  - `yarn client dev`
+- Test server:
+  - `yarn test dev`
+- Test client:
+  - `yarn test dev`
+
 ## Workspaces
 
 - Client

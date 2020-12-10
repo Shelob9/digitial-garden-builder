@@ -3,8 +3,11 @@ import { INote } from './../../../../types'
 import factory from '../../../services/serviceFactories'
 import { NextApiResponse } from 'next'
 import { NextApiRequest } from 'next'
+import createCorsMiddleWare from '../../../lib/createCorsMiddleWare'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+	const cors = createCorsMiddleWare(['GET', 'OPTIONS'])
+	await cors(req, res)
 	res.setHeader('Content-Type', 'application/json')
 	res.setHeader('Cache-Control', 's-maxage=86400')
 	let session = getSession(req)

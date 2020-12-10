@@ -1,7 +1,10 @@
 import factory from '../../services/serviceFactories'
 import { NextApiRequest, NextApiResponse } from 'next'
+import createCorsMiddleWare from '../../lib/createCorsMiddleWare'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+	const cors = createCorsMiddleWare(['GET', 'OPTIONS'])
+	await cors(req, res)
 	const { session, configService } = await factory(req)
 	if (!session) {
 		return res.status(403).json({ allowed: false, session })

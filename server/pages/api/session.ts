@@ -1,16 +1,10 @@
 import { decryptSession } from '../../services/UserService'
 import { NextApiRequest, NextApiResponse } from 'next'
 import getSession from '../../lib/getSession'
-import initMiddleware from '../../lib/init-middleware'
-import Cors from 'cors'
-
-const cors = initMiddleware(
-	Cors({
-		methods: ['GET', 'OPTIONS'],
-	})
-)
+import createCorsMiddleWare from '../../lib/createCorsMiddleWare'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+	const cors = createCorsMiddleWare(['GET', 'OPTIONS'])
 	await cors(req, res)
 	let session = getSession(req)
 	let repo = {}
