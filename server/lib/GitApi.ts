@@ -1,4 +1,4 @@
-import { noteIndex } from '../services/NotesApiService'
+import { noteIndex } from '../../types'
 import { getOctokit, gitRepoDetails } from './getOctoKit'
 import {
 	createBlobForFile,

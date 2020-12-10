@@ -1,4 +1,3 @@
-import { Octokit } from '@octokit/rest'
 
 //Git util functions.
 //Based on https://dev.to/lucis/how-to-push-files-programatically-to-a-repository-using-octokit-with-typescript-1nj0
