@@ -16,7 +16,8 @@
 		"dotenv": "^8.2.0",
 		"next": "latest",
 		"react": "^16.13.1",
-		"react-dom": "^16.13.1"
+		"react-dom": "^16.13.1",
+		"universal-cookie": "^4.0.4"
 	},
 	"license": "MIT"
 }
