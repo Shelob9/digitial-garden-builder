@@ -2,7 +2,7 @@ import NoteApp from '../components/NoteApp';
 import { NoteLayoutProvider } from '../components/useNoteLayout';
 import { NotesProvider } from '../components/useNotes';
 import useIsLoggedIn from '../hooks/useIsLoggedAuthorized'
-import factory from '../serviceFactories';
+import factory from '../services/serviceFactories';
 const Index = ({noteSlug}) => {
   const {isLoggedIn,userDisplayName} = useIsLoggedIn()
   return (

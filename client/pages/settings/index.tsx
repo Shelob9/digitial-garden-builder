@@ -1,8 +1,8 @@
-import factory from '../../serviceFactories';
+import factory from '../../services/serviceFactories';
 import {useTextField} from '@react-aria/textfield'
 import { FC, forwardRef, useRef, useState } from 'react';
 import Layout from '../../components/Layout';
-import { GardenConfig } from '../../ConfigApiService';
+import { GardenConfig } from '../../services/ConfigApiService';
 import useNotes, { NotesProvider } from '../../components/useNotes';
 
 const FieldWrapper = ({ children }) => {

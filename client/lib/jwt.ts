@@ -14,6 +14,7 @@ export const createJwtToken = (data: any) => {
 export const decodeJwtToken = (token: string) => {
 	try {
 		let decoded = jwt.verify(token, secret)
+		//@ts-ignore
 		return decoded.data
 	} catch (err) {
 		return false

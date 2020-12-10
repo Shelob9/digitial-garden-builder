@@ -1,4 +1,4 @@
-import { IGitApi } from './lib/GitApi'
+import { IGitApi } from '../lib/GitApi'
 export interface GardenConfig {
 	siteName: string
 	siteTwitter?: string

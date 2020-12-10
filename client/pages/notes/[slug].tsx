@@ -2,7 +2,7 @@ import NoteApp from "../../components/NoteApp";
 import { NoteLayoutProvider } from "../../components/useNoteLayout";
 import { NotesProvider } from "../../components/useNotes";
 import useIsLoggedInAuthorized from "../../hooks/useIsLoggedAuthorized";
-import factory from "../../serviceFactories";
+import factory from "../../services/serviceFactories";
 import { FC } from "react";
 import { INote } from "../../components/Note";
 

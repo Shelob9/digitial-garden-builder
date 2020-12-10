@@ -1,4 +1,4 @@
-import { noteIndex } from './../NotesApiService'
+import { noteIndex } from '../services/NotesApiService'
 import findNoteSlugInLink from '../lib/findNoteSlugInLink'
 import findReferences, { findWikiLinks } from '../lib/findReferences'
 import { encrypt, decrypt } from '../lib/encryptDecrypt'

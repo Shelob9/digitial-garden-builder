@@ -1,6 +1,6 @@
 import { INote } from './../components/Note'
-import NoteService from '../NoteService'
-import { noteIndex } from 'NotesApiService'
+import NoteService from '../services/NoteService'
+import { noteIndex } from '../services/NotesApiService'
 
 const item = (slug: string) => {
 	return {

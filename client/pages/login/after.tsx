@@ -1,5 +1,5 @@
 import useUserToken from "../../hooks/useUserCookie";
-import { encodeUserJwt, userFromGithub } from "../../UserService";
+import { encodeUserJwt, userFromGithub } from "../../services/UserService";
 const clientId = process.env.GITHUB_ID
 const clientSecret = process.env.GITHUB_SECRET
 const scopes = `repo,user`

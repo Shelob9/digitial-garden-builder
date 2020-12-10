@@ -5,7 +5,7 @@ import {
 	decodeUserJwt,
 	getAccessTokenFromSession,
 	decryptSession,
-} from '../UserService'
+} from '../services/UserService'
 
 describe('user functions', () => {
 	const data = {

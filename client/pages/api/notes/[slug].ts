@@ -1,6 +1,6 @@
 import getSession from '../../../lib/getSession'
 import { INote } from './../../../components/Note'
-import factory from './../../../serviceFactories'
+import factory from '../../../services/serviceFactories'
 import { NextApiResponse } from 'next'
 import { NextApiRequest } from 'next'
 

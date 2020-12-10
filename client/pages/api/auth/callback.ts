@@ -1,4 +1,4 @@
-import { encodeUserJwt, userFromGithub } from './../../../UserService'
+import { encodeUserJwt, userFromGithub } from '../../../services/UserService'
 import { NextApiRequest, NextApiResponse } from 'next'
 const clientId = process.env.GITHUB_ID
 const clientSecret = process.env.GITHUB_SECRET

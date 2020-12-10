@@ -1,7 +1,7 @@
-import { INote } from './components/Note'
-import findReferences from './lib/findReferences'
-import findTitle from './lib/findTitle'
-import { IGitApi } from './lib/GitApi'
+import { INote } from '../components/Note'
+import findReferences from '../lib/findReferences'
+import findTitle from '../lib/findTitle'
+import { IGitApi } from '../lib/GitApi'
 import NoteService from './NoteService'
 const fm = require('front-matter')
 export type noteIndexItem = {

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
-import { noteIndex, noteIndexItem } from "../NotesApiService";
+import { noteIndex, noteIndexItem } from "../services/NotesApiService";
 import { INote } from "./Note";
 
 const NotesContext = createContext(null);

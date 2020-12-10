@@ -1,5 +1,5 @@
-import { decrypt, encrypt, hash } from './lib/encryptDecrypt'
-import { createJwtToken, decodeJwtToken } from './lib/jwt'
+import { decrypt, encrypt, hash } from '../lib/encryptDecrypt'
+import { createJwtToken, decodeJwtToken } from '../lib/jwt'
 export interface User {
 	name: string
 	email?: string

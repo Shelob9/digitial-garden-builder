@@ -1,4 +1,4 @@
-import factory from './../../serviceFactories'
+import factory from '../../services/serviceFactories'
 import { NextApiRequest, NextApiResponse } from 'next'
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	let { noteService, session } = await factory(req)
