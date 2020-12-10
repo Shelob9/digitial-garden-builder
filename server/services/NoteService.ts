@@ -1,4 +1,4 @@
-import { noteIndex, noteIndexItem } from './NotesApiService'
+import { noteIndex, noteIndexItem } from '../../types'
 
 class NoteService {
 	notes: noteIndex
