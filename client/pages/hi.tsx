@@ -1,19 +1,11 @@
 import useIsLoggedInAuthorized from "../hooks/useIsLoggedAuthorized"
-import getSession from "../lib/getSession";
 
 export default function Hi({name}) {
-    const { isLoggedIn } = useIsLoggedInAuthorized();
+    const { isLoggedIn,userDisplayName,isSessionLoading } = useIsLoggedInAuthorized();
     return <div>
-        Hi {name}
+        {isSessionLoading ? <div>Loading</div> : <>
+             <p>Hi {isLoggedIn ? userDisplayName : 'Roy'}</p>
+        </>}
     </div>
 }
 
-export async function getServerSideProps({ req }) {
-    const session = getSession(req);
-    console.log(session);
-    return {
-        props: {
-            name: session ? session.name : 'Roy'
-        }
-    }
-}

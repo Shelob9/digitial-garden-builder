@@ -28,10 +28,12 @@ const useIsLoggedInAuthorized = () => {
 				} else {
 					setIsLoggedIn(false)
 				}
-				if (r.session.name) {
-					setUserDisplayName(r.session.name)
-				} else {
-					setUserDisplayName('Roy')
+				if (r.user) {
+					if (r.user.name) {
+						setUserDisplayName(r.user.name)
+					} else {
+						setUserDisplayName('Roy')
+					}
 				}
 				setLoading(false)
 			})
