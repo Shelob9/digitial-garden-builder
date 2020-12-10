@@ -1,4 +1,4 @@
-import { noteIndex } from '../services/NotesApiService'
+import { noteIndex } from '../../types'
 export const findWikiLinks = (content: string): string[] => {
 	let matches = content.match(/\[\[(.*?)]]/g)
 	if (matches && matches.length) {

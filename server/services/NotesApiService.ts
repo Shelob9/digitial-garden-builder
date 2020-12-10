@@ -1,29 +1,9 @@
-import { INote } from '../components/Note'
-import findReferences from '../lib/findReferences'
+import { INote, noteIndex, noteIndexItem } from '../../types'
+//import findReferences from '../lib/findReferences'
 import findTitle from '../lib/findTitle'
 import { IGitApi } from '../lib/GitApi'
 import NoteService from './NoteService'
 const fm = require('front-matter')
-export type noteIndexItem = {
-	slug: string
-	path: string
-	name: string
-	apiUrl: string
-	url: string
-}
-
-function rand(min = 1, max = 10000) {
-	let randomNum = Math.random() * (max - min) + min
-	return Math.floor(randomNum)
-}
-
-export type noteIndex = noteIndexItem[]
-
-const extractMatter = (content: string): { title: string; slug: string } => {
-	let matter = fm(content)
-	let { title, slug } = matter.attributes
-	return { title, slug }
-}
 
 const maybeUpdateTitle = (content: string) => {
 	let title = findTitle(content)
@@ -70,14 +50,16 @@ class NotesApiService {
 				throw new Error('Fuck')
 			}
 			let matter = fm(content)
-			let references = findReferences(content, this.noteIndex)
-			let note: INote = {
-				title: matter.attributes.title,
-				content: maybeUpdateTitle(matter.body),
-				slug: _note.slug,
-				references,
+			let note: noteIndexItem = {
+				slug,
+				name: matter.attributes.title,
+				path: `/notes/${slug}.md`,
+				url: `/notes/${slug}`,
+				apiUrl: `notes/api/${slug}`,
 			}
-			this.noteService.setNotes([...this.noteService.getNotes(), note])
+			let update: noteIndex = this.noteService.getNotes()
+			update.push(note as noteIndexItem)
+			this.noteService.setNotes(update as noteIndex)
 			return note
 		})
 	}

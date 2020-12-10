@@ -1,4 +1,4 @@
-import { INote } from '../components/Note'
+import { INote } from '../../types'
 import findReferences from '../lib/findReferences'
 import findTitle from '../lib/findTitle'
 import { IGitApi } from '../lib/GitApi'
@@ -70,14 +70,16 @@ class NotesApiService {
 				throw new Error('Fuck')
 			}
 			let matter = fm(content)
-			let references = findReferences(content, this.noteIndex)
-			let note: INote = {
-				title: matter.attributes.title,
-				content: maybeUpdateTitle(matter.body),
-				slug: _note.slug,
-				references,
+			let note: noteIndexItem = {
+				slug,
+				name: matter.attributes.title,
+				path: `/notes/${slug}.md`,
+				url: `/notes/${slug}`,
+				apiUrl: `notes/api/${slug}`,
 			}
-			this.noteService.setNotes([...this.noteService.getNotes(), note])
+			let update: noteIndex = this.noteService.getNotes()
+			update.push(note as noteIndexItem)
+			this.noteService.setNotes(update as noteIndex)
 			return note
 		})
 	}
