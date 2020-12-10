@@ -1,5 +1,3 @@
-import { match } from 'assert'
-
 export default function findTitle(
 	content: string
 ): { title: string; match: string } | void {
