@@ -3,10 +3,10 @@
 	"private": true,
 	"workspaces": [
 		"client",
-		"github-app"
+		"server"
 	],
 	"scripts": {
 		"client": "yarn workspace @garden-cms/client",
-		"gh": "yarn workspace @garden-cms/github-app"
+		"server": "yarn workspace @garden-cms/server"
 	}
 }
