@@ -2,7 +2,6 @@ import NoteApp from '../components/NoteApp';
 import { NoteLayoutProvider } from '../components/useNoteLayout';
 import { NotesProvider } from '../components/useNotes';
 import useIsLoggedIn from '../hooks/useIsLoggedAuthorized'
-import factory from '../services/serviceFactories';
 const Index = ({noteSlug}) => {
   const {isLoggedIn,userDisplayName} = useIsLoggedIn()
   return (
@@ -17,11 +16,11 @@ const Index = ({noteSlug}) => {
 }
 
 export async function getServerSideProps({req}) {
-  let { configService } = await factory(req)
-  let noteSlug = configService.config.defaultNote || 'one';
+  //let { configService } = await factory(req)
+  //let noteSlug = configService.config.defaultNote || 'one';
   return {
     props: {
-      noteSlug
+      noteSlug:'one'
     }
   }
 }
