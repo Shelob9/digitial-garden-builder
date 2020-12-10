@@ -1,4 +1,3 @@
-import { INote } from './../../client/components/Note'
 import { INote, noteIndex, noteIndexItem } from '../../types'
 //import findReferences from '../lib/findReferences'
 import findTitle from '../lib/findTitle'

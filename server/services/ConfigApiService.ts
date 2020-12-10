@@ -1,3 +1,4 @@
+import { GardenConfig } from '../../types/config'
 import { IGitApi } from '../lib/GitApi'
 
 let configPath = '/garden.json'

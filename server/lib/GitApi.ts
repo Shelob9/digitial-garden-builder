@@ -1,5 +1,6 @@
 import { noteIndex } from '../../types'
-import { getOctokit, gitRepoDetails } from './getOctoKit'
+import { gitRepoDetails } from '../../types/git'
+import { getOctokit } from './getOctoKit'
 import {
 	createBlobForFile,
 	createNewCommit,

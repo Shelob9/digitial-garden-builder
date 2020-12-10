@@ -33,6 +33,7 @@ const MarkdownEditor: React.FC<markdownEditorProps> = ({value,setValue}) => {
     // Promise that waits for "time" milliseconds
     const wait = function (time) {
       return new Promise((a, r) => {
+        //@ts-ignore
         setTimeout(() => a(), time);
       });
     };

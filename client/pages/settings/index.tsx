@@ -155,10 +155,17 @@ const Settings: FC<{ settings: GardenConfig }> = ({ settings }) => {
         
     );
 }
-const Page: FC<{ settings: GardenConfig }> = ({ settings }) => {
+const Page: FC<{ settings?: GardenConfig }> = ({ settings }) => {
     return (
         <NotesProvider>
-            <Settings settings={settings} />
+            <Settings settings={settings ? settings : {
+            defaultNote: 'one',
+            siteName: '',
+            siteTwitter: '',
+            authorName: '',
+            //@ts-ignore
+            authorTwitter: '',
+        }} />
         </NotesProvider>
     )
 }

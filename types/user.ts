@@ -1,5 +1,5 @@
 import { hash } from './../server/lib/encryptDecrypt'
-import { gitRepoDetails } from './../server/lib/getOctoKit'
+import { gitRepoDetails } from './git'
 export interface User {
 	name: string
 	email?: string

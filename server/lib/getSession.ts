@@ -1,4 +1,4 @@
-import { userJwtData } from '../services/UserService'
+import { userJwtData } from '../../types/user'
 import { decodeJwtToken } from './jwt'
 import { NextApiRequest } from 'next'
 import Cookies from 'universal-cookie'
