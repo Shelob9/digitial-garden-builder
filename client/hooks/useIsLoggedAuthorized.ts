@@ -1,6 +1,9 @@
 import { useMemo, useState, useEffect } from 'react'
 import useUserCookie from './useUserCookie'
 
+let gardenServerUrl =
+	process.env.NEXT_PUBLIC_GARDEN_SERVER_URL ||
+	'https://garden-server.vercel.app/api/session'
 const useIsLoggedInAuthorized = () => {
 	let [loading, setLoading] = useState(true)
 	let [isLoggedIn, setIsLoggedIn] = useState(true)
@@ -13,7 +16,7 @@ const useIsLoggedInAuthorized = () => {
 		if (!token) {
 			return
 		}
-		fetch('https://garden-server.vercel.app/api/session', {
+		fetch(gardenServerUrl, {
 			method: 'POST',
 			headers: {
 				'content-type': 'application/json',

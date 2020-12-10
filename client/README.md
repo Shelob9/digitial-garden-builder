@@ -25,7 +25,13 @@ These commands should be run from root of monorepo as `yarn client dev` most of 
     - Example: `REPO_OWNER=shelob9`
   - `REPO_NAME`: Name of the Github repo to use.
     - Example: `REPO_NAME=garden-cms-test-data`
-
+- Url for garden server
+  - `NEXT_PUBLIC_GARDEN_SERVER_URL`
+  - In production:
+    - `NEXT_PUBLIC_GARDEN_SERVER_URL=https://garden-server.vercel.app/api/session`
+  - In development:
+    - `NEXT_PUBLIC_GARDEN_SERVER_URL=http://localhost:3000/api/session`
+  
 ### What It Is Built With
 
 - The UI for the note viewer started as a fork of [gatsby-theme-garden](https://github.com/mathieudutour/gatsby-digital-garden).
