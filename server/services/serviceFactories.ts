@@ -1,10 +1,9 @@
-import { userJwtData } from './UserService'
+import { userJwtData, getAccessTokenFromSession } from './UserService'
 import { NextApiRequest } from 'next'
 import ConfigApiService from './ConfigApiService'
 import GitApi from '../lib/GitApi'
 import NotesApiService from './NotesApiService'
 import getSession from '../lib/getSession'
-import { getAccessTokenFromSession } from 'services/UserService'
 
 let repo = { owner: process.env.REPO_OWNER, repo: process.env.REPO_NAME }
 
