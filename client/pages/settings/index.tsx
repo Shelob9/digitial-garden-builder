@@ -1,8 +1,7 @@
-import factory from '../../services/serviceFactories';
 import {useTextField} from '@react-aria/textfield'
 import { FC, forwardRef, useRef, useState } from 'react';
 import Layout from '../../components/Layout';
-import { GardenConfig } from '../../services/ConfigApiService';
+import { GardenConfig } from '../../../types/config';
 import useNotes, { NotesProvider } from '../../components/useNotes';
 
 const FieldWrapper = ({ children }) => {
@@ -164,18 +163,5 @@ const Page: FC<{ settings: GardenConfig }> = ({ settings }) => {
     )
 }
 
-export async function getServerSideProps({ req,res }) {
-    const { configService,session } = await factory(req);
-    if (!session) {
-        res.writeHead(302, { Location: '/login' });
-        res.end();
-    }
-    let settings = configService.getSettings();
-    return {
-        props: {
-            settings
-        }
-    }
-}
 
 export default Page;

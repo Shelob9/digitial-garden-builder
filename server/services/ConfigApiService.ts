@@ -1,11 +1,4 @@
 import { IGitApi } from '../lib/GitApi'
-export interface GardenConfig {
-	siteName: string
-	siteTwitter?: string
-	authorName?: string
-	authorTwitter?: string
-	defaultNote?: string
-}
 
 let configPath = '/garden.json'
 class ConfigApiService {
