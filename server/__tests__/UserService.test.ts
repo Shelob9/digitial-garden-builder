@@ -14,6 +14,10 @@ describe('user functions', () => {
 		avatar_url: 'https://avatars0.githubusercontent.com/u/1994311?v=4',
 		email: 'green@catctus.plants',
 	}
+	const repo = {
+		owner: 'magic',
+		repo: 'post-its',
+	}
 
 	test('user from github', () => {
 		let user = userFromGithub(data)
@@ -24,9 +28,11 @@ describe('user functions', () => {
 	test('encode and decode user', () => {
 		const name = 'The Dude'
 		const accessToken = '123456secret'
-		expect(decodeUserJwt(encodeUserJwt(name, accessToken))).toEqual({
+
+		expect(decodeUserJwt(encodeUserJwt(name, accessToken, repo))).toEqual({
 			name,
 			accessToken,
+			repo,
 		})
 	})
 	test('decrypts session', () => {
@@ -34,9 +40,9 @@ describe('user functions', () => {
 		expect(
 			decryptSession({
 				name: 'Trover DuChamps',
-				session: encrypt(JSON.stringify({ accessToken })),
+				session: encrypt(JSON.stringify({ accessToken, repo })),
 			})
-		).toEqual({ name: 'Trover DuChamps', accessToken })
+		).toEqual({ name: 'Trover DuChamps', accessToken, repo })
 	})
 
 	test('gets accessToken from session', () => {

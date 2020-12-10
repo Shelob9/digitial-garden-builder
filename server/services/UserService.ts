@@ -1,3 +1,4 @@
+import { gitRepoDetails } from './../../client/lib/getOctoKit'
 import { decrypt, encrypt, hash } from '../lib/encryptDecrypt'
 import { createJwtToken, decodeJwtToken } from '../lib/jwt'
 export interface User {
@@ -22,6 +23,7 @@ export const userFromGithub = (data: any): User => {
 export interface userSession {
 	name: string
 	accessToken: string
+	repo: gitRepoDetails
 }
 
 export interface userJwtData {
@@ -29,10 +31,14 @@ export interface userJwtData {
 	session: hash
 }
 
-export const encodeUserJwt = (name: string, accessToken: string): string => {
+export const encodeUserJwt = (
+	name: string,
+	accessToken: string,
+	repo: gitRepoDetails
+): string => {
 	return createJwtToken({
 		name,
-		session: encrypt(JSON.stringify({ accessToken })),
+		session: encrypt(JSON.stringify({ accessToken, repo })),
 	})
 }
 
@@ -50,6 +56,8 @@ export const decryptSession = (
 					name: decodedJwtData.name,
 					//@ts-ignore
 					accessToken: session.accessToken,
+					//@ts-ignore
+					repo: session.repo,
 				}
 			}
 		}
