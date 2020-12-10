@@ -1,8 +1,10 @@
+import { INote } from './../../client/components/Note'
 import { INote, noteIndex, noteIndexItem } from '../../types'
 //import findReferences from '../lib/findReferences'
 import findTitle from '../lib/findTitle'
 import { IGitApi } from '../lib/GitApi'
 import NoteService from './NoteService'
+import findReferences from '../lib/findReferences'
 const fm = require('front-matter')
 
 const maybeUpdateTitle = (content: string) => {
@@ -50,15 +52,27 @@ class NotesApiService {
 				throw new Error('Fuck')
 			}
 			let matter = fm(content)
-			let note: noteIndexItem = {
+			let title = matter.attributes.title
+			let references = findReferences(
+				content,
+				this.noteService.getNotes()
+			)
+
+			let note: INote = {
+				title,
+				content,
 				slug,
-				name: matter.attributes.title,
+				references,
+			}
+			let noteIndexItem: noteIndexItem = {
+				slug,
+				name: title,
 				path: `/notes/${slug}.md`,
 				url: `/notes/${slug}`,
 				apiUrl: `notes/api/${slug}`,
 			}
 			let update: noteIndex = this.noteService.getNotes()
-			update.push(note as noteIndexItem)
+			update.push(noteIndexItem)
 			this.noteService.setNotes(update as noteIndex)
 			return note
 		})
