@@ -4,7 +4,7 @@ const slugify = require('slugify')
 import Layout from "./Layout";
 import MarkdownEditor from "./MarkdownEditor";
 import { INote } from "../../types";
-import useNotes, { useSingleNote,gardenFetcher} from "./useNotes";
+import useNotes, { useSingleNote,} from "./useNotes";
 
 //editor for the title
 const Title = forwardRef((props: {defaultValue:string}, ref) =>
@@ -67,7 +67,7 @@ const Inner: FC<{
   
 //Create a new note
 const createNote = async (note: INote) => {
-        return gardenFetcher(`/api/notes`, {
+        return fetch(`/api/notes`, {
             method: 'PUT',
             body: JSON.stringify({ note }),
             headers: {

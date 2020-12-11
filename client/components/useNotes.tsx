@@ -79,7 +79,7 @@ export const useSingleNote = (props: {
     const saveNote = async (note: INote) => {
         delete note.references;
         mutate(note);
-        return fetch(`${NEXT_PUBLIC_GARDEN_SERVER_URL}/api/notes/${props.slug}`, {
+        return fetch(`${process.env.NEXT_PUBLIC_GARDEN_SERVER_URL}/api/notes/${props.slug}`, {
             method: 'POST',
             body: JSON.stringify({ note }),
             headers: {
