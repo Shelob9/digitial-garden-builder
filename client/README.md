@@ -33,12 +33,12 @@ These commands should be run from root of monorepo as `yarn client dev` most of 
   - In development:
     - `NEXT_PUBLIC_GARDEN_SERVER_URL=http://localhost:3000`
 - Githun APP, client ID
-  - `GITHUB_ID`
+  - `NEXT_PUBLIC_GITHUB_CLIENT_ID`
   - Used to create login redirect link
 - Client URL
-  - `CLIENT_LOGIN_REDIRECT`
+  - `NEXT_PUBLIC_CLIENT_LOGIN_REDIRECT`
   - URL that login will use to redirect back to client.
-  - In development `CLIENT_LOGIN_REDIRECT=http://localhost:3000/login/after`
+  - In development `NEXT_PUBLIC_CLIENT_LOGIN_REDIRECT=http://localhost:3000/login/after`
   
 ### What It Is Built With
 

@@ -25,7 +25,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		try {
 			let user = await getUser(accessToken)
 			user = userFromGithub(user)
+			//Create a JWT token that has:
+			// - Username. Not encrypted.
+			// - Encrypted session with Github access token and repo details.
+			// JWT encoding !== encryption. hmac is used inside.
 			let token = encodeUserJwt(user.name, accessToken, {
+				//@todo set this based on installed app
 				owner: 'shelob9',
 				repo: 'garden-cms-test-data',
 			})
