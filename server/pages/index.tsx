@@ -5,7 +5,12 @@ export default function Index({redirect}) {
         Digital Garden Builder Server
          
       </h1>
-      {redirect ? <a href={redirect}>Complete Login</a>: <p>If you tried to login and end up here unclear what to do next, sorry. The URL to redirect back should be in state query param, it's not though...</p>}
+      {redirect ? <a href={redirect}>Complete Login</a> : <p />}
+      <section>
+        <h2>Would You Like A Digital Garden?</h2>
+        <a href="https://forms.gle/ji34YzzdgzjTgXkJ8">Please fill out this form.</a>
+      </section>
+       
     </>
     
   )
