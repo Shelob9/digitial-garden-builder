@@ -5,6 +5,8 @@ import { GardenConfig } from '../../../types/config';
 import useNotes, {  NotesProvider } from '../../components/useNotes';
 import useUserToken from 'hooks/useUserCookie';
 import { useMemo } from 'react';
+import useGardenServer from 'hooks/useGardenServer';
+import { useEffect } from 'react';
 
 const FieldWrapper = ({ children }) => {
     return (
@@ -66,22 +68,44 @@ const NoteSelector = ({selectedNote,setSelectedNote}) => {
         </FieldWrapper>
     )
 }
-const Settings: FC<{ settings: GardenConfig }> = ({ settings }) => {
+const Settings = () => {
     const { token } = useUserToken({});
+    const { createUrl, createHeaders } = useGardenServer({ token });
+    
+    const [settings,setSettings] = useState<GardenConfig>({
+        defaultNote: 'one',
+        siteName: '',
+        siteTwitter: '',
+        authorName: '',
+        //@ts-ignore
+        authorTwitter: '',
+    })
+
+    useEffect(() => {
+        fetch(createUrl('/api/settings'), {
+            method: 'GET',
+            headers: createHeaders()
+        }).then(r => {
+            r.json()
+        }).then(r => {
+            console.log(r);
+            //@ts-ignore
+            setSettings(r.settings);
+        });   
+    })
+
     const saveSettings = useMemo(() => {
         return async (settings: GardenConfig) => {
-            return fetch('/api/settings', {
+            return fetch(createUrl('/api/settings'), {
                 method: 'POST',
                 body: JSON.stringify({ settings }),
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: token
-                }
+                headers: createHeaders()
             }).then(r => {
                 r.json()
             }).then(r => console.log(r));
         }
-    },[token]);
+    }, [token]);
+    
     const siteNameRef = useRef();
     const siteTwitterRef = useRef();
     const authorNameRef = useRef();
@@ -172,17 +196,10 @@ const Settings: FC<{ settings: GardenConfig }> = ({ settings }) => {
         
     );
 }
-const Page: FC<{ settings?: GardenConfig }> = ({ settings }) => {
+const Page = () => {
     return (
         <NotesProvider>
-            <Settings settings={settings ? settings : {
-            defaultNote: 'one',
-            siteName: '',
-            siteTwitter: '',
-            authorName: '',
-            //@ts-ignore
-            authorTwitter: '',
-        }} />
+            <Settings  />
         </NotesProvider>
     )
 }

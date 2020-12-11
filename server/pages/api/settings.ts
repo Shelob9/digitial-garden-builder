@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import createCorsMiddleWare from '../../lib/createCorsMiddleWare'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-	const cors = createCorsMiddleWare(['GET', 'OPTIONS'])
+	const cors = createCorsMiddleWare(['GET', 'POST', 'OPTIONS'])
 	await cors(req, res)
 	const { session, configService } = await factory(req)
 	if (!session) {

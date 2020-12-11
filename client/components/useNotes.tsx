@@ -1,28 +1,19 @@
+import useGardenServer from "hooks/useGardenServer";
 import useUserToken from "hooks/useUserCookie";
 import { createContext, useContext, useMemo } from "react";
 import useSWR from "swr";
 import {  noteIndexItem,INote } from "../../types";
-let gardenServer = process.env.NEXT_PUBLIC_GARDEN_SERVER_URL || 'https://garden-server.vercel.app'
-const NotesContext = createContext(null);
 
-//Create URL with garden server from uri
-// Provide uris with forward slash - `/api/hi/roy` - please
-function createUrl(uri:string) {
-    let url = `${gardenServer}${uri}`
-    return url;
-}
+const NotesContext = createContext(null);
 
 //Returns a fetch function for garden server
 const createFetch = (token: string | undefined,handler:(r:any) => any) => {
-    
+    const { createUrl,createHeaders } = useGardenServer({token});
     
     if (token) {
         return (uri:string, args: any) => {
             args = Object.assign({
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: token
-                }
+                headers: createHeaders()
             } , args);
             return fetch(createUrl(uri), args)
                 .then(r => r.json())
@@ -43,6 +34,7 @@ const createFetch = (token: string | undefined,handler:(r:any) => any) => {
 
 //Context provider for note index
 export const NotesProvider = ({ children }) => {
+
     //Get token and create a stable fetch function with it.
     const { token } = useUserToken({});
     const noteFetcher = useMemo(() => {
@@ -51,16 +43,15 @@ export const NotesProvider = ({ children }) => {
         });
     }, [token])
 
+    const { createUrl,createHeaders } = useGardenServer({token});
+
     //Stable function to create ntoes
     const createNote = useMemo(() => {
         return (note: INote) => {
-            return fetch(`${gardenServer}/api/notes`, {
+            return fetch(createUrl( `api/notes`), {
                 method: 'PUT',
                 body: JSON.stringify({ note }),
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: token
-                }
+                headers: createHeaders()
           
             })
                 .then(r => r.json())
@@ -125,6 +116,7 @@ export const useSingleNote = (props: {
         note: INote | undefined;
         saveNote: (note: INote) => Promise<INote>;
     } => {
+
     //Get token and create a stable fetch function with it.
     const { token } = useUserToken({});
     const noteFetcher = useMemo(() => {
@@ -132,6 +124,8 @@ export const useSingleNote = (props: {
             return r.note;
         });
     }, [token])
+    const { createUrl,createHeaders } = useGardenServer({token});
+
     
     //Get single note via API
     const { data: note,mutate  } = useSWR(
@@ -146,10 +140,7 @@ export const useSingleNote = (props: {
         return fetch(createUrl(`/api/notes/${props.slug}`), {
             method: 'POST',
             body: JSON.stringify({ note }),
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: token
-            }
+            headers: createHeaders()
 
         })
             .then(r => r.json())
