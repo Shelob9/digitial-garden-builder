@@ -1,10 +1,10 @@
 export default function Index({redirect}) {
   return (
     <>
-      <p>
+      <h1>
         Digital Garden Builder Server
          
-      </p>
+      </h1>
       {redirect && <a href={redirect}>Complete Login</a>}
     </>
     
@@ -13,7 +13,7 @@ export default function Index({redirect}) {
 
 export async function getServerSideProps({ query }) {
   const { token, state } = query;
-  let redirect = `${state}?token=${token}`
+  let redirect = token && state ? `${state}?token=${token}` : '';
   return {
     props: 
       {redirect}
