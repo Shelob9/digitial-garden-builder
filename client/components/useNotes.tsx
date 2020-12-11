@@ -3,6 +3,7 @@ import useUserToken from "hooks/useUserCookie";
 import { createContext, useContext, useMemo } from "react";
 import useSWR from "swr";
 import {  noteIndexItem,INote } from "../../types";
+import { GardenConfig } from "../../types/config";
 
 const NotesContext = createContext(null);
 
@@ -104,6 +105,45 @@ const useNotes = () => {
 }
 
 export default useNotes;
+
+
+export const useNoteSettings = () => {
+    //Get token and create a stable fetch function with it.
+    const { token } = useUserToken({});
+    const settingsFetcher = useMemo(() => {
+        return createFetch(token, r => {
+            return r.settings;
+        });
+    }, [token])
+
+    //Get settings via api
+    const { data,mutate  } = useSWR(
+        `/api/settings`,
+        settingsFetcher,
+    );
+
+    const { createUrl,createHeaders } = useGardenServer({token});
+    const saveSettings = async (settings: GardenConfig) : Promise<GardenConfig> => {
+        return fetch(createUrl(`/api/settings`), {
+            method: 'POST',
+            body: JSON.stringify({ settings }),
+            headers: createHeaders(),
+
+        }).then(r => r.json())
+            .then(r => {
+                if (r.settings) {
+                    mutate(r.settings)
+                    return r.settings;
+                }
+                return settings;
+        })
+    }
+
+    return {
+        settings: data as GardenConfig,
+        saveSettings
+    }
+}
 
 //Hook for single notes, via local API
 export const useSingleNote = (props: {

@@ -1,7 +1,10 @@
-export default function useGardenServer(props: { token?: string }) {
+
+
+export default function useGardenServer(props:{token?:string}) {
 	let gardenServer =
 		process.env.NEXT_PUBLIC_GARDEN_SERVER_URL ||
 		'https://garden-server.vercel.app'
+	
 	//Create URL with garden server from uri
 	// Provide uris with forward slash - `/api/hi/roy` - please
 	function createUrl(uri: string) {
@@ -9,6 +12,7 @@ export default function useGardenServer(props: { token?: string }) {
 		return url
 	}
 
+	//Create request headers with token
 	function createHeaders() {
 		if (props.token) {
 			return {
@@ -21,6 +25,7 @@ export default function useGardenServer(props: { token?: string }) {
 		}
 	}
 
+    
 	return {
 		createUrl,
 		createHeaders,

@@ -2,7 +2,7 @@ import {useTextField} from '@react-aria/textfield'
 import { FC, forwardRef, useRef, useState } from 'react';
 import Layout from '../../components/Layout';
 import { GardenConfig } from '../../../types/config';
-import useNotes, {  NotesProvider } from '../../components/useNotes';
+import useNotes, {  NotesProvider, useNoteSettings } from '../../components/useNotes';
 import useUserToken from 'hooks/useUserCookie';
 import { useMemo } from 'react';
 import useGardenServer from 'hooks/useGardenServer';
@@ -69,48 +69,14 @@ const NoteSelector = ({selectedNote,setSelectedNote}) => {
     )
 }
 const Settings = () => {
-    const { token } = useUserToken({});
-    const { createUrl, createHeaders } = useGardenServer({ token });
-    
-    const [settings,setSettings] = useState<GardenConfig>({
-        defaultNote: 'one',
-        siteName: '',
-        siteTwitter: '',
-        authorName: '',
-        //@ts-ignore
-        authorTwitter: '',
-    })
 
-    useEffect(() => {
-        fetch(createUrl('/api/settings'), {
-            method: 'GET',
-            headers: createHeaders()
-        }).then(r => {
-            r.json()
-        }).then(r => {
-            console.log(r);
-            //@ts-ignore
-            setSettings(r.settings);
-        });   
-    })
+    const { settings,saveSettings } = useNoteSettings();
 
-    const saveSettings = useMemo(() => {
-        return async (settings: GardenConfig) => {
-            return fetch(createUrl('/api/settings'), {
-                method: 'POST',
-                body: JSON.stringify({ settings }),
-                headers: createHeaders()
-            }).then(r => {
-                r.json()
-            }).then(r => console.log(r));
-        }
-    }, [token]);
-    
     const siteNameRef = useRef();
     const siteTwitterRef = useRef();
     const authorNameRef = useRef();
     const authorTwitterRef = useRef();
-    let [defaultNote, setDefaultNote] = useState<string>(settings.defaultNote ?? '');
+    let [defaultNote, setDefaultNote] = useState<string>(settings && settings.defaultNote ? settings.defaultNote: '');
     let [isSaving, setIsSaving] = useState(false);
     const onSave = () => {
         setIsSaving(true);
@@ -132,7 +98,8 @@ const Settings = () => {
     return (
         <>
             <Layout pageDisplayTitle={'Settings'}>
-                <form id={"settings"} onSubmit={e => {
+                <>
+                    {settings ? <form id={"settings"} onSubmit={e => {
                     e.preventDefault();
                     onSave();
                 }}
@@ -180,7 +147,9 @@ const Settings = () => {
                                 {!isSaving ? 'Save' : 'Saving'}
                             </button>
                         </section>          
-                    </form>
+                    </form> :<div>Loading</div>}
+                    </>
+                
                 </Layout>
                 <style jsx>{`
                     #settings {
