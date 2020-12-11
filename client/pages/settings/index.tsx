@@ -2,7 +2,9 @@ import {useTextField} from '@react-aria/textfield'
 import { FC, forwardRef, useRef, useState } from 'react';
 import Layout from '../../components/Layout';
 import { GardenConfig } from '../../../types/config';
-import useNotes, { gardenFetcher, NotesProvider } from '../../components/useNotes';
+import useNotes, {  NotesProvider } from '../../components/useNotes';
+import useUserToken from 'hooks/useUserCookie';
+import { useMemo } from 'react';
 
 const FieldWrapper = ({ children }) => {
     return (
@@ -36,7 +38,7 @@ const TextField = forwardRef((props: {
 });
 
 const saveSettings = async (settings: GardenConfig) => {
-    return gardenFetcher('/api/settings', {
+    return fetch('/api/settings', {
         method: 'POST',
         body: JSON.stringify({ settings })
     }).then(r => {
@@ -65,6 +67,21 @@ const NoteSelector = ({selectedNote,setSelectedNote}) => {
     )
 }
 const Settings: FC<{ settings: GardenConfig }> = ({ settings }) => {
+    const { token } = useUserToken({});
+    const saveSettings = useMemo(() => {
+        return async (settings: GardenConfig) => {
+            return fetch('/api/settings', {
+                method: 'POST',
+                body: JSON.stringify({ settings }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: token
+                }
+            }).then(r => {
+                r.json()
+            }).then(r => console.log(r));
+        }
+    },[token]);
     const siteNameRef = useRef();
     const siteTwitterRef = useRef();
     const authorNameRef = useRef();

@@ -29,7 +29,7 @@ const NoteSeo: FC<{ note: INote }> = ({ note })=> {
 const Page: FC<
   { noteOne: string; noteTwo?: string; noteThree?: string; note?:INote }
 > = ({ noteOne, noteTwo, noteThree, note }) => {
-    const { isLoggedIn, userDisplayName } = useIsLoggedInAuthorized();
+    const { isLoggedIn } = useIsLoggedInAuthorized();
     return (
       <>
         {note && <NoteSeo note={note} />}
@@ -39,7 +39,6 @@ const Page: FC<
           >
             <NoteApp
               isLoggedIn={isLoggedIn}
-              userDisplayName={userDisplayName}
               noteOneSlug={noteOne}
               noteTwoSlug={noteTwo}
               noteThreeSlug={noteThree}
