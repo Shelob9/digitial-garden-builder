@@ -7,6 +7,10 @@
 	],
 	"scripts": {
 		"client": "yarn workspace @garden-cms/client",
-		"server": "yarn workspace @garden-cms/server"
+		"server": "yarn workspace @garden-cms/server",
+		"dev": "yarn wsrun dev"
+	},
+	"dependencies": {
+		"wsrun": "^5.2.4"
 	}
 }

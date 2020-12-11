@@ -14,6 +14,8 @@ This is an experiment [Josh](https://joshpress.net) made.
 
 ## Development
 
+- Start server and client
+  - `yarn dev`
 - Start server:
   - `yarn server dev`
 - Start client:
