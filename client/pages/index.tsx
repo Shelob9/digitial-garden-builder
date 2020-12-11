@@ -3,12 +3,13 @@ import { NoteLayoutProvider } from '../components/useNoteLayout';
 import { NotesProvider } from '../components/useNotes';
 import useIsLoggedIn from '../hooks/useIsLoggedAuthorized'
 const Index = ({noteSlug}) => {
-  const {isLoggedIn,userDisplayName} = useIsLoggedIn()
+  const { isLoggedIn, } = useIsLoggedIn()
+
   return (
     <>
       <NotesProvider>
         <NoteLayoutProvider noteSlug={noteSlug}>
-          <NoteApp isLoggedIn={isLoggedIn} userDisplayName={userDisplayName} />
+          <NoteApp isLoggedIn={isLoggedIn} />
         </NoteLayoutProvider>
       </NotesProvider>
     </>

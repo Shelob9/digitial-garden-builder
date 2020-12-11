@@ -1,3 +1,4 @@
+import { gitRepoDetails } from './../../types/git'
 import { getAccessTokenFromSession } from './UserService'
 import { NextApiRequest } from 'next'
 import ConfigApiService from './ConfigApiService'
@@ -6,9 +7,7 @@ import NotesApiService from './NotesApiService'
 import getSession from '../lib/getSession'
 import { userJwtData } from '../../types/user'
 
-let repo = { owner: process.env.REPO_OWNER, repo: process.env.REPO_NAME }
-
-const clientFactory = (authToken: string) => {
+const clientFactory = (authToken: string, repo: gitRepoDetails) => {
 	return GitApi(repo, 'main', authToken)
 }
 
@@ -30,8 +29,13 @@ export const noteApiServicefactoryFromRequest = async (
 export const noteApiServicefactory = async (
 	authToken?: string
 ): Promise<NotesApiService> => {
-	//authToken = process.env.GITHUB_API_TOKEN
-	let noteService = new NotesApiService(clientFactory(authToken))
+	authToken = authToken ?? process.env.GITHUB_API_TOKEN
+	let repo = {
+		owner: 'shelob9',
+		repo: 'garden-cms-test-data',
+	}
+
+	let noteService = new NotesApiService(clientFactory(authToken, repo))
 	await noteService.fetchNoteIndex()
 	return noteService
 }
@@ -39,7 +43,12 @@ export const noteApiServicefactory = async (
 export const settingsApiServiceFactory = async (
 	authToken: string
 ): Promise<ConfigApiService> => {
-	let service = new ConfigApiService(clientFactory(authToken))
+	let repo = {
+		owner: 'shelob9',
+		repo: 'garden-cms-test-data',
+	}
+
+	let service = new ConfigApiService(clientFactory(authToken, repo))
 	await service.fetchConfig()
 	return service
 }
