@@ -65,21 +65,7 @@ const Inner: FC<{
         )
     }
   
-//Create a new note
-const createNote = async (note: INote) => {
-        return fetch(`/api/notes`, {
-            method: 'PUT',
-            body: JSON.stringify({ note }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-      
-        })
-            .then(r => r.json())
-            .then(r => {
-                return r.note;
-        })
-}
+
 
 //Wraps editor with title/ slug creator for new notes
 export const NoteCreator = () => {
@@ -89,7 +75,7 @@ export const NoteCreator = () => {
     let titleRef = useRef<HTMLInputElement>();
     const pageTitle = 'Create New Note';
     let [initalNote, setInitalNote] = useState<INote>();
-    const { addNote } = useNotes();
+    const { addNote,createNote } = useNotes();
     const onCreateButton = () => {
         if (!titleRef.current || slugify(titleRef.current.value).length < 3) {
             setMessage('Must add title longer then 3 charecters first.');
