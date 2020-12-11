@@ -145,13 +145,13 @@ const Note: FC<{
 						{isOpen ? '-' : '+'}
 					</button>
 					{isOpen &&
-						<Link
-							href={ isLoggedIn ? `/notes/edit?note=${encodeURIComponent(note.slug)}` : '/login' }
+						 isLoggedIn && <Link
+							href={isLoggedIn ? `/notes/edit?note=${encodeURIComponent(note.slug)}` : '/login'}
 						>
 							<a
-								className={'edit-note'}	
+								className={'edit-note'}
 							>
-									{'Edit'}
+								{'Edit'}
 							</a>
 						</Link>
 						

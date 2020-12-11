@@ -14,6 +14,8 @@ const useIsLoggedInAuthorized = () => {
 
 	useEffect(() => {
 		if (!token) {
+			setIsLoggedIn(false)
+			setLoading(false)
 			return
 		}
 		fetch(`${gardenServerUrl}/api/session`, {
@@ -25,6 +27,7 @@ const useIsLoggedInAuthorized = () => {
 		})
 			.then((r) => r.json())
 			.then((r) => {
+				setLoading(false)
 				if (r.session) {
 					setIsLoggedIn(true)
 				} else {
@@ -37,7 +40,6 @@ const useIsLoggedInAuthorized = () => {
 						setUserDisplayName('Roy')
 					}
 				}
-				setLoading(false)
 			})
 	}, [token])
 

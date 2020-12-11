@@ -6,7 +6,7 @@ const Footer = () => {
   const { userDisplayName } = useIsLoggedInAuthorized();
   return (
     <footer>
-      <p>Hi {userDisplayName}</p>
+      <p>Hi {userDisplayName ?? 'Roy'}</p>
     </footer >
   );
 }
