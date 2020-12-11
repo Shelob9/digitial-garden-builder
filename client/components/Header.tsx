@@ -2,6 +2,7 @@ import Link from "next/link";
 import { FC } from "react";
 import useIsLoggedInAuthorized from "../hooks/useIsLoggedAuthorized";
 import DarkModeToggle from "./DarkModeToggle";
+import { useNoteSettings } from "./useNotes";
 
 const Header: FC<{
   BeforeControls?: () => JSX.Element;
@@ -10,11 +11,14 @@ const Header: FC<{
 
 }> = ({ BeforeControls,pageDisplayTitle,statusMessage }) => {
   const { isLoggedIn, isSessionLoading } = useIsLoggedInAuthorized();
+  const { siteName } = useNoteSettings();
+
+
   return (
       <>
         <header id="header">
           <a aria-current="page" className="" href="/gatsby-digital-garden/">
-            <h3>{pageDisplayTitle}</h3>
+            <h3>{siteName}</h3>
         </a>
         {statusMessage && <span>{statusMessage}</span>}
         {BeforeControls && <BeforeControls /> }

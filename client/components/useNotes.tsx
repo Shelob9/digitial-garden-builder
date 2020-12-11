@@ -1,3 +1,4 @@
+import { settings } from "cluster";
 import useGardenServer from "hooks/useGardenServer";
 import useUserToken from "hooks/useUserCookie";
 import { createContext, useContext, useMemo } from "react";
@@ -139,9 +140,14 @@ export const useNoteSettings = () => {
         })
     }
 
+    const siteName = useMemo(() => {
+        return data && data.siteName ? data.siteName : 'Digital Garden'
+    },[data]);
+
     return {
         settings: data as GardenConfig,
-        saveSettings
+        saveSettings,
+        siteName
     }
 }
 
