@@ -25,7 +25,6 @@ const useIsLoggedInAuthorized = () => {
 		})
 			.then((r) => r.json())
 			.then((r) => {
-				console.log(r)
 				if (r.session) {
 					setIsLoggedIn(true)
 				} else {
