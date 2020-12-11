@@ -54,9 +54,9 @@ export default Page;
 
 
 export async function getServerSideProps({req,params, query}) {
-  const { slug } = params;
+  let { slug } = params;
   const { noteThree, noteTwo } = query;
-
+  slug = slug ?? 'digital-garden-builder';
   return {
     props: {
         slug,

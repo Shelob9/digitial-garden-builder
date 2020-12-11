@@ -17,12 +17,11 @@ const Index = ({noteSlug}) => {
   )
 }
 
-export async function getServerSideProps({req}) {
-  //let { configService } = await factory(req)
-  //let noteSlug = configService.config.defaultNote || 'one';
+export async function getServerSideProps() {
+  
   return {
     props: {
-      noteSlug:'one'
+      noteSlug:'digital-garden-builder'
     }
   }
 }
