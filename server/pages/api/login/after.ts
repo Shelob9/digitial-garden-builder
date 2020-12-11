@@ -34,6 +34,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				owner: 'shelob9',
 				repo: 'garden-cms-test-data',
 			})
+			console.log(state)
 			if (state) {
 				let redirect = `${state as string}?token=${token}`
 				return res.redirect(301, redirect)
