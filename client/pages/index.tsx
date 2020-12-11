@@ -1,21 +1,16 @@
-//import NoteApp from '../components/NoteApp';
+import NoteApp from '../components/NoteApp';
 import { NoteLayoutProvider } from '../components/useNoteLayout';
-import useNotes, { NotesProvider } from '../components/useNotes';
+import { NotesProvider } from '../components/useNotes';
 import useIsLoggedIn from '../hooks/useIsLoggedAuthorized'
 
-const NotesApp = () => {
-  const { notes } = useNotes();
-  console.log(notes);
-  return<div>Notes</div>
-}
+
 const Index = ({noteSlug}) => {
   const { isLoggedIn, } = useIsLoggedIn()
-
   return (
     <>
       <NotesProvider>
         <NoteLayoutProvider noteSlug={noteSlug}>
-          <NotesApp />
+          <NoteApp isLoggedIn={isLoggedIn} />
         </NoteLayoutProvider>
       </NotesProvider>
     </>

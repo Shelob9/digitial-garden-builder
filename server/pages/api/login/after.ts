@@ -14,7 +14,7 @@ const getUser = async (accessToken: string) => {
 	}).then((r) => r.json())
 }
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-	const { code, state } = req.query
+	let { code, state } = req.query
 	console.log(state)
 	try {
 		const oauthAuthentication = await auth({
@@ -36,7 +36,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			})
 			console.log(state)
 			if (state) {
-				let redirect = `${state as string}?token=${token}`
+				let redirect = `${state as string}?token=${token}&state=${
+					state as string
+				}`
 				return res.redirect(301, redirect)
 			}
 			res.json({ token })
