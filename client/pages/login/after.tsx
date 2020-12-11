@@ -1,6 +1,6 @@
 import useUserToken from "../../hooks/useUserCookie";
-export async function getServerSideProps({ req, params, query }) {
-	const { token } = params;
+export async function getServerSideProps({  query }) {
+	const { token } = query;
 	return {
 		props: {
 			token: token ?? ''
