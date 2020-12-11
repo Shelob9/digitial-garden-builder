@@ -32,6 +32,13 @@ These commands should be run from root of monorepo as `yarn client dev` most of 
     - `NEXT_PUBLIC_GARDEN_SERVER_URL=https://garden-server.vercel.app`
   - In development:
     - `NEXT_PUBLIC_GARDEN_SERVER_URL=http://localhost:3000`
+- Githun APP, client ID
+  - `GITHUB_ID`
+  - Used to create login redirect link
+- Client URL
+  - `CLIENT_LOGIN_REDIRECT`
+  - URL that login will use to redirect back to client.
+  - In development `CLIENT_LOGIN_REDIRECT=http://localhost:3000/login/after`
   
 ### What It Is Built With
 
