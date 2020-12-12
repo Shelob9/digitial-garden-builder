@@ -12,6 +12,7 @@ const { wikiLinkPlugin } = require('remark-wiki-link');
 import {INote} from '../../types'
 
 
+//Render note to note links
 export const NoteMarkdownLink: FC<{
 	href: string;
 	children: any,
@@ -57,6 +58,7 @@ const nextPosition = (position: notePostions) => {
 	}
 }
 
+//Render note content, as markdwon to HTML
 export const NoteMarkdown: FC<{
 	content: string;
 	a?: (props: { href: string; children: any }) => JSX.Element,
@@ -92,6 +94,8 @@ export const NoteMarkdown: FC<{
 const NoteTitle: React.FC<{ note: INote }> = ({ note }) => (
 	<h1>{note.title}</h1>
 )
+
+//Display one note
 const Note: FC<{
 	note?: INote;
 	slug: string;
@@ -100,16 +104,17 @@ const Note: FC<{
 	position: notePostions,
 	isLoggedIn: boolean;
 }> = (props) => {
-	const { slug,toggleBox, isOpen, position, isLoggedIn } = props;
-	const { note } = useSingleNote({  slug });
-	const { focusNote,setFocusNote,findNotePostion} = useNoteLayout();
-	
+	const { slug, toggleBox, isOpen, position, isLoggedIn } = props;
+	//Even if we got a note from props, get it from network/cache
+	const { note } = useSingleNote({
+		slug, //note
+	});
+	const { focusNote,setFocusNote} = useNoteLayout();
 	if (!note) {
 		return <div>Loading</div>
 	}
 
 	let { content } = note;
-	const pos = findNotePostion(slug);
     return (
         <>
 			<div
