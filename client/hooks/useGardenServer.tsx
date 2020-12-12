@@ -3,7 +3,7 @@
 export default function useGardenServer(props:{token?:string}) {
 	let gardenServer =
 		process.env.NEXT_PUBLIC_GARDEN_SERVER_URL ||
-		'https://garden-server.vercel.app'
+		'https://digitalgardenbuilder.app'
 	
 	//Create URL with garden server from uri
 	// Provide uris with forward slash - `/api/hi/roy` - please
