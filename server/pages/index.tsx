@@ -2,8 +2,7 @@ export default function Index({redirect}) {
   return (
     <>
       <h1>
-        Digital Garden Builder Server
-         
+        Digital Garden Builder Server 
       </h1>
     {redirect && <a href={redirect}>Complete Login</a>}
     <section>
