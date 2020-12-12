@@ -52,11 +52,12 @@ class NotesApiService {
 			}
 			let matter = fm(content)
 			let title = matter.attributes.title
+
 			let references = findReferences(content, this.noteIndex)
 
 			let note: INote = {
 				title,
-				content,
+				content: matter.body,
 				slug,
 				references,
 			}
