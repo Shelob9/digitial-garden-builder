@@ -1,8 +1,12 @@
+
 # Digital Garden Builder
 
 Multi-player digital garden builder.
 
 This is an experiment [Josh](https://joshpress.net) made.
+
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/Shelob9/digitial-garden-builder)
+
 
 ## Install
 
