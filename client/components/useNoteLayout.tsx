@@ -1,5 +1,5 @@
 import { createContext, FC, useContext, useReducer, useState } from "react";
-import noteLayoutReducer, {  notePostions } from "./noteLayoutReducer";
+import noteLayoutReducer, {  NotePostion, notePostions } from "./noteLayoutReducer";
 
 const NoteLayoutContext = createContext(null);
 
@@ -88,6 +88,31 @@ export default function useNoteLayout() {
     return notePosition;
   }
  
+
+  const openInNextPosition = (noteSlug: string,openPosition:notePostions) => {
+    const pos = findNotePostion(noteSlug);
+			if (pos && hasNote(pos)) {
+				expandBox(pos)
+				setFocusNote(pos)
+			} else {
+				if ("one" === openPosition) {
+					removeNote(
+						"one"
+					);
+					removeNote(
+						"two"
+					)
+					removeNote(
+						"three"
+					)
+				}
+				addNote(
+					openPosition,
+					noteSlug
+				)
+				setFocusNote(openPosition);
+			}
+  }
   
 
   return {
@@ -101,6 +126,7 @@ export default function useNoteLayout() {
     expandBox,
     focusNote,
     setFocusNote,
-    findNotePostion
+    findNotePostion,
+    openInNextPosition
   };
 }

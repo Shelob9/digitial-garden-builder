@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { NoteReference } from "../lib/findReferences";
 import { notePostions } from "./noteLayoutReducer";
 
-import NoteLink from './NoteLink';
+import {NoteMarkdownLink} from './Note';
 import { useSingleNote } from "./useNotes";
 const Reference: FC<{
   reference: NoteReference,
@@ -12,12 +12,13 @@ const Reference: FC<{
  
   return (
     <div>
-      <NoteLink slug={reference.slug}
+      <NoteMarkdownLink 
         href={reference.url}
         className="reference"
+        openPosition={openPosition}
       >
           {note ? note.title : reference.slug}
-      </NoteLink>
+      </NoteMarkdownLink>
       <style jsx>{`
         .reference {
           text-decoration: none;

@@ -12,57 +12,31 @@ const { wikiLinkPlugin } = require('remark-wiki-link');
 import {INote} from '../../types'
 
 
-const NoteMarkdownLink: FC<{
+export const NoteMarkdownLink: FC<{
 	href: string;
 	children: any,
 	openPosition: notePostions
+	className?:string
 }> = ({
 	href,
 	children,
-	openPosition
+	openPosition,
+	className
 }) => {
 	let internal = href.startsWith('/notes/');
 	let slug = href.substr('/notes/'.length);
 	const { note } = useSingleNote({slug})
 	const {
-		addNote,
-		removeNote,
-		hasNote,
-		findNotePostion,
-		expandBox,
-		setFocusNote
+		openInNextPosition
 	} = useNoteLayout();
 	if (internal && note) {
 		const onClick = () => {
-			const pos = findNotePostion(slug);
-			if (pos && hasNote(pos)) {
-				expandBox(pos)
-				setFocusNote(pos)
-			} else {
-				if ("one" === openPosition) {
-					removeNote(
-						"one"
-					);
-					removeNote(
-						"two"
-					)
-					removeNote(
-						"three"
-					)
-				}
-				addNote(
-					openPosition,
-					note.slug
-				)
-				setFocusNote(openPosition);
-			}
-
-			
+			openInNextPosition( note.slug, openPosition)	
 		}
 
 		return <NoteLink
 				onClick={onClick}
-				className={'reference'}
+				className={className ?? 'reference'}
 				slug={slug}
 		>
 			{children}
@@ -124,14 +98,14 @@ const Note: FC<{
 }> = (props) => {
 	const { slug,toggleBox, isOpen, position, isLoggedIn } = props;
 	const { note } = useSingleNote({  slug });
-	const { focusNote,setFocusNote} = useNoteLayout();
+	const { focusNote,setFocusNote,findNotePostion} = useNoteLayout();
 	
 	if (!note) {
 		return <div>Loading</div>
 	}
 
 	let { content } = note;
-
+	const pos = findNotePostion(slug);
     return (
         <>
 			<div
