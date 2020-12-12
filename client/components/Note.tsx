@@ -87,7 +87,11 @@ export const NoteMarkdown: FC<{
 			}
 		</>
 	)
-}
+	}
+
+const NoteTitle: React.FC<{ note: INote }> = ({ note }) => (
+	<h1>{note.title}</h1>
+)
 const Note: FC<{
 	note?: INote;
 	slug: string;
@@ -113,6 +117,7 @@ const Note: FC<{
 			>
 				<div className={'note-buttons'}>
 					<button
+						title={isOpen ? 'Collapse note' : 'Expand Note'}
 						onClick={
 						() => toggleBox()
 					}>
@@ -135,7 +140,8 @@ const Note: FC<{
 					<div
 						className={"note-content"}
 						onClick={() => setFocusNote(position)}
-					>
+				>
+						<NoteTitle note={note} />
 						<NoteMarkdown
 							content={content}
 							a={(props) => (
