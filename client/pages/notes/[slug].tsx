@@ -6,6 +6,8 @@ import { FC } from "react";
 import { INote } from "../../../types";
 
 import { NextSeo } from 'next-seo';
+import { useRouter } from "next/router";
+import { useMemo } from "react";
 
 
 
@@ -27,10 +29,14 @@ const NoteSeo: FC<{ note: INote }> = ({ note })=> {
 }
 
 const Page: FC<
-  { noteOne: string; noteTwo?: string; noteThree?: string; note?:INote }
-> = ({ noteOne, noteTwo, noteThree, note }) => {
-    const { isLoggedIn } = useIsLoggedInAuthorized();
-    return (
+  { note?:INote }
+> = ({   note }) => {
+  const { isLoggedIn } = useIsLoggedInAuthorized();
+  const { query } = useRouter();
+  let noteOne = useMemo(() => query.slug as string ?? 'digital-garden-builder', [query]);
+  let noteTwo = useMemo(() =>query.noteTwo as string ?? undefined, [query]);
+  let noteThree =  useMemo(() => query.noteThree as string ?? undefined, [query]);
+  return (
       <>
         {note && <NoteSeo note={note} />}
         <NotesProvider>
@@ -60,9 +66,7 @@ export async function getServerSideProps({req,params, query}) {
   return {
     props: {
         slug,
-        noteOne: slug,
-        noteTwo: noteTwo ?? '',
-        noteThree: noteThree ?? ''
+        
     },
   }
 }
