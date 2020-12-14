@@ -35,7 +35,7 @@ const Page: FC<
   const { query } = useRouter();
   let noteOne = useMemo(() => query.slug as string ?? 'digital-garden-builder', [query]);
   let noteTwo = useMemo(() =>query.noteTwo as string ?? undefined, [query]);
-  let noteThree =  useMemo(() => query.noteThree as string ?? undefined, [query]);
+  let noteThree = useMemo(() => query.noteThree as string ?? undefined, [query]);
   return (
       <>
         {note && <NoteSeo note={note} />}
