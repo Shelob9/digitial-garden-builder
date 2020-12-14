@@ -17,7 +17,7 @@ const Header: FC<{
   return (
       <>
         <header id="header">
-          <a aria-current="page" className="" href="/gatsby-digital-garden/">
+          <a aria-current="page" className="" href="/">
             <h3>{siteName}</h3>
         </a>
         {statusMessage && <span>{statusMessage}</span>}
