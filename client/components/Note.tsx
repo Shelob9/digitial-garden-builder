@@ -12,7 +12,7 @@ const { wikiLinkPlugin } = require('remark-wiki-link');
 import {INote} from '../../types'
 
 
-const ExternalLink = ({ href, children }) => <a href={href}>{children}</a>;
+const ExternalLink = ({ href, children }) => <a className={'external'} href={href}>{children}</a>;
 
 const InternalLink : FC<{
 	href: string;
@@ -55,7 +55,7 @@ export const NoteMarkdownLink: FC<{
 }> = (props) => {
 	let internal = props.href.startsWith('/notes/');
 	if( internal ){
-		<InternalLink {...props} />
+		return<InternalLink {...props} />
 	}
 	return <ExternalLink href={props.href}>{props.children}</ExternalLink>
 }
