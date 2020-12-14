@@ -1,0 +1,15 @@
+button,
+.button a {
+	border: 1px solid var(--text);
+	color: var(--text);
+	padding: 2px;
+	margin: 4px;
+	background-color: var(--main-bg);
+	min-width: 30px;
+}
+
+button:hover,
+.button a:hover {
+	background-color: var(--references-highlight);
+	color: var(--main-bg);
+}

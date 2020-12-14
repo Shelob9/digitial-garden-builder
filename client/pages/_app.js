@@ -6,6 +6,7 @@ import { CookiesProvider } from 'react-cookie';
 import "../styles/theme.css";
 import "../styles/stacked-layout.css";
 import "../styles/note-layout.css";
+import "../styles/buttons.css";
 import { DefaultSeo } from 'next-seo';
 let site_name = 'Digital Garden Site'
 
