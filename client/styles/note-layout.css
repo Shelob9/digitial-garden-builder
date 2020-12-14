@@ -95,15 +95,21 @@
 .note-buttons {
 	float: right;
 	padding-bottom: 6px;
-	border-bottom: 1px solid black;
+	border-bottom: 1px solid var(--shadow);
 }
 
 .note-buttons button,
 .note-buttons a {
-	border: 2px solid black;
-	color: black;
+	border: 2px solid var(--text);
+	color: var(--text);
 	padding: 2px;
 	margin: 4px;
-	background-color: white;
+	background-color: var(--main-bg);
 	min-width: 30px;
+}
+
+.note-buttons button:hover,
+.note-buttons a:hover {
+	background-color: var(--references-highlight);
+	color: var(--main-bg);
 }
