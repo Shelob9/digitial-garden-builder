@@ -1,5 +1,6 @@
 import { FC } from "react";
 
+
 const NoteLink: FC<{
     slug: string;
     className?: string;

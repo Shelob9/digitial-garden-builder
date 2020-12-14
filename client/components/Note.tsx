@@ -12,8 +12,9 @@ const { wikiLinkPlugin } = require('remark-wiki-link');
 import {INote} from '../../types'
 
 
-//Render note to note links
-export const NoteMarkdownLink: FC<{
+const ExternalLink = ({ href, children }) => <a href={href}>{children}</a>;
+
+const InternalLink : FC<{
 	href: string;
 	children: any,
 	openPosition: notePostions
@@ -24,13 +25,12 @@ export const NoteMarkdownLink: FC<{
 	openPosition,
 	className
 }) => {
-	let internal = href.startsWith('/notes/');
 	let slug = href.substr('/notes/'.length);
 	const { note } = useSingleNote({slug})
 	const {
 		openInNextPosition
 	} = useNoteLayout();
-	if (internal && note) {
+	if ( note) {
 		const onClick = () => {
 			openInNextPosition( note.slug, openPosition)	
 		}
@@ -42,8 +42,22 @@ export const NoteMarkdownLink: FC<{
 		>
 			{children}
 		</NoteLink>
+	} else {
+		return <ExternalLink href={href}>{children}</ExternalLink>
 	}
-	return <a href={href}>{children}</a>
+}
+//Render note to note links
+export const NoteMarkdownLink: FC<{
+	href: string;
+	children: any,
+	openPosition: notePostions
+	className?:string
+}> = (props) => {
+	let internal = props.href.startsWith('/notes/');
+	if( internal ){
+		<InternalLink {...props} />
+	}
+	return <ExternalLink href={props.href}>{props.children}</ExternalLink>
 }
 
 const nextPosition = (position: notePostions) => {
