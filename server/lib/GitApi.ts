@@ -1,4 +1,4 @@
-import { noteIndex } from '../../types'
+import { IGitApi } from '../../types/git'
 import { gitRepoDetails } from '../../types/git'
 import { getOctokit } from './getOctoKit'
 import {
@@ -13,15 +13,6 @@ export const getRepos = async () => {
 	return await getOctokit().repos.listForAuthenticatedUser()
 }
 
-export interface IGitApi {
-	saveFile: (
-		content: string,
-		fullFilePath: string,
-		commitMessage: string
-	) => Promise<{ commitSha: string }>
-	getFile: (filePath: string) => Promise<{ content }>
-	getFiles: (path: string | undefined, extension: 'md') => Promise<noteIndex>
-}
 function GitApi(
 	gitRepo: gitRepoDetails,
 	branch: string,

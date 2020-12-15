@@ -1,5 +1,5 @@
 import { GardenConfig } from '../../types/config'
-import { IGitApi } from '../lib/GitApi'
+import { IGitApi } from '../../types/git'
 
 let configPath = '/garden.json'
 class ConfigApiService {

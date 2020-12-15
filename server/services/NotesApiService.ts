@@ -1,7 +1,8 @@
 import { INote, noteIndex, noteIndexItem } from '../../types'
+import { IGitApi } from '../../types/git'
+
 //import findReferences from '../lib/findReferences'
 import findTitle from '../lib/findTitle'
-import { IGitApi } from '../lib/GitApi'
 import NoteService from './NoteService'
 import findReferences from '../lib/findReferences'
 const fm = require('front-matter')
