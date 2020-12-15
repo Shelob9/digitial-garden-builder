@@ -3,11 +3,13 @@
 	"private": true,
 	"workspaces": [
 		"client",
-		"server"
+		"server",
+		"note-api"
 	],
 	"scripts": {
 		"client": "yarn workspace @garden-cms/client",
 		"server": "yarn workspace @garden-cms/server",
+		"note-api": "yarn workspace @garden-cms/note-api",
 		"dev": "yarn wsrun dev",
 		"build": "yarn client build && yarn server build",
 		"grow": "yarn client build && yarn client export"

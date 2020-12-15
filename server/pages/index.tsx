@@ -1,6 +1,7 @@
 import {useRouter} from 'next/router';
-
+import {sum} from '@garden-cms/note-api'
 export default function Index() {
+  console.log(sum(2, 2));
   const { query } = useRouter();
   const { token, state } = query;
   let redirect = token && state ? `${state}?token=${token}` : '';
