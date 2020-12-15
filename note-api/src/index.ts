@@ -1,6 +1,8 @@
-export const sum = (a: number, b: number) => {
-  if ('development' === process.env.NODE_ENV) {
-    console.log('boop');
-  }
-  return a + b;
-};
+import {
+  encodeUserJwt,
+  decryptSession,
+  userFromGithub,
+} from './services/UserService';
+import getSession from './lib/getSession';
+import factory from './services/serviceFactories';
+export { userFromGithub, encodeUserJwt, getSession, factory, decryptSession };

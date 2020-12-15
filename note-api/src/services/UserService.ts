@@ -1,6 +1,7 @@
-import { User, userJwtData, userSession } from '../../types/user'
-import { gitRepoDetails } from '../../types/git'
-import { decrypt, encrypt, hash } from '../lib/encryptDecrypt'
+import { gitRepoDetails } from './../../../types/git';
+import { User, userJwtData, userSession } from '../../../types/user'
+
+import { decrypt, encrypt, } from '../lib/encryptDecrypt'
 import { createJwtToken, decodeJwtToken } from '../lib/jwt'
 
 export const userFromGithub = (data: any): User => {
@@ -43,6 +44,7 @@ export const decryptSession = (
 			}
 		}
 	}
+	return;
 }
 export const decodeUserJwt = (token: string): userSession | undefined => {
 	let decoded = decodeJwtToken(token)
@@ -60,7 +62,6 @@ export const getAccessTokenFromSession = (
 		return false
 	}
 	let session = decryptSession(sessionData)
-	console.log(session)
 	if (session) {
 		return session.accessToken ?? false
 	}

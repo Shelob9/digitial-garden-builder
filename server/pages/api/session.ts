@@ -1,7 +1,6 @@
-import { decryptSession } from '../../services/UserService'
 import { NextApiRequest, NextApiResponse } from 'next'
-import getSession from '../../lib/getSession'
 import createCorsMiddleWare from '../../lib/createCorsMiddleWare'
+import { decryptSession, getSession } from '@garden-cms/note-api'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const cors = createCorsMiddleWare(['GET', 'OPTIONS'])

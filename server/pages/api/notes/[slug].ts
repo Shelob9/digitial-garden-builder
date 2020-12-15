@@ -1,6 +1,5 @@
-import getSession from '../../../lib/getSession'
 import { INote } from './../../../../types'
-import factory from '../../../services/serviceFactories'
+import { factory, getSession } from '@garden-cms/note-api'
 import { NextApiResponse } from 'next'
 import { NextApiRequest } from 'next'
 import createCorsMiddleWare from '../../../lib/createCorsMiddleWare'

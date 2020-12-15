@@ -1,4 +1,4 @@
-import getSession from '../../lib/getSession'
+import {  getSession } from '@garden-cms/note-api'
 import { NextApiRequest, NextApiResponse } from 'next'
 import createCorsMiddleWare from '../../lib/createCorsMiddleWare'
 

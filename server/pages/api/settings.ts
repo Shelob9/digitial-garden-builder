@@ -1,4 +1,4 @@
-import factory from '../../services/serviceFactories'
+import { factory } from '@garden-cms/note-api'
 import { NextApiRequest, NextApiResponse } from 'next'
 import createCorsMiddleWare from '../../lib/createCorsMiddleWare'
 

@@ -1,11 +1,11 @@
-import { gitRepoDetails } from './../../types/git'
+import { userJwtData } from './../../../types/user';
+import { gitRepoDetails } from './../../../types/git';
 import { getAccessTokenFromSession } from './UserService'
 import { NextApiRequest } from 'next'
 import ConfigApiService from './ConfigApiService'
-import GitApi from '../lib/GitApi'
+import GitApi from '../GitApi'
 import NotesApiService from './NotesApiService'
 import getSession from '../lib/getSession'
-import { userJwtData } from '../../types/user'
 
 const clientFactory = (authToken: string, repo: gitRepoDetails) => {
 	return GitApi(repo, 'main', authToken)
@@ -35,7 +35,7 @@ export const noteApiServicefactory = async (
 		repo: 'garden-cms-test-data',
 	}
 
-	let noteService = new NotesApiService(clientFactory(authToken, repo))
+	let noteService = new NotesApiService(clientFactory(authToken as string, repo))
 	await noteService.fetchNoteIndex()
 	return noteService
 }
@@ -64,14 +64,14 @@ export default async function factory(
 	session: userJwtData | false
 }> {
 	let session = getSession(req)
-	return new Promise(async (resolve, reject) => {
+	return new Promise(async (resolve) => {
 		let noteService: NotesApiService = session
 			? await noteApiServicefactoryFromRequest(req)
 			: await noteApiServicefactory()
 
 		let accessToken = session ? getAccessTokenFromSession(session) : false
 		if (!accessToken) {
-			accessToken = process.env.GITHUB_API_TOKEN
+			accessToken = process.env.GITHUB_API_TOKEN as string
 		}
 		let configService = await settingsApiServiceFactory(accessToken)
 		resolve({ noteService, configService, session })
