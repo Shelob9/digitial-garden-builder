@@ -1,14 +1,14 @@
 
 
 export default function useGardenServer(props:{token?:string}) {
-	let gardenServer =
+	let gardenServerUrl =
 		process.env.NEXT_PUBLIC_GARDEN_SERVER_URL ||
 		'https://digitalgardenbuilder.app'
 	
 	//Create URL with garden server from uri
 	// Provide uris with forward slash - `/api/hi/roy` - please
 	function createUrl(uri: string) {
-		let url = `${gardenServer}${uri}`
+		let url = `${gardenServerUrl}${uri}`
 		return url
 	}
 
@@ -29,5 +29,6 @@ export default function useGardenServer(props:{token?:string}) {
 	return {
 		createUrl,
 		createHeaders,
+		gardenServerUrl
 	}
 }
