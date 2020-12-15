@@ -1,17 +1,13 @@
 import Layout from "components/Layout";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import useUserToken from "../../hooks/useUserCookie";
-export async function getServerSideProps({  query }) {
-	const { token } = query;
-	return {
-		props: {
-			token: token ?? ''
-		}
-	}
-
-}
-export default function After(props) {
-	const { token } = useUserToken({ token: props.token });
+//Return from login redirect and store token in a cookie.
+export default function After() {
+	//New JWT token should be in query var token
+	const { query } = useRouter();
+	//This hook will put token into a cookie.
+	const { token } = useUserToken({ token: query.token  as string ?? '' });
 	return (
 		<Layout pageDisplayTitle={'Login'}>
 			<section>

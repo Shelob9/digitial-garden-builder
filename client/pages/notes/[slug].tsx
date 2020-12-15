@@ -59,14 +59,3 @@ const Page: FC<
 export default Page;
 
 
-export async function getServerSideProps({req,params, query}) {
-  let { slug } = params;
-  const { noteThree, noteTwo } = query;
-  slug = slug ?? 'digital-garden-builder';
-  return {
-    props: {
-        slug,
-        
-    },
-  }
-}

@@ -9,7 +9,8 @@
 		"client": "yarn workspace @garden-cms/client",
 		"server": "yarn workspace @garden-cms/server",
 		"dev": "yarn wsrun dev",
-		"build": "yarn client build && yarn server build"
+		"build": "yarn client build && yarn server build",
+		"grow": "yarn client build && yarn client export"
 	},
 	"dependencies": {
 		"wsrun": "^5.2.4"

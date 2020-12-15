@@ -3,7 +3,7 @@ import noteLayoutReducer, {  NotePostion, notePostions } from "./noteLayoutReduc
 
 const NoteLayoutContext = createContext(null);
 
-//@todo setting for this
+//@todo use the setting for this
 let defaultNote = 'digital-garden-builder';
 export const NoteLayoutProvider: FC<{
   children: any;

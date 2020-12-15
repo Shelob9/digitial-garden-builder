@@ -16,6 +16,10 @@ This is an experiment [Josh](https://joshpress.net) made.
   - Do not use npm. Must use Yarn 1.x
   - `yarn`
 
+## Generate HTML For Garden
+
+- `yarn grow`
+
 ## Development
 
 - Start server and client

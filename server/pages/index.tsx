@@ -1,4 +1,9 @@
-export default function Index({redirect}) {
+import {useRouter} from 'next/router';
+
+export default function Index() {
+  const { query } = useRouter();
+  const { token, state } = query;
+  let redirect = token && state ? `${state}?token=${token}` : '';
   return (
     <>
       <h1>
@@ -26,11 +31,3 @@ export default function Index({redirect}) {
   )
 }
 
-export async function getServerSideProps({ query }) {
-  const { token, state } = query;
-  let redirect = token && state ? `${state}?token=${token}` : '';
-  return {
-    props: 
-      {redirect}
-  }
-}

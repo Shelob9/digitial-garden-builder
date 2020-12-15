@@ -1,6 +1,6 @@
+import { useRouter } from 'next/router'
 import { useCookies } from 'react-cookie'
 import { useMemo, useEffect } from 'react'
-
 const useUserToken = (props: { token?: string }) => {
 	const [cookies, setCookie] = useCookies(['_garden_token'])
 	useEffect(() => {

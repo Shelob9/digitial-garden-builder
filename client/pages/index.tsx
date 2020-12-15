@@ -4,12 +4,12 @@ import { NotesProvider } from '../components/useNotes';
 import useIsLoggedIn from '../hooks/useIsLoggedAuthorized'
 
 
-const Index = ({noteSlug}) => {
+const Index = () => {
   const { isLoggedIn, } = useIsLoggedIn()
   return (
     <>
       <NotesProvider>
-        <NoteLayoutProvider noteSlug={noteSlug}>
+        <NoteLayoutProvider noteSlug={'digital-garden-builder'}>
           <NoteApp isLoggedIn={isLoggedIn} />
         </NoteLayoutProvider>
       </NotesProvider>
@@ -17,13 +17,5 @@ const Index = ({noteSlug}) => {
   )
 }
 
-export async function getServerSideProps() {
-  
-  return {
-    props: {
-      noteSlug:'digital-garden-builder'
-    }
-  }
-}
 
 export default Index;
