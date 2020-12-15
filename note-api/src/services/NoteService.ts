@@ -1,22 +1,21 @@
-import { noteIndex, noteIndexItem } from './../../../types';
-
+import { noteIndex, noteIndexItem } from '../types';
 class NoteService {
-  notes: noteIndex;
+	notes: noteIndex;
 
-  constructor() {
-    this.notes = [];
-  }
+	constructor() {
+		this.notes = [];
+	}
 
-  setNotes = (notes: noteIndex) => {
-    this.notes = notes;
-  };
-  getNotes = (): noteIndex => {
-    return this.notes;
-  };
+	setNotes = (notes: noteIndex) => {
+		this.notes = notes;
+	};
+	getNotes = (): noteIndex => {
+		return this.notes;
+	};
 
-  getNoteBySlug = (slug: string): noteIndexItem | undefined => {
-    return this.notes.find(note => slug === note.slug);
-  };
+	getNoteBySlug = (slug: string): noteIndexItem | undefined => {
+		return this.notes.find(note => slug === note.slug);
+	};
 }
 
 export default NoteService;

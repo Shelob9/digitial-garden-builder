@@ -1,41 +1,37 @@
-import { GardenConfig } from '../../types/config'
-import { IGitApi } from '../../types/git'
-
-let configPath = '/garden.json'
+import { GardenConfig } from './../types/config';
+import { IGitApi } from './../types/git';
+let configPath = '/garden.json';
 class ConfigApiService {
-	client: IGitApi
-	config: GardenConfig
+	client: IGitApi;
+	config: GardenConfig;
 	constructor(client: IGitApi) {
-		this.client = client
+		this.client = client;
 	}
 
 	fetchConfig = async () => {
+		//@ts-ignore
 		return this.client.getFile(configPath).then(({ content }) => {
-			this.config = JSON.parse(content)
-			return this.config
-		})
-	}
+			this.config = JSON.parse(content);
+			return this.config;
+		});
+	};
 
 	saveConfig = async (settings: GardenConfig) => {
-		this.config = settings
+		this.config = settings;
 		return this.client
-			.saveFile(
-				JSON.stringify(settings),
-				'garden.json',
-				`Update Settings`
-			)
+			.saveFile(JSON.stringify(settings), 'garden.json', `Update Settings`)
 			.then(() => {
-				return this.config
+				return this.config;
 			})
-			.catch((e) => console.log(e))
-	}
+			.catch(e => console.log(e));
+	};
 	getGardenTitle = () => {
-		return this.config.siteName
-	}
+		return this.config.siteName;
+	};
 
 	getSettings = () => {
-		return this.config
-	}
+		return this.config;
+	};
 }
 
-export default ConfigApiService
+export default ConfigApiService;
