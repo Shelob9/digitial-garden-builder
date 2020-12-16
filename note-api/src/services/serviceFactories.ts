@@ -6,6 +6,7 @@ import ConfigApiService from './ConfigApiService';
 import NotesApiService from './NotesApiService';
 import getSession from '../lib/getSession';
 import GitApi from '../_gitApi';
+import getCurrentRepo from '../getCurrentRepo';
 
 const clientFactory = (authToken: string, repo: gitRepoDetails) => {
 	return GitApi(repo, 'main', authToken);
@@ -30,13 +31,8 @@ export const noteApiServicefactory = async (
 	authToken?: string
 ): Promise<NotesApiService> => {
 	authToken = authToken ?? process.env.GITHUB_API_TOKEN;
-	let repo = {
-		owner: 'shelob9',
-		repo: 'garden-cms-test-data',
-	};
-
 	let noteService = new NotesApiService(
-		clientFactory(authToken as string, repo)
+		clientFactory(authToken as string, getCurrentRepo())
 	);
 	await noteService.fetchNoteIndex();
 	return noteService;
@@ -45,12 +41,9 @@ export const noteApiServicefactory = async (
 export const settingsApiServiceFactory = async (
 	authToken: string
 ): Promise<ConfigApiService> => {
-	let repo = {
-		owner: 'shelob9',
-		repo: 'garden-cms-test-data',
-	};
-
-	let service = new ConfigApiService(clientFactory(authToken, repo));
+	let service = new ConfigApiService(
+		clientFactory(authToken, getCurrentRepo())
+	);
 	await service.fetchConfig();
 	return service;
 };

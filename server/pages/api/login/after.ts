@@ -15,7 +15,6 @@ const getUser = async (accessToken: string) => {
 }
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	let { code, state } = req.query
-	console.log(state)
 	try {
 		const oauthAuthentication = await auth({
 			type: 'oauth',
@@ -25,7 +24,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		try {
 			let user = await getUser(accessToken)
 			user = userFromGithub(user)
-			//Create a JWT token that has:
+			//Encode a JWT token that has:
 			// - Username. Not encrypted.
 			// - Encrypted session with Github access token and repo details.
 			// JWT encoding !== encryption. hmac is used inside.
@@ -34,7 +33,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				owner: 'shelob9',
 				repo: 'garden-cms-test-data',
 			})
-			console.log(state)
 			if (state) {
 				let redirect = `${state as string}?token=${token}&state=${state as string}`
 				return res.redirect(301, redirect)
