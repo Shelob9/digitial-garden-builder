@@ -7,7 +7,6 @@ import {
 	createNewTree,
 	getCurrentCommit,
 	setBranchToCommit,
-	//@ts-ignore
 } from './lib/gitUtil';
 
 export const getRepos = async () => {
