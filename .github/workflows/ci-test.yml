@@ -7,7 +7,7 @@ on:
         branches: '*'
 
 jobs:
-    build:
+    test:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
@@ -15,8 +15,16 @@ jobs:
               uses: actions/setup-node@v1
               with:
                   node-version: 12.x
+            - name: Install
             - run: yarn
+
+            - name: Test note-api
             - run: yarn note-api test --ci
+            - name: Build note-api
             - run: yarn note-api build
+
+            - name: Test client
             - run: yarn client test --ci
+
+            - name: Test server
             - run: yarn server test --ci
