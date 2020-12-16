@@ -1,4 +1,4 @@
-name: Client CI
+name: Tests
 
 on:
     push:
@@ -16,5 +16,7 @@ jobs:
               with:
                   node-version: 12.x
             - run: yarn
+            - run: yarn note-api test --ci
+            - run: yarn note-api build
             - run: yarn client test --ci
-            - run: yarn client build
+            - run: yarn server test --ci
