@@ -6,7 +6,7 @@ import {
 import getSession from './lib/getSession';
 import factory, { noteApiServicefactory } from './services/serviceFactories';
 import findReferences from './lib/findReferences';
-import GitApi from './GitApi';
+import gitApi from './_gitApi';
 export {
 	userFromGithub,
 	encodeUserJwt,
@@ -15,5 +15,5 @@ export {
 	decryptSession,
 	findReferences,
 	noteApiServicefactory,
-	GitApi,
+	gitApi,
 };

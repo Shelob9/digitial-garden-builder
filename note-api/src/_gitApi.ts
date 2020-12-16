@@ -13,7 +13,7 @@ export const getRepos = async () => {
 	return await getOctokit().repos.listForAuthenticatedUser();
 };
 
-function GitApi(
+export default function gitApi(
 	gitRepo: gitRepoDetails,
 	branch: string,
 	authToken?: string
@@ -111,5 +111,3 @@ function GitApi(
 		getFiles,
 	};
 }
-
-export default GitApi;

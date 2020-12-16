@@ -5,7 +5,7 @@ import { NextApiRequest } from 'next';
 import ConfigApiService from './ConfigApiService';
 import NotesApiService from './NotesApiService';
 import getSession from '../lib/getSession';
-import GitApi from '../GitApi';
+import GitApi from '../_gitApi';
 
 const clientFactory = (authToken: string, repo: gitRepoDetails) => {
 	return GitApi(repo, 'main', authToken);
