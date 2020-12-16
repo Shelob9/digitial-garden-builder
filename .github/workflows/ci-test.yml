@@ -15,16 +15,18 @@ jobs:
               uses: actions/setup-node@v1
               with:
                   node-version: 12.x
+
             - name: Install
-            - run: yarn
+              run: yarn
 
             - name: Test note-api
-            - run: yarn note-api test --ci
+              run: yarn note-api test --ci
+              
             - name: Build note-api
-            - run: yarn note-api build
+              run: yarn note-api build
 
             - name: Test client
-            - run: yarn client test --ci
+              run: yarn client test --ci
 
             - name: Test server
-            - run: yarn server test --ci
+              run: yarn server test --ci
