@@ -1,27 +1,27 @@
-import { noteIndex } from '../../types';
+import { noteIndex } from '../src/types';
 import NoteService from '../src/services/NoteService';
 
 const item = (slug: string) => {
-  return {
-    slug,
-    path: `/notes/${slug}.md`,
-    name: `${slug}.md`,
-    apiUrl: `/api/notes/${slug}`,
-    url: `/notes/${slug}.md`,
-  };
+	return {
+		slug,
+		path: `/notes/${slug}.md`,
+		name: `${slug}.md`,
+		apiUrl: `/api/notes/${slug}`,
+		url: `/notes/${slug}.md`,
+	};
 };
 describe('NoteService', () => {
-  let notes: noteIndex = [item('eleven'), item('three'), item('seven')];
-  test('Sets and gets notes', () => {
-    let service = new NoteService();
-    service.setNotes(notes);
-    expect(notes).toEqual(service.getNotes());
-  });
+	let notes: noteIndex = [item('eleven'), item('three'), item('seven')];
+	test('Sets and gets notes', () => {
+		let service = new NoteService();
+		service.setNotes(notes);
+		expect(notes).toEqual(service.getNotes());
+	});
 
-  test('Get note by slug', () => {
-    let service = new NoteService();
-	  service.setNotes(notes);
-	  //@ts-ignore
-    expect(service.getNoteBySlug('three').slug).toEqual('three');
-  });
+	test('Get note by slug', () => {
+		let service = new NoteService();
+		service.setNotes(notes);
+		//@ts-ignore
+		expect(service.getNoteBySlug('three').slug).toEqual('three');
+	});
 });
