@@ -1,12 +1,8 @@
 import {useTextField} from '@react-aria/textfield'
-import { FC, forwardRef, useRef, useState } from 'react';
+import { forwardRef, useRef, useState } from 'react';
 import Layout from '../../components/Layout';
-import { GardenConfig } from '../../../types/config';
 import useNotes, {  NotesProvider, useNoteSettings } from '../../components/useNotes';
-import useUserToken from 'hooks/useUserCookie';
-import { useMemo } from 'react';
-import useGardenServer from 'hooks/useGardenServer';
-import { useEffect } from 'react';
+import { GardenConfig} from '@garden-cms/note-api/src/types/config'
 
 const FieldWrapper = ({ children }) => {
     return (

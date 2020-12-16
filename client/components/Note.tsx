@@ -9,8 +9,7 @@ import useNoteLayout from './useNoteLayout';
 import { notePostions } from './noteLayoutReducer';
 import Link from 'next/link'
 const { wikiLinkPlugin } = require('remark-wiki-link');
-import {INote} from '../../types'
-
+import { INote } from "@garden-cms/note-api/src/types";
 
 const ExternalLink = ({ href, children }) => <a className={'external'} href={href}>{children}</a>;
 

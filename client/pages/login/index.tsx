@@ -1,6 +1,5 @@
 import Layout from "components/Layout";
 import useIsLoggedAuthorized from "hooks/useIsLoggedAuthorized";
-import { useEffect } from "react";
 const clientId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
 const state = encodeURIComponent(process.env.NEXT_PUBLIC_CLIENT_LOGIN_REDIRECT)
 

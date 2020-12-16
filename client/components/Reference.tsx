@@ -1,9 +1,9 @@
 import React, { FC } from "react";
-import { NoteReference } from "../lib/findReferences";
 import { notePostions } from "./noteLayoutReducer";
 
 import {NoteMarkdownLink} from './Note';
 import { useSingleNote } from "./useNotes";
+import { NoteReference } from "@garden-cms/note-api/src/types";
 const Reference: FC<{
   reference: NoteReference,
   openPosition: notePostions

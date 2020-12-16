@@ -3,8 +3,8 @@ import useGardenServer from "hooks/useGardenServer";
 import useUserToken from "hooks/useUserCookie";
 import { createContext, useContext, useMemo } from "react";
 import useSWR from "swr";
-import {  noteIndexItem,INote } from "../../types";
-import { GardenConfig } from "../../types/config";
+import {INote, noteIndexItem} from '../../note-api/src/types'
+import {GardenConfig } from '../../note-api/src/types/config'
 
 const NotesContext = createContext(null);
 

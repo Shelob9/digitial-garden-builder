@@ -3,7 +3,7 @@ import { FC, forwardRef, Fragment,  useRef, useState } from "react";
 const slugify = require('slugify')
 import Layout from "./Layout";
 import MarkdownEditor from "./MarkdownEditor";
-import { INote } from "../../types";
+import {INote} from '../../note-api/src/types'
 import useNotes, { useSingleNote,} from "./useNotes";
 
 //editor for the title

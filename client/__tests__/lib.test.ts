@@ -1,6 +1,6 @@
 import findNoteSlugInLink from '../lib/findNoteSlugInLink'
 import findReferences, { findWikiLinks } from '../lib/findReferences'
-import { noteIndex } from '../../types'
+import { noteIndex } from '@garden-cms/note-api'
 describe('find note slug', () => {
 	it('Returns if found', () => {
 		expect(findNoteSlugInLink('/notes/fish')).toEqual('fish')

@@ -11,8 +11,9 @@
 		"server": "yarn workspace @garden-cms/server",
 		"note-api": "yarn workspace @garden-cms/note-api",
 		"dev": "yarn wsrun dev",
-		"build": "yarn client build && yarn server build",
-		"grow": "yarn client build && yarn client export"
+		"build": "yarn note-api build && yarn server build && yarn client build",
+		"grow": "yarn client build && yarn client export",
+		"test": "yarn note-api test --ci"
 	},
 	"dependencies": {
 		"wsrun": "^5.2.4"

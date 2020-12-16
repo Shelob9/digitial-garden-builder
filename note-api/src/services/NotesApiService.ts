@@ -85,13 +85,16 @@ class NotesApiService {
 
 	saveNote = async (note: INote) => {
 		let nI = this.findNoteInIndex(note.slug);
-		let mattterString = `---\ntitle: ${note.title} \nslug: ${note.slug}\n---\n`;
-		note.content = maybeUpdateTitle(note.content);
-		return await this.client.saveFile(
-			`${mattterString} ${note.content}`,
-			nI.path,
-			`Update ${note.title}`
-		);
+		if (nI) {
+			let mattterString = `---\ntitle: ${note.title} \nslug: ${note.slug}\n---\n`;
+			note.content = maybeUpdateTitle(note.content);
+			return await this.client.saveFile(
+				`${mattterString} ${note.content}`,
+				nI.path,
+				`Update ${note.title}`
+			);
+		}
+		return undefined;
 	};
 
 	createNote = async (note: INote) => {

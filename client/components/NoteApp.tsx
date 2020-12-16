@@ -5,7 +5,6 @@ import Note from '../components/Note';
 import useNotes from './useNotes';
 import useNoteLayout from './useNoteLayout';
 import { useRouter } from 'next/router'
-import { INote } from '../../types'
 
 
 const NoteApp: FC<{

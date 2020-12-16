@@ -1,4 +1,4 @@
-import { INote } from './../../../../types'
+import { INote } from './../../../../note-api/src/types'
 import { factory, getSession } from '@garden-cms/note-api'
 import { NextApiResponse } from 'next'
 import { NextApiRequest } from 'next'

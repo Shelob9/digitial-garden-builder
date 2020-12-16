@@ -3,9 +3,10 @@ import { IGitApi } from './../types/git';
 let configPath = '/garden.json';
 class ConfigApiService {
 	client: IGitApi;
-	config: GardenConfig;
+	config: GardenConfig | undefined;
 	constructor(client: IGitApi) {
 		this.client = client;
+		this.config = undefined;
 	}
 
 	fetchConfig = async () => {
@@ -26,6 +27,9 @@ class ConfigApiService {
 			.catch(e => console.log(e));
 	};
 	getGardenTitle = () => {
+		if (!this.config) {
+			return 'Digital Garden';
+		}
 		return this.config.siteName;
 	};
 

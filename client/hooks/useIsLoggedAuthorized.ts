@@ -1,5 +1,5 @@
 import useGardenServer from 'hooks/useGardenServer'
-import { useMemo, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import useUserCookie from './useUserCookie'
 
 const useIsLoggedInAuthorized = () => {

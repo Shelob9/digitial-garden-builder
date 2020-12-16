@@ -3,12 +3,11 @@ import { NoteLayoutProvider } from "../../components/useNoteLayout";
 import { NotesProvider } from "../../components/useNotes";
 import useIsLoggedInAuthorized from "../../hooks/useIsLoggedAuthorized";
 import { FC } from "react";
-import { INote } from "../../../types";
-
 import { NextSeo } from 'next-seo';
 import { useRouter } from "next/router";
 import { useMemo } from "react";
-import { noteApiServicefactory } from '../../../server/services/serviceFactories'
+import { INote } from "@garden-cms/note-api/src/types";
+import { noteApiServicefactory} from '@garden-cms/note-api'
 
 const NoteSeo: FC<{ note: INote }> = ({ note })=> {
   let description = note.content ? note.content.substring(0, 240) : '';

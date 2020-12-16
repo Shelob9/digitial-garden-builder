@@ -1,4 +1,4 @@
-import { userFromGithub, encodeUserJwt } from '../../../services/UserService'
+import { userFromGithub, encodeUserJwt } from '@garden-cms/note-api'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getAuth } from '../../../auth'
 
@@ -11,7 +11,7 @@ const getUser = async (accessToken: string) => {
 			'content-type': 'application/json',
 			Authorization: `token ${accessToken}`,
 		},
-	}).then((r) => r.json())
+	}).then(r => r.json())
 }
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	let { code, state } = req.query
@@ -36,9 +36,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			})
 			console.log(state)
 			if (state) {
-				let redirect = `${state as string}?token=${token}&state=${
-					state as string
-				}`
+				let redirect = `${state as string}?token=${token}&state=${state as string}`
 				return res.redirect(301, redirect)
 			}
 			res.json({ token })
