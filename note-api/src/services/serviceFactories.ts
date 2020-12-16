@@ -3,9 +3,9 @@ import { gitRepoDetails } from '../types/git';
 import { getAccessTokenFromSession } from './UserService';
 import { NextApiRequest } from 'next';
 import ConfigApiService from './ConfigApiService';
-import GitApi from '../GitApi';
 import NotesApiService from './NotesApiService';
 import getSession from '../lib/getSession';
+import GitApi from '../GitApi';
 
 const clientFactory = (authToken: string, repo: gitRepoDetails) => {
 	return GitApi(repo, 'main', authToken);
