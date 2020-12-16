@@ -1,6 +1,4 @@
-import { FC} from "react";
 import NoteEditor from '../../components/NoteEditor';
-import { INote } from "../../../types";
 import  { NotesProvider } from "../../components/useNotes";
 import {useRouter} from 'next/router';
 

@@ -9,6 +9,7 @@ import { NextSeo } from 'next-seo';
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { noteApiServicefactory } from '../../../server/services/serviceFactories'
+import { gardenServiceFactory } from "services/factory";
 
 const NoteSeo: FC<{ note: INote }> = ({ note })=> {
   let description = note.content ? note.content.substring(0, 240) : '';
@@ -63,8 +64,14 @@ const Page: FC<
 //Tells next.js which notes to generate files for
 export async function getStaticPaths() {
   let authToken = process.env.GITHUB_API_TOKEN;
-  let notesApi = await noteApiServicefactory(authToken);
-  let noteIndex = notesApi.noteIndex
+  const gardenService = gardenServiceFactory(
+    {
+      owner: process.env.REPO_OWNER ?? 'shelob9',
+      repo: process.env.REPO_NAME ?? 'garden-cms-test-data'
+    },
+    authToken
+  );
+  let noteIndex = await gardenService.fetchNoteIndex();
   const paths = noteIndex.map(({ slug}) => ({
     params: { slug },
   }))
@@ -76,8 +83,14 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const {slug} = params
   let authToken = process.env.GITHUB_API_TOKEN;
-  let notesApi = await noteApiServicefactory(authToken);
-  const note = await notesApi.fetchNote(slug);
+  const gardenService = gardenServiceFactory(
+    {
+      owner: process.env.REPO_OWNER ?? 'shelob9',
+      repo: process.env.REPO_NAME ?? 'garden-cms-test-data'
+    },
+    authToken
+  );
+  const note = await gardenService.fetchNote(slug);
 
   // Pass post data to the page via props
   return { props: { note,slug } }
