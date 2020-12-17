@@ -60,7 +60,6 @@ export const getAccessTokenFromSession = (
 		return false
 	}
 	let session = decryptSession(sessionData)
-	console.log(session)
 	if (session) {
 		return session.accessToken ?? false
 	}

@@ -15,7 +15,6 @@ const getUser = async (accessToken: string) => {
 }
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	let { code, state } = req.query
-	console.log(state)
 	try {
 		const oauthAuthentication = await auth({
 			type: 'oauth',
@@ -34,7 +33,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				owner: 'shelob9',
 				repo: 'garden-cms-test-data',
 			})
-			console.log(state)
 			if (state) {
 				let redirect = `${state as string}?token=${token}&state=${
 					state as string

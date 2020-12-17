@@ -4,7 +4,6 @@ module.exports = {
         defaultPathMap,
         { dev, dir, outDir, distDir, buildId }
     ) {
-        console.log(defaultPathMap);
         return {
             ...defaultPathMap,
             '/': { page: '/' },
