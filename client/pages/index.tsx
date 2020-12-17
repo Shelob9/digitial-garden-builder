@@ -8,11 +8,11 @@ const Index = () => {
   const { isLoggedIn, } = useIsLoggedIn()
   return (
     <>
-      <NotesProvider>
+      <>
         <NoteLayoutProvider noteSlug={'digital-garden-builder'}>
           <NoteApp isLoggedIn={isLoggedIn} />
         </NoteLayoutProvider>
-      </NotesProvider>
+      </>
     </>
   )
 }

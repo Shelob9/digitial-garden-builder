@@ -142,12 +142,32 @@ export const useNoteSettings = () => {
 
     const siteName = useMemo(() => {
         return data && data.siteName ? data.siteName : 'Digital Garden'
-    },[data]);
+    }, [data]);
+    
+    const siteTwitter = useMemo(() => {
+        return data && data.siteTwitter ? data.siteTwitter : ''
+    }, [data]);
+    
+    const authorName = useMemo(() => {
+        return data && data.authorName ? data.authorName : ''
+    }, [data]);
+    
 
+    const authorTwitter = useMemo(() => {
+        return data && data.authorTwitter ? data.authorTwitter : ''
+    }, [data]);
+    
+    const defaultNote = useMemo(() => {
+        return data && data.defaultNote ? data.defaultNote : 'digtial-garden-builder'
+    },[data]);
     return {
         settings: data as GardenConfig,
         saveSettings,
-        siteName
+        siteName,
+        siteTwitter,
+        authorName,
+        authorTwitter,
+        defaultNote,
     }
 }
 

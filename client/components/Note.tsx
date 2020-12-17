@@ -4,7 +4,6 @@ import remark2react from 'remark-react'
 import ReferencesBlock from "./ReferencesBlock";
 import { FC } from 'react';
 import useNotes, { useSingleNote } from './useNotes';
-import NoteLink from './NoteLink';
 import useNoteLayout from './useNoteLayout';
 import { notePostions } from './noteLayoutReducer';
 import Link from 'next/link'

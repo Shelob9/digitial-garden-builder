@@ -39,14 +39,6 @@ const TextField = forwardRef((props: {
     );
 });
 
-const saveSettings = async (settings: GardenConfig) => {
-    return fetch('/api/settings', {
-        method: 'POST',
-        body: JSON.stringify({ settings })
-    }).then(r => {
-        r.json()
-    }).then(r => console.log(r));
-}
 
 const NoteSelector = ({selectedNote,setSelectedNote}) => {
     let { allSlugs } = useNotes();
