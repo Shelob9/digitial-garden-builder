@@ -7,7 +7,8 @@ export default function After() {
 	//New JWT token should be in query var token
 	const { query } = useRouter();
 	//This hook will put token into a cookie.
-	const { token } = useUserToken({ token: query.token  as string ?? '' });
+	//@ts-ignore
+	const { token } = useUserToken({ token: query.token  });
 	return (
 		<Layout pageDisplayTitle={'Login'}>
 			<section>
@@ -24,3 +25,4 @@ export default function After() {
 		</Layout>
 	)
 };
+
