@@ -13,7 +13,7 @@ const ReferencesBlock: FC<{
 
   return (
     <div className="references-block">
-      <h3>Referred in</h3>
+      <h3>Linked Notes</h3>
       <div>
         {references.map((reference) => (
           <Reference
