@@ -9,11 +9,9 @@ const Header: FC<{
   pageDisplayTitle: string;
   statusMessage?: string;
 
-}> = ({ BeforeControls,pageDisplayTitle,statusMessage }) => {
+}> = ({ BeforeControls,statusMessage }) => {
   const { isLoggedIn, isSessionLoading } = useIsLoggedInAuthorized();
   const { siteName } = useNoteSettings();
-
-
   return (
       <>
         <header id="header" role="banner">
