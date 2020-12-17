@@ -1,6 +1,16 @@
 import { Garden, gardens } from '../../types'
 let theGardens: gardens = [
 	{
+		rootUrl: `https://docs.digitalgardenbuilder.app/`,
+		afterLoginUrl: `https://docs.digitalgardenbuilder.app//login/after`,
+		repo: {
+			owner: 'shelob9',
+			repo: 'garden-cms-test-data',
+		},
+		gardenServerUrl: `https://digitalgardenbuilder.app/`,
+		publicKey: '3erty54ear',
+	},
+	{
 		rootUrl: `http://localhost:3202`,
 		afterLoginUrl: `http://localhost:3202/login/after`,
 		repo: {
