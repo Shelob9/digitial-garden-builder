@@ -171,7 +171,7 @@ const Note: FC<{
 								}
 							/>
 						<>
-						{note.references && <ReferencesBlock references={note.references} openPosition={'one'} />}
+						{note.references && <ReferencesBlock references={note.references} openPosition={nextPosition(position)} />}
 						</>
                 </div>
                 }

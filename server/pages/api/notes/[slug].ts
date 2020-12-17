@@ -12,7 +12,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	res.setHeader('Cache-Control', 's-maxage=86400')
 	let session = getSession(req)
 	let { noteService } = await factory(req)
-
 	let note: INote
 	await noteService.fetchNoteIndex()
 	switch (req.method) {
