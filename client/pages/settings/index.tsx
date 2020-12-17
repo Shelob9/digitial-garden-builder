@@ -159,9 +159,9 @@ const Settings = () => {
 }
 const Page = () => {
     return (
-        <NotesProvider>
+        <>
             <Settings  />
-        </NotesProvider>
+        </>
     )
 }
 

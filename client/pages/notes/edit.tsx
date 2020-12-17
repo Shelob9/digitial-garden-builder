@@ -1,5 +1,4 @@
 import NoteEditor from '../../components/NoteEditor';
-import  { NotesProvider } from "../../components/useNotes";
 import {useRouter} from 'next/router';
 
 
@@ -9,9 +8,9 @@ const Page = () => {
   
   return (
     <>
-      <NotesProvider>
+      <>
         <NoteEditor slug={slug} />
-        </NotesProvider>
+        </>
     </>
   )
 }

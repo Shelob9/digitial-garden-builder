@@ -1,6 +1,6 @@
 import NoteApp from "../../components/NoteApp";
 import { NoteLayoutProvider } from "../../components/useNoteLayout";
-import { NotesProvider, useNoteSettings } from "../../components/useNotes";
+import {  useNoteSettings } from "../../components/useNotes";
 import useIsLoggedInAuthorized from "../../hooks/useIsLoggedAuthorized";
 import { FC } from "react";
 import { INote } from "../../../types";
@@ -44,7 +44,7 @@ const Page: FC<
   return (
       <>
         {note && <NoteSeo note={note} />}
-        <NotesProvider>
+        <>
           <NoteLayoutProvider
             noteSlug={noteOne}
           >
@@ -55,7 +55,7 @@ const Page: FC<
               noteThreeSlug={noteThree}
             />
          </NoteLayoutProvider>
-        </NotesProvider> 
+        </> 
       </>
     )
     
