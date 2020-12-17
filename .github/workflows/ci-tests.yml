@@ -19,12 +19,6 @@ jobs:
             - name: Install
               run: yarn
 
-            - name: Test note-api
-              run: yarn note-api test --ci
-
-            - name: Build note-api
-              run: yarn note-api build
-
             - name: Test client
               run: yarn client test --ci
 
