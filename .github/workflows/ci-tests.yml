@@ -18,7 +18,7 @@ jobs:
 
             - name: Install
               run: yarn
-
+              
             - name: Test client
               run: yarn client test --ci
 
