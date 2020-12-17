@@ -10,6 +10,7 @@
 		"start": "next start"
 	},
 	"dependencies": {
+		"@adobe/react-spectrum": "^3.6.0",
 		"@octokit/auth-oauth-app": "^3.0.7",
 		"@octokit/rest": "^18.0.9",
 		"@react-aria/select": "^3.2.3",
@@ -33,6 +34,7 @@
 		"react-cookie": "^4.0.3",
 		"react-dom": "^16.14",
 		"react-mde": "^11.0.0",
+		"react-tiny-popover": "^6.0.3",
 		"rehype-parse": "^7.0.1",
 		"rehype-react": "^6.1.0",
 		"rehype-remark": "^8.0.0",

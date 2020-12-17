@@ -10,55 +10,8 @@ import { notePostions } from './noteLayoutReducer';
 import Link from 'next/link'
 const { wikiLinkPlugin } = require('remark-wiki-link');
 import {INote} from '../../types'
+import  NoteMarkdownLink  from './NoteMarkdownLink';
 
-
-const ExternalLink = ({ href, children }) => <a className={'external'} href={href}>{children}</a>;
-
-const InternalLink : FC<{
-	href: string;
-	children: any,
-	openPosition: notePostions
-	className?:string
-}> = ({
-	href,
-	children,
-	openPosition,
-	className
-}) => {
-	let slug = href.substr('/notes/'.length);
-	const { note } = useSingleNote({slug})
-	const {
-		openInNextPosition
-	} = useNoteLayout();
-	if ( note) {
-		const onClick = () => {
-			openInNextPosition( note.slug, openPosition)	
-		}
-
-		return <NoteLink
-				onClick={onClick}
-				className={className ?? 'reference'}
-				slug={slug}
-		>
-			{children}
-		</NoteLink>
-	} else {
-		return <ExternalLink href={href}>{children}</ExternalLink>
-	}
-}
-//Render note to note links
-export const NoteMarkdownLink: FC<{
-	href: string;
-	children: any,
-	openPosition: notePostions
-	className?:string
-}> = (props) => {
-	let internal = props.href.startsWith('/notes/');
-	if( internal ){
-		return<InternalLink {...props} />
-	}
-	return <ExternalLink href={props.href}>{props.children}</ExternalLink>
-}
 
 const nextPosition = (position: notePostions) => {
 	switch (position) {

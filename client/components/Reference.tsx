@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { NoteReference } from "../lib/findReferences";
 import { notePostions } from "./noteLayoutReducer";
 
-import {NoteMarkdownLink} from './Note';
+import NoteMarkdownLink from './NoteMarkdownLink';
 import { useSingleNote } from "./useNotes";
 const Reference: FC<{
   reference: NoteReference,
