@@ -22,7 +22,10 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx", "lib/gitUtil.js", "pages/after.jx", "pages/api/auth/session.js"
+    "**/*.tsx", 
+    "lib/gitUtil.js",
+    "pages/api/auth/session.js",
+    "../stuff/**/*.ts"
   ],
   "exclude": [
     "node_modules"

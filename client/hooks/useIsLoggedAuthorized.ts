@@ -1,10 +1,9 @@
+import useGardenServer from 'hooks/useGardenServer'
 import { useMemo, useState, useEffect } from 'react'
 import useUserCookie from './useUserCookie'
 
-let gardenServerUrl =
-	process.env.NEXT_PUBLIC_GARDEN_SERVER_URL ||
-	'https://garden-server.vercel.app'
 const useIsLoggedInAuthorized = () => {
+	let { createUrl } = useGardenServer({})
 	let [loading, setLoading] = useState(true)
 	let [isLoggedIn, setIsLoggedIn] = useState(true)
 	const { token } = useUserCookie({})
@@ -18,7 +17,7 @@ const useIsLoggedInAuthorized = () => {
 			setLoading(false)
 			return
 		}
-		fetch(`${gardenServerUrl}/api/session`, {
+		fetch(createUrl(`/api/session`), {
 			method: 'POST',
 			headers: {
 				'content-type': 'application/json',

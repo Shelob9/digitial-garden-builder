@@ -1,28 +1,20 @@
-import { FC} from "react";
 import NoteEditor from '../../components/NoteEditor';
-import { INote } from "../../../types";
 import  { NotesProvider } from "../../components/useNotes";
-import useIsLoggedInAuthorized from "../../hooks/useIsLoggedAuthorized";
-const Page: FC<{ note?: INote,slug:string}> = (props) => {
-    const { isLoggedIn, userDisplayName, isSessionLoading } = useIsLoggedInAuthorized();
-    return (
-      <>
-        <NotesProvider>
-          <NoteEditor  {...props} />
-          </NotesProvider>
-        </>
-    )
+import {useRouter} from 'next/router';
+
+
+const Page = () => {
+  const { query } = useRouter();
+  let slug = query && query.note ? query.note as string : '';
+  
+  return (
+    <>
+      <NotesProvider>
+        <NoteEditor slug={slug} />
+        </NotesProvider>
+    </>
+  )
 }
 export default Page;
 
-export async function getServerSideProps(context) {
- 
-  //do not get note server side to make sure its fresh in editor.
-  let slug = context.query.note;
-    return {
-      props: {
-          slug,
 
-    },
-  }
-}

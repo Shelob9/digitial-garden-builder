@@ -6,13 +6,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const cors = createCorsMiddleWare(['GET', 'POST', 'OPTIONS'])
 	await cors(req, res)
 	const { session, configService } = await factory(req)
-	if (!session) {
-		return res.status(403).json({ allowed: false, session })
-	}
 	let settings = await configService.getSettings()
 	switch (req.method) {
 		case 'GET':
-			res.setHeader('Cache-Control', 's-maxage=300')
+			res.setHeader('Cache-Control', 's-maxage=3000')
 			res.status(200).json({ settings })
 			break
 		case 'POST':

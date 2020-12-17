@@ -21,7 +21,6 @@ const NoteApp: FC<{
 }) => {
   //https://nextjs.org/docs/api-reference/next/router
   const router = useRouter();
-  console.log(router.query);
   //Controls the three note slots
   const { currentNotes,toggleBox,isNoteOpen,hasNote,addNote } = useNoteLayout();
   //The actual notes
