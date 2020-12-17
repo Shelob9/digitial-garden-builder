@@ -30,9 +30,7 @@ const Page: FC<{
 export async function getServerSideProps({ query }) {
     const clientId = process.env.GITHUB_ID
     const { publicKey } = query;
-    let redirect = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(
-        process.env.GITHUB_REDIRECT || `https://docs.digitalgardenbuilder.app/api/login/after&state=${publicKey}`
-    )}`;
+    let redirect = `https://github.com/login/oauth/authorize?client_id=${clientId}&state=${publicKey}`;
     
     const service = new GardenerService();
     let garden: Garden | undefined = undefined;

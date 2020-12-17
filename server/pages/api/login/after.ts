@@ -15,6 +15,7 @@ const getUser = async (accessToken: string) => {
 	}).then((r) => r.json())
 }
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+	console.log(req.query)
 	let { code, state } = req.query
 	let _gardenerService = new GardenerService()
 	try {
