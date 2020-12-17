@@ -5,6 +5,11 @@ export default function useGardenServer(props:{token?:string}) {
 		process.env.NEXT_PUBLIC_GARDEN_SERVER_URL ||
 		'https://digitalgardenbuilder.app'
 	
+	let gardenServerPublicKey =
+		process.env.NEXT_PUBLIC_GARDEN_SERVER_PUBLIC_KEY ||
+		'3erty54ear';
+	
+	let loginLink = `${gardenServerUrl}/login?publicKey=${gardenServerPublicKey}`
 	//Create URL with garden server from uri
 	// Provide uris with forward slash - `/api/hi/roy` - please
 	function createUrl(uri: string) {
@@ -25,10 +30,12 @@ export default function useGardenServer(props:{token?:string}) {
 		}
 	}
 
+
     
 	return {
 		createUrl,
 		createHeaders,
-		gardenServerUrl
+		gardenServerUrl,
+		loginLink
 	}
 }

@@ -1,22 +1,23 @@
 import Layout from "components/Layout";
+import useGardenServer from "hooks/useGardenServer";
 import useIsLoggedAuthorized from "hooks/useIsLoggedAuthorized";
-import { useEffect } from "react";
-const clientId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
-const state = encodeURIComponent(process.env.NEXT_PUBLIC_CLIENT_LOGIN_REDIRECT)
 
-const loginLink = `https://github.com/login/oauth/authorize?client_id=${clientId}&state=${state}`;
 export default function Login() {
+    let { loginLink} = useGardenServer({});
     let { isLoggedIn } = useIsLoggedAuthorized();
     return (
         <Layout pageDisplayTitle={'Login'}>
             <div>
                 <p>{isLoggedIn ? 'Logged In' : 'Not Logged In'}</p>
-                <a href={loginLink}>Login With Github</a>
+                <a href={loginLink}>Login To Digital Garden Builder</a>
                 <p>Login to edit your notes or suggest changes.</p>
             </div>
             <div>
                 <p>
-                    Right now, this isn't going to work if you're not Josh.  
+                    You must be author of site to login.  
+                </p>
+                <p>
+                    Multi-player coming soon.  
                 </p>
             </div>
         </Layout>

@@ -1,6 +1,7 @@
 import { userFromGithub, encodeUserJwt } from '../../../services/UserService'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getAuth } from '../../../auth'
+import GardenerService from '../../../services/GardenerService'
 
 let auth = getAuth()
 
@@ -15,7 +16,9 @@ const getUser = async (accessToken: string) => {
 }
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	let { code, state } = req.query
+	let _gardenerService = new GardenerService()
 	try {
+		let garden = await _gardenerService.getGarden(state as string)
 		const oauthAuthentication = await auth({
 			type: 'oauth',
 			code: code as string,
@@ -24,28 +27,29 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		try {
 			let user = await getUser(accessToken)
 			user = userFromGithub(user)
-			//Create a JWT token that has:
-			// - Username. Not encrypted.
-			// - Encrypted session with Github access token and repo details.
-			// JWT encoding !== encryption. hmac is used inside.
-			let token = encodeUserJwt(user.name, accessToken, {
-				//@todo set this based on installed app
-				owner: 'shelob9',
-				repo: 'garden-cms-test-data',
-			})
-			if (state) {
-				let redirect = `${state as string}?token=${token}&state=${
-					state as string
-				}`
-				return res.redirect(301, redirect)
+			try {
+				//Create a JWT token that has:
+				// - Username. Not encrypted.
+				// - Encrypted session with Github access token and repo details.
+				// JWT encoding !== encryption. hmac is used inside.
+				let token = encodeUserJwt(user.name, accessToken, garden.repo)
+				if (state) {
+					let redirect = `${garden.afterLoginUrl}?token=${token}`
+					return res.redirect(301, redirect)
+				}
+				return res.json({ token, state })
+			} catch (error) {
+				console.log(error)
+				return res.status(500).json({ error, state })
 			}
-			res.json({ token })
 		} catch (error) {
 			console.log(error)
-			res.status(500).json({ error })
+			return res
+				.status(403)
+				.json({ error, message: 'Garden not found', state })
 		}
 	} catch (error) {
-		res.status(400).json({
+		return res.status(400).json({
 			error: { name: error.name, status: error.status },
 		})
 	}
