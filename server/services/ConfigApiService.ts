@@ -2,6 +2,9 @@ import { GardenConfig } from '../../types/config'
 import { IGitApi } from '../lib/GitApi'
 
 let configPath = '/garden.json'
+/**
+ * API client for garden settings.
+ */
 class ConfigApiService {
 	client: IGitApi
 	config: GardenConfig

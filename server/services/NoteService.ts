@@ -1,5 +1,9 @@
 import { noteIndex, noteIndexItem } from '../../types'
 
+/**
+ * Collection for note index.
+ * Do not use, probably will be deleted.
+ */
 class NoteService {
 	notes: noteIndex
 

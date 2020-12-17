@@ -13,6 +13,9 @@ const maybeUpdateTitle = (content: string) => {
 	}
 	return content
 }
+/**
+ * API client for garden notes.
+ */
 class NotesApiService {
 	noteService: NoteService
 	client: IGitApi
