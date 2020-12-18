@@ -46,12 +46,13 @@ let theGardens: gardens = [
  */
 export default class GardenerService {
 	getGarden = async (publicKey: string): Promise<Garden> => {
+		console.log(publicKey)
 		return new Promise(async (resolve, reject) => {
 			const garden = theGardens.find((g) => g.publicKey === publicKey)
 			if (garden) {
 				resolve(garden)
 			}
-			reject()
+			reject(`Garden not found for pk: ${publicKey}`)
 		})
 	}
 }

@@ -6,6 +6,7 @@ import useUserToken from "../../hooks/useUserCookie";
 export default function After(props:{token:string}) {
 	//New JWT token should be in query var token
 	const { query } = useRouter();
+	console.log(query);
 	//This hook will put token into a cookie.
 	//@ts-ignore
 	const { token } = useUserToken({ token: query.token ? query.token : props.token  });

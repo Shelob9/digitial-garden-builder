@@ -20,6 +20,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	let _gardenerService = new GardenerService()
 	try {
 		let garden = await _gardenerService.getGarden(state as string)
+		console.log(garden)
 		const oauthAuthentication = await auth({
 			type: 'oauth',
 			code: code as string,
