@@ -6,7 +6,6 @@ import useUserCookie from "../hooks/useUserCookie"
 export default function Hi({name}) {
     const { isLoggedIn, userDisplayName, isSessionLoading } = useIsLoggedInAuthorized();
     const { createUrl,createHeaders } = useGardenServer({});
-    console.log(createHeaders());
     useEffect(() => {
         fetch(createUrl(`/api/notes`), {
             headers: createHeaders()
