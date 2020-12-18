@@ -63,13 +63,7 @@ const Page: FC<
 // This function gets called at build time
 //Tells next.js which notes to generate files for
 export async function getStaticPaths() {
-  let authToken = process.env.GITHUB_API_TOKEN;
   const gardenService = gardenServiceFactory(
-    {
-      owner: process.env.REPO_OWNER ?? 'shelob9',
-      repo: process.env.REPO_NAME ?? 'garden-cms-test-data'
-    },
-    authToken
   );
   let noteIndex = await gardenService.fetchNoteIndex();
   const paths = noteIndex.map(({ slug}) => ({
@@ -82,14 +76,7 @@ export async function getStaticPaths() {
 //Tells next.js which note to generate with
 export async function getStaticProps({ params }) {
   const {slug} = params
-  let authToken = process.env.GITHUB_API_TOKEN;
-  const gardenService = gardenServiceFactory(
-    {
-      owner: process.env.REPO_OWNER ?? 'shelob9',
-      repo: process.env.REPO_NAME ?? 'garden-cms-test-data'
-    },
-    authToken
-  );
+  const gardenService = gardenServiceFactory()
   const note = await gardenService.fetchNote(slug);
 
   // Pass post data to the page via props
