@@ -79,5 +79,9 @@
 				"tsconfig": "tsconfig.jest.json"
 			}
 		}
+	},
+	"gitHead": "058b401a8b54811cde493eb063ae11e20e88bfe8",
+	"publishConfig": {
+		"access": "public"
 	}
 }
