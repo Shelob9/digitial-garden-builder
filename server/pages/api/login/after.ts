@@ -1,3 +1,4 @@
+import { User } from './../../../../types/user'
 import { userFromGithub, encodeUserJwt } from '../../../services/UserService'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getAuth } from '../../../auth'
@@ -29,16 +30,20 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		try {
 			let user = await getUser(accessToken)
 			user = userFromGithub(user)
+			let githubIdentity = user.providers.find((p) => 'github' === p.type)
 			//Is this the owner of garden?
-			if (user.id != garden.gardener.github.id) {
+			if (
+				!githubIdentity ||
+				githubIdentity.id != garden.gardener.github.id
+			) {
 				console.log({
-					user: user,
+					user,
 					gardener: garden.gardener,
 				})
 				//No? return error
 				return res.status(403).json({
 					error: `Invalid user`,
-					user: user,
+					user,
 					gardener: garden.gardener,
 				})
 			}
