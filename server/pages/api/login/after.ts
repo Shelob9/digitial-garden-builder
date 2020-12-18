@@ -27,6 +27,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		const accessToken = oauthAuthentication.token
 		try {
 			let user = await getUser(accessToken)
+			console.log(user)
 			user = userFromGithub(user)
 			try {
 				//Create a JWT token that has:
