@@ -18,6 +18,7 @@ export default function After(props:{token:string}) {
 				<ul>
 					<li><Link href={'/'}><a>Notes</a></Link></li>
 					<li><Link href={'/settings'}><a>Settings</a></Link></li>
+					<li><Link href={'/login/logout'}><a>Logout</a></Link></li>
 					<li><a href={'https://docs.digitalgardenbuilder.app'}>Documentation</a></li>
 				</ul>
 			</section>
