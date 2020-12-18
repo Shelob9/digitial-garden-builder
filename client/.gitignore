@@ -5,3 +5,4 @@ yarn.lock
 .env
 private-key.pem
 out
+garden.json

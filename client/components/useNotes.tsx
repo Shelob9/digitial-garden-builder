@@ -102,7 +102,22 @@ const useNotes = () => {
 
 export default useNotes;
 
+let defaultConfig = {
+    "siteName": "Digital Garden",
+    "authorName": "",
+    "defaultNote": "digital-garden-builder",
+    "siteTwitter": "@digigardenbuilder",
+    "authorTwitter": ""
+};
 
+let gardenJson;
+try {
+     gardenJson = require('../garden.json');
+    // do stuff
+} catch (ex) {
+    gardenJson = false;
+}
+ 
 export const useNoteSettings = () => {
     //Get token and create a stable fetch function with it.
     const { token } = useUserToken({});
@@ -116,6 +131,7 @@ export const useNoteSettings = () => {
     const { data,mutate  } = useSWR(
         `/api/settings`,
         settingsFetcher,
+        {initialData: gardenJson ? Object.assign(defaultConfig,gardenJson): defaultConfig }
     );
 
     const { createUrl,createHeaders } = useGardenServer({token});
