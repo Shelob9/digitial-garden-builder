@@ -6,20 +6,23 @@ import GitApi from '../lib/GitApi'
 import NotesApiService from './NotesApiService'
 import getSession from '../lib/getSession'
 import { userJwtData } from '../../types/user'
+import getRepoFromHeader from '../lib/getRepoFromHeader'
+import GardenerService from './GardenerService'
 
 const clientFactory = (authToken: string, repo: gitRepoDetails) => {
 	return GitApi(repo, 'main', authToken)
 }
 
 export const noteApiServicefactoryFromRequest = async (
-	req: NextApiRequest
+	req: NextApiRequest,
+	repo: gitRepoDetails
 ): Promise<NotesApiService> => {
 	return new Promise(async (resolve, reject) => {
 		let session = getSession(req)
 		if (session) {
 			let accessToken = getAccessTokenFromSession(session)
 			if (accessToken) {
-				let noteService = await noteApiServicefactory(accessToken)
+				let noteService = await noteApiServicefactory(accessToken, repo)
 				return resolve(noteService)
 			}
 		}
@@ -27,27 +30,19 @@ export const noteApiServicefactoryFromRequest = async (
 	})
 }
 export const noteApiServicefactory = async (
-	authToken?: string
+	authToken: string | undefined,
+	repo: gitRepoDetails
 ): Promise<NotesApiService> => {
 	authToken = authToken ?? process.env.GITHUB_API_TOKEN
-	let repo = {
-		owner: 'shelob9',
-		repo: 'garden-cms-test-data',
-	}
-
 	let noteService = new NotesApiService(clientFactory(authToken, repo))
 	await noteService.fetchNoteIndex()
 	return noteService
 }
 
 export const settingsApiServiceFactory = async (
-	authToken: string
+	authToken: string,
+	repo: gitRepoDetails
 ): Promise<ConfigApiService> => {
-	let repo = {
-		owner: 'shelob9',
-		repo: 'garden-cms-test-data',
-	}
-
 	let service = new ConfigApiService(clientFactory(authToken, repo))
 	await service.fetchConfig()
 	return service
@@ -64,16 +59,25 @@ export default async function factory(
 	session: userJwtData | false
 }> {
 	let session = getSession(req)
+	let gardener = new GardenerService()
 	return new Promise(async (resolve, reject) => {
+		let garden = await getRepoFromHeader(req, gardener).catch(() => {
+			reject({ message: 'Garden not found' })
+		})
+		if (!garden) {
+			reject({ message: 'Garden not found' })
+		}
+		//@ts-ignore
+		let repo = garden.repo
 		let noteService: NotesApiService = session
-			? await noteApiServicefactoryFromRequest(req)
-			: await noteApiServicefactory()
+			? await noteApiServicefactoryFromRequest(req, repo)
+			: await noteApiServicefactory(undefined, repo)
 
 		let accessToken = session ? getAccessTokenFromSession(session) : false
 		if (!accessToken) {
 			accessToken = process.env.GITHUB_API_TOKEN
 		}
-		let configService = await settingsApiServiceFactory(accessToken)
+		let configService = await settingsApiServiceFactory(accessToken, repo)
 		resolve({ noteService, configService, session })
 	})
 }

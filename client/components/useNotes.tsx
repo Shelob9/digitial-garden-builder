@@ -12,25 +12,20 @@ const NotesContext = createContext(null);
 const createFetch = (token: string | undefined,handler:(r:any) => any) => {
     const { createUrl,createHeaders } = useGardenServer({token});
     
-    if (token) {
-        return (uri:string, args: any) => {
-            args = Object.assign({
-                headers: createHeaders()
-            } , args);
-            return fetch(createUrl(uri), args)
-                .then(r => r.json())
-                .then(
-                    handler
-                );
-        };
-    }
+    
     return (uri:string, args: any) => {
+        args = Object.assign({
+            headers: createHeaders()
+        }, args);
+        
         return fetch(createUrl(uri), args)
             .then(r => r.json())
             .then(
                 handler
             );
     };
+    
+   
 }
 
 

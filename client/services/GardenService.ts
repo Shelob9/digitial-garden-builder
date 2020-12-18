@@ -1,16 +1,10 @@
 import { INote, noteIndex } from './../../types'
 import { gitRepoDetails } from '../../types/git'
 export default class GardenService {
-	repo: gitRepoDetails
-	authToken: string
+	publicKey: string
 	gardenServerUrl: string
-	constructor(
-		repo: gitRepoDetails,
-		authToken: string,
-		gardenServerUrl: string
-	) {
-		this.repo = repo
-		this.authToken = authToken
+	constructor(publicKey: string, gardenServerUrl: string) {
+		this.publicKey = publicKey
 		this.gardenServerUrl = gardenServerUrl
 	}
 
@@ -18,7 +12,7 @@ export default class GardenService {
 	createHeaders = () => {
 		return {
 			'content-type': 'application/json',
-			token: this.authToken,
+			'x-garden-public': this.publicKey,
 		}
 	}
 
@@ -27,8 +21,8 @@ export default class GardenService {
 			method: 'GET',
 			headers: this.createHeaders(),
 		})
-			.then(r => r.json())
-			.then(r => {
+			.then((r) => r.json())
+			.then((r) => {
 				return r.noteIndex
 			})
 	}
@@ -38,8 +32,8 @@ export default class GardenService {
 			method: 'GET',
 			headers: this.createHeaders(),
 		})
-			.then(r => r.json())
-			.then(r => {
+			.then((r) => r.json())
+			.then((r) => {
 				return r.note
 			})
 	}

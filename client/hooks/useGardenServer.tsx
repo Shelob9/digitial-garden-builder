@@ -6,8 +6,7 @@ export default function useGardenServer(props:{token?:string}) {
 		'https://digitalgardenbuilder.app'
 	
 	let gardenServerPublicKey =
-		process.env.NEXT_PUBLIC_GARDEN_SERVER_PUBLIC_KEY ||
-		'3erty54ear';
+		process.env.NEXT_PUBLIC_GARDEN_SERVER_PUBLIC_KEY;
 	
 	let loginLink = `${gardenServerUrl}/login?publicKey=${gardenServerPublicKey}`
 	//Create URL with garden server from uri
@@ -23,10 +22,13 @@ export default function useGardenServer(props:{token?:string}) {
 			return {
 				'Content-Type': 'application/json',
 				Authorization: props.token,
+				'x-garden-public': gardenServerPublicKey,
 			}
 		}
 		return {
 			'Content-Type': 'application/json',
+			'x-garden-public': gardenServerPublicKey,
+
 		}
 	}
 

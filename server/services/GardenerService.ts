@@ -29,6 +29,17 @@ let theGardens: gardens = [
 		publicKey: '3erty54ear',
 		gardener: josh,
 	},
+	{
+		rootUrl: `https://template.digitalgardenbuilder.app/`,
+		afterLoginUrl: `https://template.digitalgardenbuilder.app/login/after`,
+		repo: {
+			owner: 'shelob9',
+			repo: 'garden-builder-content-template',
+		},
+		gardenServerUrl: `https://digitalgardenbuilder.app/`,
+		publicKey: '346ed52b9fa674fa85630987bc97a8b27f49',
+		gardener: josh,
+	},
 ]
 /**
  * Gets digital gardens allowed by this server

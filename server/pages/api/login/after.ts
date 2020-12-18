@@ -30,10 +30,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			user = userFromGithub(user)
 			//Is this the owner of garden?
 			if (user.id != garden.gardener.github.id) {
+				console.log({
+					user: user,
+					gardener: garden.gardener,
+				})
 				//No? return error
-				return res
-					.status(403)
-					.json({ error: `Invalid user`, user: user.id })
+				return res.status(403).json({
+					error: `Invalid user`,
+					user: user,
+					gardener: garden.gardener,
+				})
 			}
 			try {
 				//Create a JWT token that has:

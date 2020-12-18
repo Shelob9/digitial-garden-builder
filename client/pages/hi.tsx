@@ -1,16 +1,15 @@
+import useGardenServer from "hooks/useGardenServer";
 import { useEffect } from "react";
 import useIsLoggedInAuthorized from "../hooks/useIsLoggedAuthorized"
 import useUserCookie from "../hooks/useUserCookie"
 
 export default function Hi({name}) {
     const { isLoggedIn, userDisplayName, isSessionLoading } = useIsLoggedInAuthorized();
-    const { token } = useUserCookie({})
-
+    const { createUrl,createHeaders } = useGardenServer({});
+    console.log(createHeaders());
     useEffect(() => {
-        fetch(`${process.env.NEXT_PUBLIC_GARDEN_SERVER_URL}/api/notes`, {
-            headers: {
-                Authorization:token
-            }
+        fetch(createUrl(`/api/notes`), {
+            headers: createHeaders()
         }).then(r => r.json())
             .then( r => console.log(r))
         .catch(e => console.log(e))
