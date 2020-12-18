@@ -1,6 +1,7 @@
 {
 	"name": "@digital-garden-builder/server",
 	"version": "0.0.3",
+	"private": false,
 	"scripts": {
 		"dev": "next",
 		"build": "next build",

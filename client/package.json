@@ -2,6 +2,7 @@
 	"name": "@digital-garden-builder/client",
 	"version": "0.0.3",
 	"license": "MIT",
+	"private": false,
 	"scripts": {
 		"test": "jest",
 		"dev": "next dev --port=3202",
