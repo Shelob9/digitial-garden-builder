@@ -1,4 +1,11 @@
 import { Garden, gardens } from '../../types'
+
+let josh = {
+	github: {
+		login: 'Shelob9',
+		id: 1994311,
+	},
+}
 let theGardens: gardens = [
 	{
 		rootUrl: `https://docs.digitalgardenbuilder.app/`,
@@ -9,6 +16,7 @@ let theGardens: gardens = [
 		},
 		gardenServerUrl: `https://digitalgardenbuilder.app/`,
 		publicKey: '3erty54ear',
+		gardener: josh,
 	},
 	{
 		rootUrl: `http://localhost:3202`,
@@ -19,6 +27,7 @@ let theGardens: gardens = [
 		},
 		gardenServerUrl: `http://localhost:3000`,
 		publicKey: '3erty54ear',
+		gardener: josh,
 	},
 ]
 /**

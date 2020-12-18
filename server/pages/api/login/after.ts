@@ -27,8 +27,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		const accessToken = oauthAuthentication.token
 		try {
 			let user = await getUser(accessToken)
-			console.log(user)
 			user = userFromGithub(user)
+			//Is this the owner of garden?
+			if (user.id != garden.gardener.github.id) {
+				//No? return error
+				return res
+					.status(403)
+					.json({ error: `Invalid user`, user: user.id })
+			}
 			try {
 				//Create a JWT token that has:
 				// - Username. Not encrypted.

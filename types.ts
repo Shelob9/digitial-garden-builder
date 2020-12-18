@@ -45,6 +45,16 @@ export interface Garden {
 	repo: gitRepoDetails
 	gardenServerUrl: string
 	publicKey: string
+	gardener: Gardener
+}
+/**
+ * One digital gardener
+ */
+export interface Gardener {
+	github: {
+		login: string
+		id: number
+	}
 }
 
 /**
