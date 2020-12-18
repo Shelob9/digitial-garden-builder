@@ -11,7 +11,7 @@ This is an experiment [Josh](https://joshpress.net) made.
 ## Install
 
 - Clone
-  - `git clone git@github.com:Shelob9/garden-cms.git`
+  - `git clone git@github.com:Shelob9/digital-garden-builder.git`
 - Install with Yarn.
   - Do not use npm. Must use Yarn 1.x
   - `yarn`

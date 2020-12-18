@@ -1,5 +1,5 @@
 {
-	"name": "@garden-cms/server",
+	"name": "@digital-garden-builder/server",
 	"version": "1.0.0",
 	"scripts": {
 		"dev": "next",

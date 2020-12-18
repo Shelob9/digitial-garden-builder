@@ -1,5 +1,5 @@
 {
-	"name": "@garden-cms/client",
+	"name": "@digital-garden-builder/client",
 	"version": "0.0.2",
 	"license": "MIT",
 	"scripts": {

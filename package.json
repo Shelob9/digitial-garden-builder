@@ -1,13 +1,13 @@
 {
-	"name": "garden-cms",
+	"name": "digital-garden-builder",
 	"private": true,
 	"workspaces": [
 		"client",
 		"server"
 	],
 	"scripts": {
-		"client": "yarn workspace @garden-cms/client",
-		"server": "yarn workspace @garden-cms/server",
+		"client": "yarn workspace @digital-garden-builder/client",
+		"server": "yarn workspace @digital-garden-builder/server",
 		"dev": "yarn wsrun dev",
 		"build": "yarn client build && yarn server build",
 		"grow": "yarn client build && yarn client export"
