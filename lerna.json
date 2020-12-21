@@ -1,7 +1,4 @@
 {
-	"packages": [
-		"client",
-		"server"
-	],
+	"packages": ["client", "server", "packages/*"],
 	"version": "0.0.7"
 }
