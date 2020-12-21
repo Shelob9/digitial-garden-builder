@@ -1,6 +1,0 @@
-{
-	"name": "@digital-garden-builder/types",
-	"devDependencies": {
-		"typescript": "^4"
-	}
-}

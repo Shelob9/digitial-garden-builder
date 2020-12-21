@@ -5,8 +5,7 @@
 	"version": "0.1.0",
 	"workspaces": [
 		"client",
-		"server",
-		"types"
+		"server"
 	],
 	"scripts": {
 		"client": "yarn workspace @digital-garden-builder/client",
