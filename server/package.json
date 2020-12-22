@@ -18,7 +18,7 @@
 		"cors": "2.8.5",
 		"dotenv": "^8.2.0",
 		"front-matter": "^4.0.2",
-		"next": "^10.0.3",
+		"next": "^10.0.4",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
 		"universal-cookie": "^4.0.4"
