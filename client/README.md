@@ -25,6 +25,9 @@ These commands should be run from root of monorepo as `yarn client dev` most of 
     - Example: `REPO_OWNER=shelob9`
   - `REPO_NAME`: Name of the Github repo to use.
     - Example: `REPO_NAME=garden-cms-test-data`
+- `USE_REPO_PREFIX`
+  - When using Github pages, without a custom domain, prefix asset urls with repo name.
+  - [Article about fixing this](https://dev.to/jameswallis/deploying-a-next-js-app-to-github-pages-24pn)
 - Url for garden server
   - `NEXT_PUBLIC_GARDEN_SERVER_URL`
   - [Will be availble in the browser](https://nextjs.org/docs/basic-features/environment-variables#exposing-environment-variables-to-the-browser)
