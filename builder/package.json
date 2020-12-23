@@ -1,7 +1,7 @@
 {
 	"name": "@digital-garden-builder/builder",
 	"private": false,
-	"version": "0.0.11",
+	"version": "0.0.12",
 	"description": "CLI client for Digital Garden Builder",
 	"main": "bin/index.js",
 	"scripts": {
