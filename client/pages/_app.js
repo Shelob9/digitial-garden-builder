@@ -8,8 +8,8 @@ import { NotesProvider } from '../components/useNotes';
 import "../styles/theme.css";
 import "../styles/stacked-layout.css";
 import "../styles/note-layout.css";
-import "../styles/buttons.css";
 import "../styles/style.css";
+import "../styles/buttons-fields.css";
 
 class MyApp extends App {
   render() {
