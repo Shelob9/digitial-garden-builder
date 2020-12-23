@@ -21,7 +21,8 @@
 		"next": "^10.0.3",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
-		"universal-cookie": "^4.0.4"
+		"universal-cookie": "^4.0.4",
+		"uuid": "^8.3.2"
 	},
 	"license": "MIT",
 	"devDependencies": {
