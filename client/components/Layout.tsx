@@ -18,14 +18,16 @@ const Layout: FC<{
 }> = ({ children, BeforeControls,pageDisplayTitle,statusMessage}) => {
   return (
       <>
-        <div className="layout">
+      <div className="layout">
+        <>
             <Header
               BeforeControls={BeforeControls}
               pageDisplayTitle={pageDisplayTitle ?? 'Digital Gardens' }
               statusMessage={statusMessage}
             />
             {children}
-            <Footer />
+          <Footer />
+          </>
         </div>
       </>
       
