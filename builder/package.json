@@ -14,7 +14,10 @@
 		"shelljs": "^0.8.4"
 	},
 	"bin": {
-		"grow": "./bin/index.js"
+		"garden": "./bin/index.js"
 	},
-	"gitHead": "6905baed7e5ccab718b2912a0ff2677d48f707ff"
+	"gitHead": "6905baed7e5ccab718b2912a0ff2677d48f707ff",
+	"publishConfig": {
+		"access": "public"
+	}
 }
