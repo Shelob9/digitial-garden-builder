@@ -35,7 +35,8 @@ export const TextInput : FC<TextInputProps> = forwardRef((props, ref) => {
                     ...inputProps, id,
                     'aria-labelledby': `${id}-label`
                 }}
-                ref={ref}
+                //@ts-ignore
+                ref={ref as HTMLInputElement}
             />
         </div>
     );
@@ -62,7 +63,8 @@ export const TextArea : FC<TextAreaProps> = forwardRef((props, ref) => {
             <label {...labelProps}>{label}</label>
             <textarea
                 {...inputProps}
-                ref={ref}
+                //@ts-ignore
+                ref={ref as HTMLTextAreaElement}
             />
         </div>
     );
