@@ -27,14 +27,6 @@ const Layout: FC<{
             {children}
             <Footer />
         </div>
-        <style jsx>{`
-          footer{ 
-            margin-top: 4px;
-            padding-top: 8px;
-            background-color: var( --shadow);
-            color: var( --text);}
-        `}
-        </style>
       </>
       
     )

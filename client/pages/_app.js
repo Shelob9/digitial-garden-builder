@@ -9,7 +9,7 @@ import "../styles/theme.css";
 import "../styles/stacked-layout.css";
 import "../styles/note-layout.css";
 import "../styles/buttons.css";
-import "tailwindcss/tailwind.css";
+import "../styles/style.css";
 
 class MyApp extends App {
   render() {

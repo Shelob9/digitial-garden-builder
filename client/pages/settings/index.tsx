@@ -143,16 +143,7 @@ const Settings = () => {
                     </>
                 
                 </Layout>
-                <style jsx>{`
-                    #settings {
-                        margin-left:42px;
-                    }
-                    #settings section {
-                        margin-top: 26.25px;
-                    }
-                
-                
-                `}</style>
+            
         </>
         
     );
