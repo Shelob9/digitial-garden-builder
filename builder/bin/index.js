@@ -6,7 +6,7 @@ const {
     deploy,
     html,
     install
-} = require('./bin/builder');
+} = require('./builder');
 (async () => {
     /** */
     if (!shell.which('git')) {
