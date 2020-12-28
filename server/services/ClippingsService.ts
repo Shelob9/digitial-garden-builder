@@ -1,5 +1,4 @@
-import { JsonBased, JsonService } from './JsonService'
-import { gitRepoDetails } from './../../types/git'
+import { JsonBased, JsonService, jsonServiceFactoryArgs } from './JsonService'
 import GitApi from './../lib/GitApi'
 import { clippingCollection, Clipping } from './../../types/clippings'
 
@@ -35,12 +34,9 @@ export default class ClippingService extends JsonBased<
 	}
 }
 
-export function clippingServiceFactory(
-	repo: gitRepoDetails,
-	authToken: string
-) {
+export function clippingServiceFactory(args: jsonServiceFactoryArgs) {
 	new JsonService(
-		GitApi(repo, 'main', authToken),
+		GitApi(args.repo, 'main', args.authToken),
 		clippingFactory,
 		clippingPathFactory
 	)

@@ -3,6 +3,11 @@ import GitApi, { IGitApi } from './../lib/GitApi'
 export type entityFactory<T> = (data: any) => T
 export type collectionFactory<T> = (data: any) => T
 export type entityPathFactory<T> = (identiefier: string | number) => string
+
+export type jsonServiceFactoryArgs = {
+	repo: gitRepoDetails
+	authToken: string
+}
 export class JsonService<Entity, Collection> {
 	client: IGitApi
 	entityFactory: entityFactory<Entity>
@@ -20,6 +25,21 @@ export class JsonService<Entity, Collection> {
 			.then(({ content }) => {
 				let json = JSON.parse(content)
 				return this.entityFactory(json)
+			})
+	}
+
+	saveItem = async (
+		identifier: string | number,
+		item: Entity
+	): Promise<Entity> => {
+		return this.client
+			.saveFile(
+				JSON.stringify(item),
+				this.entityPathFactory(identifier),
+				`Save`
+			)
+			.then(() => {
+				return item
 			})
 	}
 }
