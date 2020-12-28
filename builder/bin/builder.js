@@ -41,6 +41,10 @@ function deploy() {
         'Error: Checking out gh-pages branch'
     )
     git(
+        'git pull origin gh-pages',
+        'Error: Pulling gh-pages branch from origin'
+    )
+    git(
         //Add all to commit
         'git add .',
         'Error: adding build'
