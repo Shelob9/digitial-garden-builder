@@ -1,6 +1,8 @@
+import { JsonService } from './JsonService'
 import { gitRepoDetails } from './../../types/git'
-import GitApi, { IGitApi } from './../lib/GitApi'
+import GitApi from './../lib/GitApi'
 import { clippingCollection, Clipping } from './../../types/clippings'
+
 import { v4 as uuid } from 'uuid'
 
 function clippingFactory<Clipping>(data: any): Clipping {
@@ -22,30 +24,6 @@ function clippingFactory<Clipping>(data: any): Clipping {
 
 function clippingPathFactory(identiefier: string | number): string {
 	return `/clippings/${identiefier}.json`
-}
-type entityFactory<T> = (data: any) => T
-type collectionFactory<T> = (data: any) => T
-type entityPathFactory<T> = (identiefier: string | number) => string
-
-class JsonService<Entity, Collection> {
-	client: IGitApi
-	entityFactory: entityFactory<Entity>
-	entityPathFactory: entityPathFactory<Entity>
-	collectionFactory: collectionFactory<Collection>
-	constructor(client, entityFactory, entityPathFactory) {
-		this.client = client
-		this.entityFactory = entityFactory
-		this.entityPathFactory = entityPathFactory
-	}
-
-	getItem = async (identifier: string | number): Promise<Entity> => {
-		return this.client
-			.getFile(this.entityPathFactory(identifier))
-			.then(({ content }) => {
-				let json = JSON.parse(content)
-				return this.entityFactory(json)
-			})
-	}
 }
 
 export default class ClippingService {
