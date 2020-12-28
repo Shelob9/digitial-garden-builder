@@ -7,7 +7,6 @@ export default class GardenService {
 		this.publicKey = publicKey
 		this.gardenServerUrl = gardenServerUrl
 	}
-
 	createUrl = (uri: string) => `${this.gardenServerUrl}${uri}`
 	createHeaders = () => {
 		return {
