@@ -23,3 +23,11 @@ export class JsonService<Entity, Collection> {
 			})
 	}
 }
+
+export class JsonBased<Entity, Collection> {
+	repo: gitRepoDetails
+	jsonService: JsonService<Entity, Collection>
+	constructor(jsonService: JsonService<Entity, Collection>) {
+		this.jsonService = jsonService
+	}
+}
