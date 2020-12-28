@@ -30,8 +30,8 @@ let theGardens: gardens = [
 		gardener: josh,
 	},
 	{
-		rootUrl: `https://template.digitalgardenbuilder.app/`,
-		afterLoginUrl: `https://template.digitalgardenbuilder.app/login/after`,
+		rootUrl: `https://shelob9.github.io/garden-builder-content-template/`,
+		afterLoginUrl: `https://shelob9.github.io/garden-builder-content-template/after/login`,
 		repo: {
 			owner: 'shelob9',
 			repo: 'garden-builder-content-template',
