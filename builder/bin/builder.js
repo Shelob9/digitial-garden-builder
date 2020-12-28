@@ -32,6 +32,10 @@ function html() {
 }
 
 function deploy() {
+    /** Delete docs dir */
+    if (shell.test('-d', 'docs')) {
+        shell.rm('-rf', 'docs');
+    }
     /** Copy out dir */
     shell.echo( '!Copying to output directory!')
     shell.cp('-R', 'digitial-garden-builder/client/out', 'docs');
