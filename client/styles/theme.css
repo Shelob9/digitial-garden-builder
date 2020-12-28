@@ -7,6 +7,10 @@ html {
 	line-height: 1.5;
 }
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /*********** LIGHT MODE **************/
 
 body.light-mode {
