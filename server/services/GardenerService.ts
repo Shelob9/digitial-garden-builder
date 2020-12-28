@@ -6,6 +6,12 @@ let josh = {
 		id: 1994311,
 	},
 }
+
+/**
+ * All gardens.
+ *
+ * This is a shortcut.
+ */
 let theGardens: gardens = [
 	{
 		rootUrl: `https://docs.digitalgardenbuilder.app/`,
@@ -38,6 +44,28 @@ let theGardens: gardens = [
 		},
 		gardenServerUrl: `https://digitalgardenbuilder.app/`,
 		publicKey: '346ed52b9fa674fa85630987bc97a8b27f49',
+		gardener: josh,
+	},
+	{
+		rootUrl: `https://garden.joshpress.net`,
+		afterLoginUrl: `https://garden.joshpress.net/after/login`,
+		repo: {
+			owner: 'shelob9',
+			repo: 'josh-garden',
+		},
+		gardenServerUrl: `https://digitalgardenbuilder.app/`,
+		publicKey: 'Y6JyMiwHXqySeDGI2ZA3ZLxUWeKI0XV0YbkWaWwe',
+		gardener: josh,
+	},
+	{
+		rootUrl: `https://code-garden.joshpress.net`,
+		afterLoginUrl: `https://garden.joshpress.net/after/login`,
+		repo: {
+			owner: 'shelob9',
+			repo: 'josh-code-garden',
+		},
+		gardenServerUrl: `https://digitalgardenbuilder.app/`,
+		publicKey: 'm3kEvEYCm7uI4SaWfI1Z9iWTiiSYu4LvGJ32mgrU3BF6p',
 		gardener: josh,
 	},
 ]
