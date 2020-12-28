@@ -1,0 +1,145 @@
+#header {
+	padding-left: 32px;
+	padding-right: 32px;
+	width: 100%;
+	min-height: 57px;
+	z-index: 5;
+	background-color: var(--note-bg);
+	border-bottom: 1px solid var(--separator);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	flex-wrap: wrap;
+	transition: background-color 0.3s ease;
+}
+
+#header > a {
+	font-weight: 700;
+	color: var(--text);
+	text-decoration: none;
+	transition: color 0.3s ease;
+}
+
+#header .controls {
+	display: flex;
+}
+
+.dark-mode-toggle {
+	cursor: pointer;
+	transform: scale(0.6);
+}
+.dark-mode-toggle input {
+	display: none;
+}
+.dark-mode-toggle input + div {
+	border-radius: 50%;
+	width: 36px;
+	height: 36px;
+	position: relative;
+	box-shadow: inset 16px -16px 0 0 #fff;
+	transform: scale(1) rotate(-2deg);
+	transition: box-shadow 0.5s ease 0s, transform 0.4s ease 0.1s;
+}
+.dark-mode-toggle input + div:before {
+	content: '';
+	width: inherit;
+	height: inherit;
+	border-radius: inherit;
+	position: absolute;
+	left: 0;
+	top: 0;
+	transition: background 0.3s ease;
+}
+.dark-mode-toggle input + div:after {
+	content: '';
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	margin: -4px 0 0 -4px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	box-shadow: 0 -23px 0 var(--link), 0 23px 0 var(--link),
+		23px 0 0 var(--link), -23px 0 0 var(--link), 15px 15px 0 var(--link),
+		-15px 15px 0 var(--link), 15px -15px 0 var(--link),
+		-15px -15px 0 var(--link);
+	transform: scale(0);
+	transition: all 0.3s ease;
+}
+
+.dark-mode-toggle input:checked + div {
+	box-shadow: inset 32px -32px 0 0 #fff;
+	transform: scale(0.5) rotate(0deg);
+	transition: transform 0.3s ease 0.1s, box-shadow 0.2s ease 0s;
+}
+.dark-mode-toggle input:checked + :before {
+	background: var(--link);
+	transition: background 0.3s ease 0.1s;
+}
+.dark-mode-toggle input:checked + :after {
+	transform: scale(1.5);
+	transition: transform 0.5s ease 0.15s;
+}
+footer {
+	margin-top: 4px;
+	padding-top: 8px;
+	background-color: var(--shadow);
+	color: var(--text);
+}
+.reference {
+	text-decoration: none;
+}
+
+.reference:hover {
+	color: var(--references-highlight);
+}
+
+.reference > div {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+}
+
+.reference > div > p {
+	margin: 0;
+	font-size: 0.875rem;
+}
+
+.reference > div > ul {
+	margin: 0;
+}
+
+.references-block {
+	color: var(--references-text);
+	padding: 1rem;
+	margin: 1rem 0;
+	border-radius: 0.5rem;
+	background-color: var(--references-bg);
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.references-block > div {
+	margin-bottom: 1rem;
+}
+
+.references-block > hr {
+	margin-left: auto;
+	margin-right: auto;
+	width: 8rem;
+}
+
+.references-block a {
+	color: var(--references-text);
+	transition: color 0.3s ease;
+}
+
+.references-block > p:last-child {
+	margin-bottom: 0;
+}
+#settings {
+	margin-left: 42px;
+}
+#settings section {
+	margin-top: 26.25px;
+}

@@ -1,4 +1,3 @@
-import { settings } from "cluster";
 import useGardenServer from "hooks/useGardenServer";
 import useUserToken from "hooks/useUserCookie";
 import { createContext, useContext, useMemo } from "react";
@@ -6,26 +5,36 @@ import useSWR from "swr";
 import {  noteIndexItem,INote } from "../../types";
 import { GardenConfig } from "../../types/config";
 
+/**
+ * The garden settings
+ * 
+ * Will be replaced at build-time.
+ * Also, will be re-fetched at page load.
+ */
+import gardenConfig from '../garden'
 const NotesContext = createContext(null);
 
-//Returns a fetch function for garden server
+/**
+ * Returns a fetch function for garden server
+ * 
+ * Converts URIs to complete URLs and adds authentication headers.
+ * Fetch function can be used for second arg of `useSwr()` hook. 
+ *
+ * @param token JWT auth token or undefiend.
+ * @param handler A callback function, which is passed the parsed response.
+ */
 const createFetch = (token: string | undefined,handler:(r:any) => any) => {
     const { createUrl,createHeaders } = useGardenServer({token});
-    
-    
     return (uri:string, args: any) => {
         args = Object.assign({
             headers: createHeaders()
         }, args);
-        
         return fetch(createUrl(uri), args)
             .then(r => r.json())
             .then(
                 handler
             );
     };
-    
-   
 }
 
 
@@ -102,21 +111,7 @@ const useNotes = () => {
 
 export default useNotes;
 
-let defaultConfig = {
-    "siteName": "Digital Garden",
-    "authorName": "",
-    "defaultNote": "digital-garden-builder",
-    "siteTwitter": "@digigardenbuilder",
-    "authorTwitter": ""
-};
 
-let gardenJson;
-try {
-     gardenJson = require('../garden.json');
-    // do stuff
-} catch (ex) {
-    gardenJson = false;
-}
  
 export const useNoteSettings = () => {
     //Get token and create a stable fetch function with it.
@@ -131,7 +126,7 @@ export const useNoteSettings = () => {
     const { data,mutate  } = useSWR(
         `/api/settings`,
         settingsFetcher,
-        {initialData: gardenJson ? Object.assign(defaultConfig,gardenJson): defaultConfig }
+        {initialData: gardenConfig }
     );
 
     const { createUrl,createHeaders } = useGardenServer({token});
@@ -156,20 +151,20 @@ export const useNoteSettings = () => {
     }, [data]);
     
     const siteTwitter = useMemo(() => {
-        return data && data.siteTwitter ? data.siteTwitter : ''
+        return data && data.siteTwitter ? data.siteTwitter : gardenConfig.siteTwitter
     }, [data]);
     
     const authorName = useMemo(() => {
-        return data && data.authorName ? data.authorName : ''
+        return data && data.authorName ? data.authorName : gardenConfig.authorName
     }, [data]);
     
 
     const authorTwitter = useMemo(() => {
-        return data && data.authorTwitter ? data.authorTwitter : ''
+        return data && data.authorTwitter ? data.authorTwitter : gardenConfig.authorTwitter
     }, [data]);
     
     const defaultNote = useMemo(() => {
-        return data && data.defaultNote ? data.defaultNote : 'digtial-garden-builder'
+        return data && data.defaultNote ? data.defaultNote :gardenConfig.defaultNote
     },[data]);
     return {
         settings: data as GardenConfig,

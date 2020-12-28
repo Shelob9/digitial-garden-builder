@@ -1,14 +1,13 @@
 import { createContext, FC, useContext, useReducer, useState } from "react";
-import noteLayoutReducer, {  NotePostion, notePostions } from "./noteLayoutReducer";
+import noteLayoutReducer, {  notePostions } from "./noteLayoutReducer";
+import { useNoteSettings } from "./useNotes";
 
 const NoteLayoutContext = createContext(null);
-
-//@todo use the setting for this
-let defaultNote = 'digital-garden-builder';
 export const NoteLayoutProvider: FC<{
   children: any;
   noteSlug?: string;
 }> = ({ children, noteSlug }) => {
+  const { defaultNote } = useNoteSettings();
     const [currentNotes, dispatchNotesAction] = useReducer(
         noteLayoutReducer,
         {

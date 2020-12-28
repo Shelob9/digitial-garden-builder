@@ -41,7 +41,6 @@ This is an experiment [Josh](https://joshpress.net) made.
 - Server
   - `yarn server`
   - Git API server.
-- CLI
-  - Does not exist yet.
+- Builder
+  - The CLI
   - Used to build sites and deploy to Github pages.
- 

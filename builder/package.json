@@ -1,0 +1,23 @@
+{
+	"name": "@digital-garden-builder/builder",
+	"private": false,
+	"version": "0.0.14",
+	"description": "CLI client for Digital Garden Builder",
+	"main": "bin/index.js",
+	"scripts": {
+		"build": "node index.js",
+		"start": "cd docs && npx serve -l 2999"
+	},
+	"author": "Josh Pollock",
+	"license": "MIT",
+	"dependencies": {
+		"shelljs": "^0.8.4"
+	},
+	"bin": {
+		"garden": "./bin/index.js"
+	},
+	"gitHead": "6905baed7e5ccab718b2912a0ff2677d48f707ff",
+	"publishConfig": {
+		"access": "public"
+	}
+}
