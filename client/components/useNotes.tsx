@@ -151,20 +151,20 @@ export const useNoteSettings = () => {
     }, [data]);
     
     const siteTwitter = useMemo(() => {
-        return data && data.siteTwitter ? data.siteTwitter : ''
+        return data && data.siteTwitter ? data.siteTwitter : gardenConfig.siteTwitter
     }, [data]);
     
     const authorName = useMemo(() => {
-        return data && data.authorName ? data.authorName : ''
+        return data && data.authorName ? data.authorName : gardenConfig.authorName
     }, [data]);
     
 
     const authorTwitter = useMemo(() => {
-        return data && data.authorTwitter ? data.authorTwitter : ''
+        return data && data.authorTwitter ? data.authorTwitter : gardenConfig.authorTwitter
     }, [data]);
     
     const defaultNote = useMemo(() => {
-        return data && data.defaultNote ? data.defaultNote : 'digtial-garden-builder'
+        return data && data.defaultNote ? data.defaultNote :gardenConfig.defaultNote
     },[data]);
     return {
         settings: data as GardenConfig,
