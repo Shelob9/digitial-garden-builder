@@ -1,5 +1,14 @@
 var shell = require('shelljs');
- 
+
+var fs = require('fs');
+function gardenConfig() {
+    //Get config from the garden.json
+    let config = fs.readFileSync('garden.json', 
+        { encoding: 'utf8', flag: 'r' });
+    //Write it to garden.js
+    fs.writeFileSync('digitial-garden-builder/client/garden.js', `module.exports = ${config}`);
+}
+
 function git(cmd,errorMessage) {
     if (shell.exec(cmd).code !== 0) {
         shell.echo(errorMessage);
@@ -20,11 +29,12 @@ function install() {
         )
 }
 
+
 function html() {
     /** Create Garden HTML */
     shell.echo( '!Making HTML and such out of the Garden!')
     shell.cp('client.env', 'digitial-garden-builder/client/.env');
-    shell.cp('garden.json', 'digitial-garden-builder/client/garden.json');
+    gardenConfig();
     shell.exec('cd digitial-garden-builder/client && yarn')
     shell.exec('cd digitial-garden-builder/client && yarn build')
     shell.exec('cd digitial-garden-builder/client && yarn export');
