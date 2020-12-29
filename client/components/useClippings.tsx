@@ -6,13 +6,14 @@ import {Clipping,clippingCollection} from '../../types/clippings'
 
 const ClippingsContext = createContext<{
     addClipping: (clipping: Clipping) => void;
-    clippings: clippingCollection
+    clippingIndex: {id:string|number}[]
 }>(
     null
 );
 
 export const ClippingsProvider = ({ children }) => {
     const { createUrl, createHeaders } = useGardenServer({});
+    
     const fetcher = useMemo(() => {
         return (url): Clipping => {
             //@ts-ignore
@@ -26,7 +27,7 @@ export const ClippingsProvider = ({ children }) => {
             })
         };
     }, [createUrl, createHeaders]);
-    const { data: clippings, mutate } = useSWR<clippingCollection>(
+    const { data: clippingIndex, mutate } = useSWR<{id:string|number}[]>(
         '/api/clippings',
         //@ts-ignore
         fetcher
@@ -34,26 +35,71 @@ export const ClippingsProvider = ({ children }) => {
     
     const addClipping = useMemo(() => {
         return (clipping: Clipping) => {
-            mutate([...clippings,clipping])
+            mutate([...clippingIndex,clipping])
         }
     }, [mutate]);
     return (
         <ClippingsContext.Provider value={{
             addClipping,
-            clippings
+            clippingIndex,
+            
         }}>
             {children}
         </ClippingsContext.Provider>
     )
 }
 
+export function useSingleClipping(props: { clippingId: string | number }) {
+    let { clippingId } = props ;
+    const { createUrl, createHeaders } = useGardenServer({});
+    
+    const fetcher = useMemo(() => {
+        return (url): Clipping => {
+            //@ts-ignore
+            return fetch(
+                createUrl(url),
+                { headers: createHeaders() }
+            ).then(r => r.json())
+                .then(r => {
+                    
+                    return r.index;
+            })
+        };
+    }, [createUrl, createHeaders]);
+
+    const { data: clipping, mutate } = useSWR(`/api/clippings/${clippingId}`, fetcher);
+
+    const updateClipping = useMemo(() => {
+        async (clipping: Clipping) => {
+            return fetch(
+                createUrl(`/api/clippings/${clippingId}`),
+                {
+                    headers: createHeaders(),
+                    method: 'POST',
+                    body: JSON.stringify(clipping)
+                }
+            )
+                .then(r => r.json())
+                .then(r => {
+                    mutate(r.clipping);
+                    return r.clipping;
+                });
+        };
+    }, [createUrl, createHeaders]);
+    
+    return {
+        clipping,
+        updateClipping
+    }
+}
+
 export default function useClippings() {
     const {
         addClipping,
-        clippings
+        clippingIndex
     } = useContext(ClippingsContext);
     return {
         addClipping,
-        clippings
+        clippingIndex
     }
 }

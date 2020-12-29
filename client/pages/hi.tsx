@@ -7,9 +7,9 @@ import useUserCookie from "../hooks/useUserCookie"
 
 export default function Hi({name}) {
     const { isLoggedIn, userDisplayName, isSessionLoading } = useIsLoggedInAuthorized();
-    const { clippings } = useClippings();
+    const { clippingIndex } = useClippings();
 
-    console.log(clippings);
+    console.log(clippingIndex);
     
    
     return <div>
