@@ -1,7 +1,7 @@
 import React from 'react'
 import App from 'next/app';
 
-import "../styles/index.css";
+import "../styles/style.css";
 import Layout from "../components/Layout";
 class MyApp extends App {
   render() {
