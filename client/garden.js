@@ -1,7 +1,7 @@
 module.exports = {
     "siteName": "Digital Garden Client",
     "authorName": "",
-    "defaultNote": "two",
+    "defaultNote": "digital-garden-builder",
     "siteTwitter": "@digigardenbuilder",
     "authorTwitter": ""
 };
