@@ -8,6 +8,12 @@ This package is used in the [content repo template](https://github.com/Shelob9/g
 
 `npm i @digital-garden-builder/builder`
 
+## Use
+
+- Build and deploy garden:
+  - `npm garden`
+  - `yarn garden`
+
 ### Requirements
 
 This package requires the following dependencies:
@@ -29,7 +35,3 @@ The git repo you are using must:
 - Be hosted on Github
 - Be authorized on a [Garden Server](https://docs.digitalgardenbuilder.app/notes/garden-server).
 
-### Build Garden
-
-- Build and deploy garden:
-    - `npm garden`
