@@ -8,7 +8,7 @@ export default function Hi({name}) {
     const { isLoggedIn, userDisplayName, isSessionLoading } = useIsLoggedInAuthorized();
     const { createUrl,createHeaders } = useGardenServer({});
     useEffect(() => {
-        fetch(createUrl(`/api/notes`), {
+        fetch(createUrl(`/api/clippings`), {
             headers: createHeaders()
         }).then(r => r.json())
             .then( r => console.log(r))

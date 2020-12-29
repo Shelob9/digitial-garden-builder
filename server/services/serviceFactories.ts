@@ -57,6 +57,8 @@ export default async function factory(
 	noteService: NotesApiService
 	configService: ConfigApiService
 	session: userJwtData | false
+	repo: gitRepoDetails
+	accessToken: string
 }> {
 	let session = getSession(req)
 	let gardener = new GardenerService()
@@ -78,6 +80,6 @@ export default async function factory(
 			accessToken = process.env.GITHUB_API_TOKEN
 		}
 		let configService = await settingsApiServiceFactory(accessToken, repo)
-		resolve({ noteService, configService, session })
+		resolve({ noteService, configService, session, repo, accessToken })
 	})
 }

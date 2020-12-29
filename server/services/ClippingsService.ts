@@ -29,20 +29,41 @@ export default class ClippingService extends JsonBased<
 	Clipping,
 	clippingCollection
 > {
+	index: {
+		id: string | number
+	}[]
 	getClipping = async (id: string) => {
 		return await this.jsonService.getItem(id)
 	}
 
 	saveClipping = async (clipping: any) => {
 		clipping = this.entityFactory(clipping)
-		return await this.jsonService.saveItem(clipping.id, clipping)
+		await this.jsonService.saveItem(clipping.id, clipping)
+		return clipping
+	}
+
+	fetchIndex = async () => {
+		return this.jsonService.client
+			.getFiles('/clippings', 'json')
+			.then((r) => {
+				this.index = r.map((file) => {
+					let { name } = file
+					let id = name.replace('.json', '')
+					return {
+						id,
+					}
+				})
+				return this.index
+			})
 	}
 }
 
 export function clippingServiceFactory(args: jsonServiceFactoryArgs) {
-	new JsonService(
-		GitApi(args.repo, 'main', args.authToken),
-		clippingFactory,
-		clippingPathFactory
+	return new ClippingService(
+		new JsonService(
+			GitApi(args.repo, 'main', args.authToken),
+			clippingFactory,
+			clippingPathFactory
+		)
 	)
 }

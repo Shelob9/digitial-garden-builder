@@ -20,7 +20,10 @@ export interface IGitApi {
 		commitMessage: string
 	) => Promise<{ commitSha: string }>
 	getFile: (filePath: string) => Promise<{ content }>
-	getFiles: (path: string | undefined, extension: 'md') => Promise<noteIndex>
+	getFiles: (
+		path: string | undefined,
+		extension: 'md' | 'json'
+	) => Promise<noteIndex>
 }
 function GitApi(
 	gitRepo: gitRepoDetails,
