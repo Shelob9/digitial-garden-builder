@@ -1,3 +1,4 @@
+import useClippings from "components/useClippings";
 import useGardenServer from "hooks/useGardenServer";
 import { useEffect } from "react";
 import { Tabbed } from "../components/primatives/layout";
@@ -6,14 +7,11 @@ import useUserCookie from "../hooks/useUserCookie"
 
 export default function Hi({name}) {
     const { isLoggedIn, userDisplayName, isSessionLoading } = useIsLoggedInAuthorized();
-    const { createUrl,createHeaders } = useGardenServer({});
-    useEffect(() => {
-        fetch(createUrl(`/api/clippings`), {
-            headers: createHeaders()
-        }).then(r => r.json())
-            .then( r => console.log(r))
-        .catch(e => console.log(e))
-      })
+    const { clippings } = useClippings();
+
+    console.log(clippings);
+    
+   
     return <div>
         {isSessionLoading ? <div>Loading</div> : <>
              <p>Hi {isLoggedIn ? userDisplayName : 'Roy'}</p>

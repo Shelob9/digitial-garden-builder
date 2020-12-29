@@ -4,6 +4,7 @@ import { SSRProvider } from '@react-aria/ssr';
 import { CookiesProvider } from 'react-cookie';
 import GardenDefaultSeo from "../components/GardenDefaultSeo";
 import { NotesProvider } from '../components/useNotes';
+import { ClippingsProvider } from '../components/useClippings';
 
 import "../styles/theme.css";
 import "../styles/stacked-layout.css";
@@ -19,8 +20,11 @@ class MyApp extends App {
         <SSRProvider>
           <CookiesProvider>
             <NotesProvider>
+              <ClippingsProvider>
                 <GardenDefaultSeo />
                 <Component {...pageProps} />
+              </ClippingsProvider>
+                
             </NotesProvider>
             </CookiesProvider>
         </SSRProvider>
