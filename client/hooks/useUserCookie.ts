@@ -7,7 +7,7 @@ const useUserToken = (props: { token?: string }) => {
 		if (props.token) {
 			setCookie('_garden_token', props.token, { path: '/' })
 		}
-	}, [cookies])
+	}, [setCookie, props.token])
 
 	const removeCookie = () => {
 		setCookie('_garden_token', undefined, {
@@ -15,7 +15,10 @@ const useUserToken = (props: { token?: string }) => {
 			expires: new Date(3),
 		})
 	}
-	let token = useMemo(() => cookies._garden_token || undefined, [cookies])
+	let token = useMemo(() => cookies._garden_token || undefined, [
+		cookies,
+		props.token,
+	])
 	return { token, removeCookie }
 }
 
