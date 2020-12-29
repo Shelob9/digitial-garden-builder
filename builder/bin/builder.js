@@ -86,5 +86,6 @@ module.exports = {
     deploy,
     html,
     install,
-    after
+    after,
+    gardenConfig
 }
