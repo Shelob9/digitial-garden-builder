@@ -32,6 +32,11 @@ export default class ClippingService extends JsonBased<
 	getClipping = async (id: string) => {
 		return await this.jsonService.getItem(id)
 	}
+
+	saveClipping = async (clipping: any) => {
+		clipping = this.entityFactory(clipping)
+		return await this.jsonService.saveItem(clipping.id, clipping)
+	}
 }
 
 export function clippingServiceFactory(args: jsonServiceFactoryArgs) {

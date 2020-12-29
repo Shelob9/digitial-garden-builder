@@ -1,3 +1,4 @@
+import { entityFactory } from './JsonService'
 import { gitRepoDetails } from './../../types/git'
 import GitApi, { IGitApi } from './../lib/GitApi'
 export type entityFactory<T> = (data: any) => T
@@ -49,5 +50,17 @@ export class JsonBased<Entity, Collection> {
 	jsonService: JsonService<Entity, Collection>
 	constructor(jsonService: JsonService<Entity, Collection>) {
 		this.jsonService = jsonService
+	}
+
+	entityFactory = (data: any) => {
+		return this.jsonService.entityFactory(data)
+	}
+
+	collectionFactory = (data: any) => {
+		return this.jsonService.collectionFactory(data)
+	}
+
+	entityPathFactory = (identiefier: string | number) => {
+		return this.jsonService.entityPathFactory(identiefier)
 	}
 }
