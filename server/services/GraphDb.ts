@@ -95,6 +95,14 @@ class GraphDb<Entity, Collection> {
 	}
 }
 
+export function graphDbFactory<Entity, Collection>(
+	args: jsonServiceFactoryArgs,
+	jsonDb: JsonService<Entity, Collection>
+): GraphDb<Entity, Collection> {
+	let linksDb = graphDbLinksFactory(args)
+	return new GraphDb<Entity, Collection>(jsonDb, linksDb)
+}
+
 export function graphDbLinksFactory(args: jsonServiceFactoryArgs) {
 	return new Links(
 		new JsonService(
