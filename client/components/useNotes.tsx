@@ -165,7 +165,9 @@ export const useNoteSettings = () => {
     
     const defaultNote = useMemo(() => {
         return data && data.defaultNote ? data.defaultNote :gardenConfig.defaultNote
-    },[data]);
+    }, [data]);
+    
+
     return {
         settings: data as GardenConfig,
         saveSettings,

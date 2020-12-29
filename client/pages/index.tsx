@@ -9,7 +9,7 @@ const Index = () => {
   return (
     <>
       <>
-        <NoteLayoutProvider noteSlug={'digital-garden-builder'}>
+        <NoteLayoutProvider>
           <NoteApp isLoggedIn={isLoggedIn} />
         </NoteLayoutProvider>
       </>
