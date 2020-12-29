@@ -71,11 +71,20 @@ function deploy() {
     git(
         'git push -u origin gh-pages',
         'Error: push failed'
+    );
+    return true;
+}
+
+function after() {
+    git(
+        'git checkout main',
+        'Error: Checking out main branch'
     )
 }
 
 module.exports = {
     deploy,
     html,
-    install
+    install,
+    after
 }

@@ -5,7 +5,8 @@ var shell = require('shelljs');
 const {
     deploy,
     html,
-    install
+    install,
+    after
 } = require('./builder');
 (async () => {
     /** */
@@ -16,5 +17,6 @@ const {
         install();
         html();
         deploy();
+        after();
     }
 })()
