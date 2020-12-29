@@ -6,7 +6,7 @@ Multi-player digital garden builder.
 This is an experiment [Josh](https://joshpress.net) made.
 
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/Shelob9/digitial-garden-builder)
-![Server Tests](https://github.com/Shelob9/digitial-garden-builder/workflows/Server%20CI/badge.svg)
+![Tests](https://github.com/Shelob9/digitial-garden-builder/workflows/Tests/badge.svg)
 
 ## Install
 
@@ -15,10 +15,7 @@ This is an experiment [Josh](https://joshpress.net) made.
 - Install with Yarn.
   - Do not use npm. Must use Yarn 1.x
   - `yarn`
-
-## Generate HTML For One Digital Garden
-
-- `yarn grow`
+  - `yarn lerna bootstrap`
 
 ## Development
 
@@ -39,8 +36,17 @@ This is an experiment [Josh](https://joshpress.net) made.
   - `yarn client ...`
   - Generates HTML for each digital garden.
 - Server
-  - `yarn server`
+  - `yarn server ...`
   - Git API server.
 - Builder
   - The CLI
   - Used to build sites and deploy to Github pages.
+
+## Release To NPM
+
+```sh
+yarn lerna publish
+```
+
+The [builder](https://www.npmjs.com/package/@digital-garden-builder/builder) is currently the only one being published.
+

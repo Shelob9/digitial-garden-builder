@@ -33,12 +33,14 @@ const Page: FC<
 > = ({  note,slug }) => {
   const { isLoggedIn } = useIsLoggedInAuthorized();
   const { query } = useRouter();
+  const { defaultNote } = useNoteSettings();
   let noteOne = useMemo(() => {
     if (slug) {
       return slug;
     }
-    return query.slug as string ?? 'digital-garden-builder'
-  }, [query,slug]);
+    return query.slug as string ?? defaultNote
+  }, [query, slug]);
+  
   let noteTwo = useMemo(() =>query.noteTwo as string ?? undefined, [query]);
   let noteThree = useMemo(() => query.noteThree as string ?? undefined, [query]);
   return (

@@ -4,4 +4,5 @@ export interface GardenConfig {
 	authorName?: string
 	authorTwitter?: string
 	defaultNote?: string
+	descShort?: string
 }

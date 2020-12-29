@@ -1,33 +1,14 @@
 
-const fetch = require('cross-fetch');
-
-
 let config = {
 //@see https://nextjs.org/docs/api-reference/next.config.js/exportPathMap
 exportPathMap: async function (
     defaultPathMap,
     { dev, dir, outDir, distDir, buildId }
     ) {
-        let noteIndex = await fetch(`${process.env.NEXT_PUBLIC_GARDEN_SERVER_URL ? process.env.NEXT_PUBLIC_GARDEN_SERVER_URL :
-			'https://digitalgardenbuilder.app'}/api/notes`, {
-            method: 'GET',
-            headers:  {
-                'content-type': 'application/json',
-                'x-garden-public': process.env.NEXT_PUBLIC_GARDEN_SERVER_PUBLIC_KEY,
-            },
-        })
-            .then((r) => r.json())
-            .then((r) => {
-                return r.noteIndex
-            });
-        let pages = {
+        return {
             ...defaultPathMap,
             '/': { page: '/' },
         };
-        noteIndex.forEach(({url,slug}) => {
-            pages[url] = { page: url, query: {slug} }
-        });
-        return pages;
 },
 }
 //For GH pages without custom domains

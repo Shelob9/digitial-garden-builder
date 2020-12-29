@@ -1,0 +1,38 @@
+/* purgecss start ignore */
+@tailwind base;
+@tailwind components;
+/* purgecss end ignore */
+@tailwind utilities;
+
+@import './button.css';
+
+h1 {
+	@apply font-bold text-4xl;
+}
+
+h2 {
+	@apply font-bold text-2xl;
+}
+
+#index-page h1 {
+	@apply mb-4;
+}
+#index-page section {
+	@apply bg-white shadow-md rounded p-4 mt-4 mb-4;
+}
+
+#index-page p {
+	@apply mb-4;
+}
+
+#index-page .btn-green {
+	@apply py-0 m-12 px-12;
+}
+
+a {
+	@apply border-dashed border-b-2;
+}
+
+a:hover {
+	@apply border-solid;
+}
