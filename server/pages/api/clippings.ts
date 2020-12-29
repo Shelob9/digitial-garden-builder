@@ -3,6 +3,9 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import createCorsMiddleWare from '../../lib/createCorsMiddleWare'
 
 import { clippingServiceFactory } from '../../services/ClippingsService'
+/**
+ * API endpoints for clipping index and create.
+ */
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const cors = createCorsMiddleWare(['GET', 'PUT', 'OPTIONS'])
 	await cors(req, res)
