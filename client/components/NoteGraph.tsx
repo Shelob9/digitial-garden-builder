@@ -4,6 +4,7 @@ import useNotes from "./useNotes";
 import { INote, NoteReference } from '../../types'
 import Link from "next/link";
 import {useRouter} from "next/router";
+import useGardenServer from "hooks/useGardenServer";
 
 // the graph configuration, just override the ones you need
 const myConfig ={
@@ -90,7 +91,8 @@ const noteReducer = (state: INote[], action: { type: 'ADD_NOTE', note: INote }):
 }
 
 function useAllNotes() {
-  const { notes,fetchNote } = useNotes();
+  const { notes, fetchNote } = useNotes();
+
   const [allNotes, dispatch] = useReducer(noteReducer, []);
   function addNote(note: INote){
     dispatch({ type: 'ADD_NOTE', note });

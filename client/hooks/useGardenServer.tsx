@@ -38,6 +38,7 @@ export default function useGardenServer(props:{token?:string}) {
 		createUrl,
 		createHeaders,
 		gardenServerUrl,
-		loginLink
+		loginLink,
+		gardenServerPublicKey
 	}
 }

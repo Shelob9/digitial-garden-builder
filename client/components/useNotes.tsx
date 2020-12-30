@@ -40,6 +40,7 @@ const createFetch = (token: string | undefined,handler:(r:any) => any) => {
 
 //Context provider for note index
 export const NotesProvider = ({ children }) => {
+    const { gardenServerPublicKey } = useGardenServer({});
 
     //Get token and create a stable fetch function with it.
     const { token } = useUserToken({});
@@ -89,7 +90,7 @@ export const NotesProvider = ({ children }) => {
      * Fetch note from local storage, or remote API 
      */
     const fetchNote = async (slug: string) => {
-        let key = `-garden-notes-${slug}`;
+        let key = `${gardenServerPublicKey}-garden-notes-${slug}`;
         return new Promise(async (resolve) => {
             let cached = localStorage.getItem(key);
             if (cached) {
