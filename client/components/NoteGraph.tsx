@@ -1,8 +1,27 @@
+import { useMemo } from "react";
 import { Graph } from "react-d3-graph";
+import useNotes from "./useNotes";
 
 const NoteGraph = () => {
+  const { notes } = useNotes();
+
+  let data = useMemo(() => {
+    let nodes = [];
+    let links = [];
+    if (notes) {
+      nodes = notes.map(note => {
+        return {
+          id: note.slug
+        }
+      })
+    }
+    return {
+      nodes,
+      links
+    }
+  }, [notes]);
     // graph payload (with minimalist structure)
-const data = {
+const _data = {
   nodes: [{ id: "Harry" }, { id: "Sally" }, { id: "Alice" },{ id: "Roy" }],
   links: [
     { source: "Harry", target: "Sally", },
@@ -10,7 +29,6 @@ const data = {
     { source: "Roy", target: "Alice", },
     { source: "Roy", target: "Sally", },
     { source: "Roy", target: "Harry", },
-
   ],
 };
 
