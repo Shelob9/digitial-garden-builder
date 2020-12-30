@@ -1,7 +1,9 @@
-import { useEffect, useMemo, useReducer, useRef, useState } from "react";
+import { FC, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { Graph } from "react-d3-graph";
 import useNotes from "./useNotes";
 import { INote, NoteReference } from '../../types'
+import Link from "next/link";
+import {useRouter} from "next/router";
 
 // the graph configuration, just override the ones you need
 const myConfig ={
@@ -71,9 +73,6 @@ const myConfig ={
   }
 };
 
-const onClickNode = function(nodeId) {
-  window.alert(`Clicked node ${nodeId}`);
-};
 
 const onClickLink = function(source, target) {
   window.alert(`Clicked link between ${source} and ${target}`);
@@ -117,11 +116,16 @@ function useAllNotes() {
 }
 
 
-const NoteGraph = () => {
+const NoteGraph: FC<{ closeGraph:() => void}>= ({closeGraph}) => {
   const {
     allNotes, notes, allLoaded
   } = useAllNotes();
   const graphRef = useRef<SVGElement>();
+  const router = useRouter();
+  const onClickNode = (noteSlug:string) => {
+    router.push(`/notes/${noteSlug}`);
+    closeGraph();
+  };
   
   let data = useMemo(() => {
     let nodes = [];
@@ -136,7 +140,8 @@ const NoteGraph = () => {
         if (note.references) {
           note.references.forEach((noteLink: NoteReference) => {
             links.push(
-              { source: note.slug, target: noteLink.slug, }
+              {
+                source: note.slug, target: noteLink.slug, }
             )
           })
         }

@@ -65,10 +65,12 @@ const NoteApp: FC<{
 
   return (
     <>
-      <Layout FirstControl={() => <GraphButton showGraph={showGraph} setShowGraph={setShowGraph} /> }>
+      <Layout FirstControl={() => (
+        <GraphButton showGraph={showGraph} setShowGraph={setShowGraph} />)
+      }>
       <div className={'note-columns-scrolling-container'}>
           <div className={'note-columns-container'}>
-            {showGraph ? <NoteGraph /> : (
+            {showGraph ? <NoteGraph closeGraph={() => setShowGraph(false)} /> : (
               <>
                 {notes ? (
                   <>
