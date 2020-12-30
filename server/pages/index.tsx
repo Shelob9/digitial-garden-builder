@@ -16,15 +16,15 @@ export default function Index() {
       <Section heading={'Grow Your Ideas'} className={'shadowed-box'}>
         <div className={'md:grid grid-cols-3 gap-4'}>
           <div className={'shadowed-box'}>
-            <h3>Grow</h3>
+            <h3 className={'font-bold text-4xl'}>Grow</h3>
             <p>A digital garden is a public notebook for your in progress writing.</p>
           </div>
           <div className={'shadowed-box'}>
-            <h3>Collaborate With Others</h3>
+          <h3 className={'font-bold text-4xl'}>Collaborate With Others</h3>
             <p>Additional words should be here.</p>
           </div>
           <div className={'shadowed-box'}>
-            <h3>Publish</h3>
+          <h3 className={'font-bold text-4xl'}>Publish</h3>
             <p>Share on social, publish to your WordPress site or Medium.</p>
           </div>
           </div>
