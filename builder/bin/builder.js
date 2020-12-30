@@ -42,14 +42,14 @@ function html() {
 }
 
 function deploy() {
-    /** Delete docs dir */
-    if (shell.test('-d', 'docs')) {
-        shell.rm('-rf', 'docs');
+    /** Delete _docs  dir in main branch */
+    if (shell.test('-d', '_docs')) {
+        shell.rm('-rf', '_docs');
     }
-    /** Copy out dir */
+    /** Copy out to _docs */
     shell.echo( '!Copying to output directory!')
-    shell.cp('-R', 'digitial-garden-builder/client/out', 'docs');
-    /** Switch to gh-pages branch, commit and push */
+    shell.cp('-R', 'digitial-garden-builder/client/out', '_docs');
+    /** Switch to gh-pages branch **/
     git(
         'git checkout gh-pages',
         'Error: Checking out gh-pages branch'
@@ -58,6 +58,17 @@ function deploy() {
         'git pull origin gh-pages',
         'Error: Pulling gh-pages branch from origin'
     )
+
+    /** Delete docs dir in gh-pages branch*/
+    if (shell.test('-d', 'docs')) {
+        shell.rm('-rf', 'docs');
+    }
+    /** Rename _docs to docs */
+    shell.mv('_docs', 'docs')
+    /** Copy Github pages config files back to docs dir */
+    shell.cp('.nojekyll', 'docs/.nojekyll')
+    shell.cp( 'CNAME', 'docs/CNAME')
+    /**commit and push */
     git(
         //Add all to commit
         'git add .',
