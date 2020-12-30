@@ -14,7 +14,7 @@ export default function Index() {
         Digital <span className="bg-green-400">Garden Builder</span>  
       </h1>
       <Section heading={'Grow Your Ideas'} className={'shadowed-box'}>
-        <div className={'grid grid-cols-3 gap-4'}>
+        <div className={'md:grid grid-cols-3 gap-4'}>
           <div className={'shadowed-box'}>
             <h3>Grow</h3>
             <p>A digital garden is a public notebook for your in progress writing.</p>
