@@ -13,7 +13,26 @@ import "../styles/buttons-fields.css";
 
 class MyApp extends App {
   render() {
-    const { Component, pageProps } = this.props
+    const { Component, pageProps } = this.props;
+    let { asPath } = this.props.router;
+    let path = asPath.includes('?')
+      ? this.props.router.asPath.substr(0, this.props.router.asPath.indexOf('?'))
+      : asPath;
+    //After login, do not use ssr provider
+    if ('/login/after' === path) {
+      return (
+        <>
+          <>
+            <CookiesProvider>
+              <NotesProvider>
+                  <GardenDefaultSeo />
+                  <Component {...pageProps} />
+              </NotesProvider>
+              </CookiesProvider>
+          </>
+        </>
+      );
+    }
     return (
       <>
         <SSRProvider>

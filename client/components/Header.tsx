@@ -17,7 +17,7 @@ const Header: FC<{
         <header id="header" role="banner">
           <a aria-current="page" className="" href="/">
             <span>{siteName}</span>
-        </a>
+          </a>
         {statusMessage && <span>{statusMessage}</span>}
         {BeforeControls && <BeforeControls /> }
           <div className={'controls'}>

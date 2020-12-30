@@ -1,12 +1,19 @@
 import Layout from "components/Layout";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { Fragment } from "react";
 import useUserToken from "../../hooks/useUserCookie";
+
+const isServer = () => typeof window === `undefined`;
+
 //Return from login redirect and store token in a cookie.
-export default function After() {
+const After =  ()  => {
 	//New JWT token should be in query var token
 	const { query } = useRouter();
-	console.log(query);
+	if (isServer()) {
+		return <div />
+	}
+	console.log(2,query);
 	//This hook will put token into a cookie.
 	//@ts-ignore
 	const { token } = useUserToken({ token: query.token ? query.token : ''  });
@@ -28,3 +35,4 @@ export default function After() {
 	)
 };
 
+export default After; 
