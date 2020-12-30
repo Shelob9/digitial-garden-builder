@@ -1,3 +1,11 @@
+import { FC } from "react"
+
+const Section: FC<{ heading: string; children: any, className?:string }> = ({ heading, children,className }) => (
+  <section className={className}>
+    <h2>{heading}</h2>
+    {children}
+  </section>
+)
 
 export default function Index() {
   return (
@@ -5,22 +13,37 @@ export default function Index() {
       <h1 >
         Digital <span className="bg-green-400">Garden Builder</span>  
       </h1>
-      <section >
-        <h2>Build Your Garden</h2>
-          <>
-              <a className={'btn-green'} href="https://docs.google.com/forms/d/e/1FAIpQLSceXRwG_NQ-5sy1lcP613uS_BH2H1JqhuGOzOWbai7XClK3Cw/viewform">
+      <Section heading={'Grow Your Ideas'} className={'shadowed-box'}>
+        <div className={'grid grid-cols-3 gap-4'}>
+          <div className={'shadowed-box'}>
+            <h3>Grow</h3>
+            <p>A digital garden is a public notebook for your in progress writing.</p>
+          </div>
+          <div className={'shadowed-box'}>
+            <h3>Collaborate With Others</h3>
+            <p>Additional words should be here.</p>
+          </div>
+          <div className={'shadowed-box'}>
+            <h3>Publish</h3>
+            <p>Share on social, publish to your WordPress site or Medium.</p>
+          </div>
+          </div>
+      </Section>
+      
+      <Section heading={'Build Your Garden'} className={'shadowed-box'}>
+        <ul>
+          <li><a className={'btn-green'} href="https://docs.google.com/forms/d/e/1FAIpQLSceXRwG_NQ-5sy1lcP613uS_BH2H1JqhuGOzOWbai7XClK3Cw/viewform">
                   Sign Up For Early Access
-              </a>
-          </>
-      </section>
-      <section>
-        <h2>Learn More</h2>
-        <p>
-            <a href="https://docs.digitalgardenbuilder.app">
-                Documentation
-            </a>
-        </p>
-    </section>
+              </a></li>
+              <li>
+                <a href="https://docs.digitalgardenbuilder.app">
+                  Read the documentation and try a demo.
+                </a>
+              </li>
+              
+          </ul>
+      </Section>
+      
       </div>
   
   
