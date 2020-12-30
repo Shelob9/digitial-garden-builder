@@ -59,7 +59,7 @@ let theGardens: gardens = [
 	},
 	{
 		rootUrl: `https://code.joshpress.net`,
-		afterLoginUrl: `https://garden.joshpress.net/after/login`,
+		afterLoginUrl: `https://code.joshpress.net/after/login`,
 		repo: {
 			owner: 'shelob9',
 			repo: 'josh-code-garden',
