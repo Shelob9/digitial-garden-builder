@@ -184,6 +184,7 @@ const Settings = () => {
             </section>
             <section>
                 <button
+                    className={'btn-primary'}
                     disabled={isSaving}
                     onClick={(e) => {
                     e.preventDefault();

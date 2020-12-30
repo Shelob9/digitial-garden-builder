@@ -1,19 +1,4 @@
 button,
-.button a {
-	border: 1px solid var(--references-highlight);
-	color: var(--text);
-	padding: 2px;
-	margin: 4px;
-	background-color: var(--main-bg);
-	min-width: 30px;
-}
-
-button:hover,
-.button a:hover {
-	background-color: var(--references-highlight);
-	color: var(--main-bg);
-}
-
 input,
 textarea {
 	@apply appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight;
@@ -22,14 +7,6 @@ textarea {
 input:focus,
 textarea:focus {
 	@apply bg-white border-gray-500;
-}
-
-button {
-	@apply flex-shrink-0  text-gray-500 text-sm py-1 px-2 rounded;
-}
-
-button:hover {
-	@apply text-gray-800;
 }
 
 select {
@@ -44,10 +21,32 @@ select:focus {
 	@apply outline-none;
 }
 
+button,
+.btn-primary:hover {
+	@apply bg-white border-2 border-black text-black font-bold py-2 px-4 my-4 rounded;
+}
+
+button:hover,
 .btn-primary {
-	@apply bg-blue-500 text-white font-bold py-2 px-4 border-b-4 border-blue-700 rounded;
+	@apply bg-green-400 text-white border-green-800;
 }
 
 .btn-primary:hover {
-	@apply bg-blue-400 border-blue-500;
+	@apply bg-green-800 text-white;
+}
+
+.header-login-button {
+	border: 1px solid var(--references-highlight);
+	color: var(--text);
+
+	background-color: var(--main-bg);
+	min-width: 30px;
+	padding: 4px;
+	margin: 4px;
+	font-weight: 500;
+}
+
+.header-login-button:hover {
+	background-color: var(--references-highlight);
+	color: var(--main-bg);
 }

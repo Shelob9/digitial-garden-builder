@@ -23,7 +23,7 @@ const Header: FC<{
           <div className={'controls'}>
           <DarkModeToggle />
           {isSessionLoading
-            ? <span style={{ width: '42px' }} /> : <Link href={isLoggedIn ? '/notes/new' : '/login'}><button>{isLoggedIn ? "New" : "Login"}</button></Link>
+            ? <span style={{ width: '42px' }} /> : <Link href={isLoggedIn ? '/notes/new' : '/login'}><button className={'header-login-button'}>{isLoggedIn ? "New" : "Login"}</button></Link>
           }
           </div>
         </header>
