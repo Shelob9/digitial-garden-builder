@@ -10,6 +10,7 @@ import Link from 'next/link'
 const { wikiLinkPlugin } = require('remark-wiki-link');
 import {INote} from '../../types'
 import  NoteMarkdownLink  from './NoteMarkdownLink';
+import { useMemo } from 'react';
 
 
 const nextPosition = (position: notePostions) => {
@@ -75,16 +76,32 @@ const Note: FC<{
 	const { note } = useSingleNote({
 		slug, //note
 	});
-	const { focusNote,setFocusNote} = useNoteLayout();
+	const { focusNote, setFocusNote } = useNoteLayout();
+	const outterClassName = useMemo(
+		() => `note-container ${isOpen ? 'note-open' : 'note-closed'} ${focusNote === position ? 'note-focus' : ''}`,
+		[focusNote, position]
+	);
 	if (!note) {
-		return <div>Loading</div>
+		return (
+			<div
+				className={`${outterClassName} animate-pulse`}
+			>
+				<div className={'note-buttons'}></div>
+				<div
+					className={"note-content animate-ping h-full"}
+					
+				>
+					 <span className="animate-pulse">Loading</span><span className="animate-ping">...</span>
+				</div>
+			</div>
+		)
 	}
 
 	let { content } = note;
     return (
         <>
 			<div
-                className={`note-container ${isOpen ? 'note-open' : 'note-closed'} ${focusNote === position ? 'note-focus': ''}`}
+				className={outterClassName}
 			>
 				<div className={'note-buttons'}>
 					<button
@@ -103,8 +120,7 @@ const Note: FC<{
 							>
 								{'Edit'}
 							</a>
-						</Link>
-						
+						</Link>	
 					}
 				</div>
                 {isOpen &&

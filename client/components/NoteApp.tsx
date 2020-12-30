@@ -13,11 +13,13 @@ const NoteApp: FC<{
   noteTwoSlug?: string;
   noteThreeSlug?: string;
   isLoggedIn: boolean;
+  note?:INote
 }> = ({
   noteOneSlug,
   noteTwoSlug,
   noteThreeSlug,
   isLoggedIn,
+  note
 }) => {
   //https://nextjs.org/docs/api-reference/next/router
   const router = useRouter();
@@ -70,6 +72,7 @@ const NoteApp: FC<{
                   isOpen={isNoteOpen('one')}
                   toggleBox={() => toggleBox('one')}
                   position={"one"}
+                  note={note}
               />
                 {hasNote('two') &&
                   <Note
