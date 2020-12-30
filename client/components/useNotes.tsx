@@ -85,8 +85,25 @@ export const NotesProvider = ({ children }) => {
         mutate([...notes, note]);
     }
 
+    /**
+     * Fetch note from local storage, or remote API 
+     */
     const fetchNote = async (slug: string) => {
-        return singleNoteFetcher(`/api/notes/${slug}`, { method: "GET" });
+        let key = `-garden-notes-${slug}`;
+        return new Promise(async (resolve) => {
+            let cached = localStorage.getItem(key);
+            if (cached) {
+                resolve(JSON.parse(
+                    cached
+                ))
+            }
+            let note = await singleNoteFetcher(
+                `/api/notes/${slug}`, { method: "GET" }
+            );
+            localStorage.setItem(key, JSON.stringify(note));
+            resolve(note);
+        })
+         
     }
   
     return <NotesContext.Provider value={{

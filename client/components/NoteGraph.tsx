@@ -134,7 +134,11 @@ const NoteGraph: FC<{ closeGraph:() => void}>= ({closeGraph}) => {
       allNotes.forEach(note => {
         nodes.push(
           {
-            id: note.slug
+            id: note.slug,
+            labelProperty: () => (
+              <div>{note.title}</div>
+            ),
+            fontSize: 12,
           }
         );
         if (note.references) {
