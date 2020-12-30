@@ -26,7 +26,6 @@ let theGardens: gardens = [
 	},
 	{
 		rootUrl: `http://localhost:3202`,
-		afterLoginUrl: `http://localhost:3202/login/after`,
 		repo: {
 			owner: 'shelob9',
 			repo: 'garden-cms-test-data',
@@ -37,7 +36,6 @@ let theGardens: gardens = [
 	},
 	{
 		rootUrl: `https://shelob9.github.io/garden-builder-content-template/`,
-		afterLoginUrl: `https://shelob9.github.io/garden-builder-content-template/after/login`,
 		repo: {
 			owner: 'shelob9',
 			repo: 'garden-builder-content-template',
@@ -48,7 +46,6 @@ let theGardens: gardens = [
 	},
 	{
 		rootUrl: `https://garden.joshpress.net`,
-		afterLoginUrl: `https://garden.joshpress.net/after/login`,
 		repo: {
 			owner: 'shelob9',
 			repo: 'josh-garden',
@@ -59,16 +56,20 @@ let theGardens: gardens = [
 	},
 	{
 		rootUrl: `https://code.joshpress.net`,
-		afterLoginUrl: `https://code.joshpress.net/after/login`,
 		repo: {
 			owner: 'shelob9',
 			repo: 'josh-code-garden',
 		},
-		gardenServerUrl: `https://digitalgardenbuilder.app/`,
+		gardenServerUrl: `https://digitalgardenbuilder.app`,
 		publicKey: 'm3kEvEYCm7uI4SaWfI1Z9iWTiiSYu4LvGJ32mgrU3BF6p',
 		gardener: josh,
 	},
-]
+].map((g) => {
+	return {
+		...g,
+		afterLoginUrl: `${g.rootUrl}/login/after`,
+	}
+})
 /**
  * Gets digital gardens allowed by this server
  */
