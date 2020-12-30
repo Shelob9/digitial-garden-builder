@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FC } from "react";
+import { FC, Fragment } from "react";
 import useIsLoggedInAuthorized from "../hooks/useIsLoggedAuthorized";
 import DarkModeToggle from "./DarkModeToggle";
 import { useNoteSettings } from "./useNotes";
@@ -8,9 +8,8 @@ const Header: FC<{
   BeforeControls?: () => JSX.Element;
   pageDisplayTitle: string;
   statusMessage?: string;
-
-}> = ({ BeforeControls,statusMessage }) => {
-  const { isLoggedIn, isSessionLoading } = useIsLoggedInAuthorized();
+  FirstControl?: () => JSX.Element;
+}> = ({ BeforeControls,statusMessage,FirstControl}) => {
   const { siteName } = useNoteSettings();
   return (
       <>
@@ -20,11 +19,9 @@ const Header: FC<{
           </a>
         {statusMessage && <span>{statusMessage}</span>}
         {BeforeControls && <BeforeControls /> }
-          <div className={'controls'}>
+        <div className={'controls'}>
+          {FirstControl ? <FirstControl />: <Fragment/>}
           <DarkModeToggle />
-          {isSessionLoading
-            ? <span style={{ width: '42px' }} /> : <Link href={isLoggedIn ? '/notes/new' : '/login'}><button className={'header-login-button'}>{isLoggedIn ? "New" : "Login"}</button></Link>
-          }
           </div>
         </header>
 

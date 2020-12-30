@@ -1,36 +1,7 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { Graph } from "react-d3-graph";
 import useNotes from "./useNotes";
-
-const NoteGraph = () => {
-  const { notes } = useNotes();
-
-  let data = useMemo(() => {
-    let nodes = [];
-    let links = [];
-    if (notes) {
-      nodes = notes.map(note => {
-        return {
-          id: note.slug
-        }
-      })
-    }
-    return {
-      nodes,
-      links
-    }
-  }, [notes]);
-    // graph payload (with minimalist structure)
-const _data = {
-  nodes: [{ id: "Harry" }, { id: "Sally" }, { id: "Alice" },{ id: "Roy" }],
-  links: [
-    { source: "Harry", target: "Sally", },
-    { source: "Harry", target: "Alice", },
-    { source: "Roy", target: "Alice", },
-    { source: "Roy", target: "Sally", },
-    { source: "Roy", target: "Harry", },
-  ],
-};
+import { INote, NoteReference } from '../../types'
 
 // the graph configuration, just override the ones you need
 const myConfig ={
@@ -40,7 +11,7 @@ const myConfig ={
   "focusAnimationDuration": 0.75,
   "focusZoom": 1,
   "freezeAllDragEvents": false,
-  "height": 400,
+  "height": 800,
   "highlightDegree": 1,
   "highlightOpacity": 1,
   "linkHighlightBehavior": false,
@@ -50,7 +21,7 @@ const myConfig ={
   "panAndZoom": false,
   "staticGraph": false,
   "staticGraphWithDragAndDrop": false,
-  "width": 800,
+  "width": 1000,
   "d3": {
     "alphaTarget": 0.05,
     "gravity": -100,
@@ -108,12 +79,93 @@ const onClickLink = function(source, target) {
   window.alert(`Clicked link between ${source} and ${target}`);
 };
 
+const noteReducer = (state: INote[], action: { type: 'ADD_NOTE', note: INote }):INote[] => {
+  switch (action.type) {
+    case 'ADD_NOTE':{
+      let { note } = action;
+      return [...state, note];
+    }
+    default:
+      return state;
+  }
+}
+
+function useAllNotes() {
+  const { notes,fetchNote } = useNotes();
+  const [allNotes, dispatch] = useReducer(noteReducer, []);
+  function addNote(note: INote){
+    dispatch({ type: 'ADD_NOTE', note });
+  };
+  const [allLoaded, setAllLoaded] = useState<boolean>(false);
+  useEffect(() => {
+    if (notes.length) {
+      notes.forEach(note => {
+        fetchNote(note.slug).then(addNote);
+      });
+    }
+  }, [notes]);
+  useEffect(() => {
+    if (allNotes.length >= notes.length) {
+      setAllLoaded(true);
+    } else {
+      setAllLoaded(false);
+    }
+  }, [notes, allNotes]);
+  return {
+    allNotes,notes,allLoaded
+  }
+}
+
+
+const NoteGraph = () => {
+  const {
+    allNotes, notes, allLoaded
+  } = useAllNotes();
+  const graphRef = useRef<SVGElement>();
+  
+  let data = useMemo(() => {
+    let nodes = [];
+    let links = [];
+    if (allLoaded) {
+      allNotes.forEach(note => {
+        nodes.push(
+          {
+            id: note.slug
+          }
+        );
+        if (note.references) {
+          note.references.forEach((noteLink: NoteReference) => {
+            links.push(
+              { source: note.slug, target: noteLink.slug, }
+            )
+          })
+        }
+      })
+    } else {
+      if (notes) {
+        nodes = notes.map(note => {
+          return {
+            id: note.slug
+          }
+        })
+      }
+    }
+    
+    return {
+      nodes,
+      links
+    }
+  }, [allLoaded, notes]);
+  
+
+
 return <Graph
-  id="graph-id" // id is mandatory
+  id="note-graph"
   data={data}
   config={myConfig}
   onClickNode={onClickNode}
   onClickLink={onClickLink}
+  ref={graphRef}
 />;
 }
 

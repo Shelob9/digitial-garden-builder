@@ -1,4 +1,4 @@
-button,
+button:not(.graph-button),
 input,
 textarea {
 	@apply appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight;
@@ -21,7 +21,7 @@ select:focus {
 	@apply outline-none;
 }
 
-button,
+button:not(.graph-button),
 .btn-primary:hover {
 	@apply bg-white border-2 border-black text-black font-bold py-2 px-4 my-4 rounded;
 }
@@ -33,6 +33,16 @@ button:hover,
 
 .btn-primary:hover {
 	@apply bg-green-800 text-white;
+}
+
+.graph-button {
+	border: 0;
+	background: none;
+	cursor: pointer;
+}
+
+.graph-button svg g {
+	stroke: var(--link);
 }
 
 .header-login-button {

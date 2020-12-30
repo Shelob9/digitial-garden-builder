@@ -47,6 +47,12 @@ export const NotesProvider = ({ children }) => {
         return createFetch(token, r => {
             return r.noteIndex;
         });
+    }, [token]);
+
+    const singleNoteFetcher = useMemo(() => {
+        return createFetch(token, r => {
+            return r.note;
+        });
     }, [token])
 
     const { createUrl,createHeaders } = useGardenServer({token});
@@ -78,12 +84,17 @@ export const NotesProvider = ({ children }) => {
     const addNote = (note) => {
         mutate([...notes, note]);
     }
+
+    const fetchNote = async (slug: string) => {
+        return singleNoteFetcher(`/api/notes/${slug}`, { method: "GET" });
+    }
   
     return <NotesContext.Provider value={{
         notes,
         getNote,
         addNote,
-        createNote
+        createNote,
+        fetchNote
     }}>
         {children}
     </NotesContext.Provider>
@@ -92,7 +103,7 @@ export const NotesProvider = ({ children }) => {
 //State of note index
 //@TODO rename this useNoteIndex
 const useNotes = () => {
-    const { notes, getNote,addNote,createNote } = useContext(NotesContext);
+    const { notes, getNote,addNote,createNote,fetchNote } = useContext(NotesContext);
     const findBySlug = (noteSlug: string):INote|undefined => {
         if( notes && notes.length) {
             return notes.find(n => noteSlug === n.slug); 
@@ -106,7 +117,9 @@ const useNotes = () => {
     const allNoteLinks = useMemo(() => {
        return notes.map(({ url }) => url);
     }, [notes]);
-    return { notes, getNote,findBySlug,allSlugs,allNoteLinks,addNote,createNote }
+
+    
+    return { notes, getNote,findBySlug,allSlugs,allNoteLinks,addNote,createNote,fetchNote }
 }
 
 export default useNotes;

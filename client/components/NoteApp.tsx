@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import { INote } from '../../types'
 import { useState } from 'react';
 import NoteGraph from './NoteGraph';
+import GraphButton from './GraphButton';
 
 
 const NoteApp: FC<{
@@ -64,10 +65,10 @@ const NoteApp: FC<{
 
   return (
     <>
-      <Layout >
+      <Layout FirstControl={() => <GraphButton showGraph={showGraph} setShowGraph={setShowGraph} /> }>
       <div className={'note-columns-scrolling-container'}>
           <div className={'note-columns-container'}>
-            {!showGraph ? <NoteGraph /> : (
+            {showGraph ? <NoteGraph /> : (
               <>
                 {notes ? (
                   <>
