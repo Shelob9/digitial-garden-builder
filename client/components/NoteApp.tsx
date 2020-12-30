@@ -6,6 +6,8 @@ import useNotes from './useNotes';
 import useNoteLayout from './useNoteLayout';
 import { useRouter } from 'next/router'
 import { INote } from '../../types'
+import { useState } from 'react';
+import NoteGraph from './NoteGraph';
 
 
 const NoteApp: FC<{
@@ -28,6 +30,7 @@ const NoteApp: FC<{
   //The actual notes
   const { notes } = useNotes();
   
+  const [showGraph, setShowGraph] = useState<boolean>(false);
 
   //load notes based on url parsing that happend server-side
   useEffect(() => {
@@ -64,36 +67,39 @@ const NoteApp: FC<{
       <Layout >
       <div className={'note-columns-scrolling-container'}>
           <div className={'note-columns-container'}>
-            {notes ? (
-            <>
-                <Note
-                  isLoggedIn={isLoggedIn}
-                  slug={currentNotes.one.noteSlug}
-                  isOpen={isNoteOpen('one')}
-                  toggleBox={() => toggleBox('one')}
-                  position={"one"}
-                  note={note}
-              />
-                {hasNote('two') &&
-                  <Note
+            {!showGraph ? <NoteGraph /> : (
+              <>
+                {notes ? (
+                  <>
+                    <Note
                       isLoggedIn={isLoggedIn}
-                      slug={currentNotes.two.noteSlug}
-                      isOpen={isNoteOpen('two')}
-                      toggleBox={() => toggleBox('two')}
-                      position={"two"}   
-                  />
-                }
-                {hasNote('three') && 
-                  <Note
-                    isLoggedIn={isLoggedIn}
-                    slug={currentNotes.three.noteSlug}
-                    isOpen={isNoteOpen('three')}
-                    toggleBox={() => toggleBox('three')}
-                    position={"three"}
-                  />
-                }
-            </>
-            ) : <div>Loading</div>}
+                      slug={currentNotes.one.noteSlug}
+                      isOpen={isNoteOpen('one')}
+                      toggleBox={() => toggleBox('one')}
+                      position={"one"}
+                      note={note}
+                    />
+                    {hasNote('two') &&
+                      <Note
+                        isLoggedIn={isLoggedIn}
+                        slug={currentNotes.two.noteSlug}
+                        isOpen={isNoteOpen('two')}
+                        toggleBox={() => toggleBox('two')}
+                        position={"two"}
+                      />
+                    }
+                    {hasNote('three') &&
+                      <Note
+                        isLoggedIn={isLoggedIn}
+                        slug={currentNotes.three.noteSlug}
+                        isOpen={isNoteOpen('three')}
+                        toggleBox={() => toggleBox('three')}
+                        position={"three"}
+                      />
+                    }
+                  </>
+                ) : <div>Loading</div>}
+              </>)}
           </div>
         </div>
         
