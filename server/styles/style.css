@@ -6,6 +6,9 @@
 
 @import './button.css';
 
+main {
+	min-height: 70%;
+}
 h1 {
 	@apply font-bold text-4xl;
 }
