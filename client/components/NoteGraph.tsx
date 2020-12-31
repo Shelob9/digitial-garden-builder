@@ -35,14 +35,13 @@ const myConfig ={
   "node": {
     "color": "#d3d3d3",
     "fontColor": "black",
-    "fontSize": 8,
+    "fontSize": 12,
     "fontWeight": "normal",
     "highlightColor": "SAME",
     "highlightFontSize": 8,
     "highlightFontWeight": "normal",
     "highlightStrokeColor": "SAME",
     "highlightStrokeWidth": "SAME",
-    "labelProperty": "id",
     "mouseCursor": "pointer",
     "opacity": 1,
     "renderLabel": true,
@@ -50,7 +49,8 @@ const myConfig ={
     "strokeColor": "none",
     "strokeWidth": 1.5,
     "svg": "",
-    "symbolType": "circle"
+    "symbolType": "circle",
+    labelProperty:'label'
   },
   "link": {
     "color": "#d3d3d3",
@@ -137,10 +137,8 @@ const NoteGraph: FC<{ closeGraph:() => void}>= ({closeGraph}) => {
         nodes.push(
           {
             id: note.slug,
-            labelProperty: () => (
-              <div>{note.title}</div>
-            ),
-            fontSize: 12,
+            
+            label: note.title,
           }
         );
         if (note.references) {
