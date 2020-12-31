@@ -57,13 +57,13 @@ const Inner: FC<{
                     className={`note-container note-editor-container`}
                 >
                     <MarkdownEditor
-                      value={value}
-                      setValue={setValue}
+                        value={value}
+                        setValue={setValue}
                     />
                 </div>
-              </Layout>  
-        )
-    }
+        </Layout>  
+    )
+}
   
 
 
@@ -132,15 +132,14 @@ export const NoteCreator = () => {
 };
 
 //Wraps note editor with loading state for editting note
-const NoteEditor = (props: {
+const NoteEditor :FC<{
     note?: INote;
     slug: string;
-  }) => {
+}> = (props) => {
     let { note,saveNote } = useSingleNote({ note: props.note, slug: props.slug });
     if (note) {
       return <Inner note={note} saveNote={saveNote} pageTitle={`Edit Note`} />
     }
-    return <div>Loading</div>
-    
-  }
+    return <div>Loading</div>  
+}
 export default NoteEditor;

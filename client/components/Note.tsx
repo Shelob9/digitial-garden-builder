@@ -135,13 +135,10 @@ const Note: FC<{
 								<span className="animate-pulse">Loading</span><span className="animate-ping">...</span>
 							</>
 					)}
-					 
 				</NoteContentWrapper>
 			</div>
 		)
 	}
-
-	
 
 	if (!isOpen) {
 		return (<>
@@ -166,7 +163,6 @@ const Note: FC<{
 		</>);
 	}
 
-	
 	let { content } = note;
     return (
         <>
@@ -213,8 +209,8 @@ const Note: FC<{
 									{...props}
 									openPosition={nextPosition(position)}
 								/>)
-								}
-							/>
+							}
+						/>
 						<>
 						{note.references && <ReferencesBlock references={note.references} openPosition={nextPosition(position)} />}
 						</>

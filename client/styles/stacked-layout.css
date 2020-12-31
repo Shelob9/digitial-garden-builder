@@ -76,7 +76,6 @@ p {
 
 .layout {
 	@apply flex;
-	height: 100vh;
 	flex-direction: column;
 }
 
