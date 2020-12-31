@@ -55,6 +55,7 @@ const Page: FC<
               noteOneSlug={noteOne}
               noteTwoSlug={noteTwo}
               noteThreeSlug={noteThree}
+              note={note}
             />
          </NoteLayoutProvider>
         </> 

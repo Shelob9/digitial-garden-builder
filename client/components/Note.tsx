@@ -58,8 +58,8 @@ export const NoteMarkdown: FC<{
 	)
 	}
 
-const NoteTitle: React.FC<{ note: INote }> = ({ note }) => (
-	<h1>{note.title}</h1>
+const NoteTitle: React.FC<{ note: INote,className?:string }> = ({ note,className}) => (
+	<h1 className={className}>{note.title}</h1>
 )
 
 //Display one note
@@ -84,14 +84,27 @@ const Note: FC<{
 	if (!note) {
 		return (
 			<div
-				className={`${outterClassName} animate-pulse`}
+				className={`${outterClassName} animate-pulse opacity-40`}
 			>
 				<div className={'note-buttons'}></div>
 				<div
-					className={"note-content animate-ping h-full"}
-					
+					className={"note-content h-full"}
 				>
-					 <span className="animate-pulse">Loading</span><span className="animate-ping">...</span>
+					{props.note ? (
+						<>
+							<NoteTitle note={props.note}
+								className={'animate-pulse'}
+							/>
+							<NoteMarkdown
+								content={props.note.content}
+							/>
+						</>
+					) : (
+							<>
+								<span className="animate-pulse">Loading</span><span className="animate-ping">...</span>
+							</>
+					)}
+					 
 				</div>
 			</div>
 		)
