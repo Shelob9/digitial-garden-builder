@@ -1,6 +1,7 @@
-import { createContext, FC, useContext, useReducer, useState } from "react";
+import { createContext, FC, useContext, useEffect, useReducer, useState } from "react";
 import noteLayoutReducer, {  notePostions } from "./noteLayoutReducer";
 import { useNoteSettings } from "./useNotes";
+import { useMediaQuery } from 'react-responsive'
 
 const NoteLayoutContext = createContext(null);
 export const NoteLayoutProvider: FC<{
@@ -19,6 +20,9 @@ export const NoteLayoutProvider: FC<{
   );
 
   const [focusNote, setFocusNote] = useState<notePostions>("one");
+
+  
+  
     return (
         <NoteLayoutContext.Provider value={{
           currentNotes,
@@ -39,22 +43,28 @@ export default function useNoteLayout() {
     setFocusNote
   } = useContext(NoteLayoutContext);
   
-  const expandBox = (notePosition) => {
+  const expandBox = (notePosition:notePostions) => {
     dispatchNotesAction({
       notePosition,
       type: 'expandNote'
     });
   }
-    const toggleBox = (notePosition) => {
+
+  const collapseBox = (notePosition: notePostions) => {
+    dispatchNotesAction({
+      notePosition,
+      type:'collapseNote'
+    });
+  }
+    const toggleBox = (notePosition:notePostions) => {
         if (! isNoteOpen(notePosition)) {
           expandBox(
             notePosition,
           );
         } else {
-          dispatchNotesAction({
+          collapseBox(
             notePosition,
-            type:'collapseNote'
-          });
+          );
         }
     }
     const addNote = (notePosition: notePostions, noteSlug: string) => {
@@ -90,7 +100,8 @@ export default function useNoteLayout() {
 
   const openInNextPosition = (noteSlug: string,openPosition:notePostions) => {
     const pos = findNotePostion(noteSlug);
-			if (pos && hasNote(pos)) {
+    if (pos && hasNote(pos)) {
+        //@ts-ignore
 				expandBox(pos)
 				setFocusNote(pos)
 			} else {
@@ -110,10 +121,13 @@ export default function useNoteLayout() {
 					noteSlug
 				)
 				setFocusNote(openPosition);
-			}
+    }
+    
   }
   
 
+  
+ 
   return {
     currentNotes,
     dispatchNotesAction,
@@ -123,6 +137,7 @@ export default function useNoteLayout() {
     addNote,
     removeNote,
     expandBox,
+    collapseBox,
     focusNote,
     setFocusNote,
     findNotePostion,

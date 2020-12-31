@@ -79,7 +79,7 @@ const Note: FC<{
 	});
 	const { focusNote, setFocusNote } = useNoteLayout();
 	const outterClassName = useMemo(
-		() => `md:w-screen note-container ${isOpen ? 'note-open' : 'note-closed'} ${focusNote === position ? 'note-focus' : ''}`,
+		() => `sm:w-screen md:w-1/3 overflow-auto note-container ${isOpen ? 'note-open' : 'note-closed'} ${focusNote === position ? 'note-focus' : ''}`,
 		[focusNote, position,isOpen]
 	);
 	if (!note) {
@@ -89,7 +89,7 @@ const Note: FC<{
 			>
 				<div className={'note-buttons'}></div>
 				<div
-					className={"note-content h-full"}
+					className={"note-content"}
 				>
 					{props.note ? (
 						<>
