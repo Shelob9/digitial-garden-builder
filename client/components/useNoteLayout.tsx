@@ -47,7 +47,7 @@ export default function useNoteLayout() {
   let noteTwoRef = useRef<HTMLDivElement>();
   let noteThreeRef = useRef<HTMLDivElement>();
 
-  const _scrollToNote = (position: notePostions) => {
+  const getNoteRef = (position: notePostions) => {
     let ref: Ref<HTMLDivElement>;
     switch (position) {
       case 'three':
@@ -62,6 +62,10 @@ export default function useNoteLayout() {
           ref = noteOneRef;
         break;
     }
+    return ref;
+  }
+  const _scrollToNote = (position: notePostions) => {
+    let ref = getNoteRef(position);
     if (!ref || !ref.current) {
       return;
     }
@@ -170,8 +174,6 @@ export default function useNoteLayout() {
     setFocusNote,
     findNotePostion,
     openInNextPosition,
-    noteOneRef,
-    noteTwoRef,
-    noteThreeRef
+    getNoteRef
   };
 }

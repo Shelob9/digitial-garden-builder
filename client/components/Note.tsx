@@ -92,7 +92,6 @@ const NoteContentWrapper: FC<{
 
 //Display one note
 const Note: FC<{
-	ref: Ref<HTMLDivElement>;
 	note?: INote;
 	slug: string;
 	toggleBox: () => void;
@@ -100,12 +99,12 @@ const Note: FC<{
 	position: notePostions,
 	isLoggedIn: boolean;
 }> = (props) => {
-	const { slug, toggleBox, isOpen, position, isLoggedIn,ref } = props;
+	const { slug, toggleBox, isOpen, position, isLoggedIn } = props;
 	//Even if we got a note from props, get it from network/cache
 	const { note } = useSingleNote({
 		slug, //note
 	});
-	const { focusNote, setFocusNote } = useNoteLayout();
+	const { focusNote, setFocusNote,getNoteRef } = useNoteLayout();
 	const outterClassName = useMemo(
 		() => `note-container ${isOpen ? 'note-open' : 'note-closed'} ${focusNote === position ? 'note-focus' : ''}`,
 		[focusNote, position,isOpen]
@@ -114,7 +113,7 @@ const Note: FC<{
 	if (!note) {
 		return (
 			<div
-				ref={ref}
+				ref={getNoteRef(position)}
 				className={`${outterClassName} animate-pulse opacity-40`}
 			>
 				<div className={'note-buttons'}></div>
