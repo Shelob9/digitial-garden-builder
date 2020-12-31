@@ -4,7 +4,7 @@ import NoteLink from "./NoteLink";
 import useNoteLayout from "./useNoteLayout";
 import { useSingleNote } from "./useNotes";
 const ExternalLink = ({ href, children }) => <a className={'external'} href={href}>{children}</a>;
-import { Popover } from 'react-tiny-popover'
+//import { Popover } from 'react-tiny-popover'
 
 const InternalLink : FC<{
 	href: string;
@@ -21,11 +21,18 @@ const InternalLink : FC<{
 	let slug = href.substr('/notes/'.length);
 	const { note } = useSingleNote({slug})
 	const {
-		openInNextPosition
+		openInNextPosition,
+		setFocusNote,
+		hasNote
 	} = useNoteLayout();
 	if ( note) {
 		const onClick = () => {
-			openInNextPosition( note.slug, openPosition)	
+			if (hasNote(note.slug)) {
+				setFocusNote(note.slug)
+			} else {
+				openInNextPosition( note.slug, openPosition)	
+				setFocusNote(note.slug)
+			}
         }
         
         return (

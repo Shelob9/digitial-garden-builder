@@ -9,6 +9,7 @@ import { INote } from '../../types'
 import { useState } from 'react';
 import NoteGraph from './NoteGraph';
 import GraphButton from './GraphButton';
+import { useMediaQuery } from 'react-responsive'
 
 
 const NoteApp: FC<{
@@ -31,7 +32,11 @@ const NoteApp: FC<{
   //The actual notes
   const { notes } = useNotes();
   
+  //Show graph instead of notes?
   const [showGraph, setShowGraph] = useState<boolean>(false);
+
+  //https://www.npmjs.com/package/react-responsive
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
 
   //load notes based on url parsing that happend server-side
   useEffect(() => {
