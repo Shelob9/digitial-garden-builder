@@ -50,7 +50,7 @@ export default function Index() {
             </div>
             <p>Use wiki-style, double-bracket links to connect notes.</p>
             <div>
-                  <Image src="/cat800.jpg" alt="Note editor" width="900" height="544" layout={'responsive'} />
+                  <Image src="/dgb-editor.jpg" alt="Note editor" width="900" height="544" layout={'responsive'} />
             </div>
           </div>
           <div className={'md:grid grid-cols-2 gap-4 shadowed-box'}>
