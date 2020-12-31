@@ -44,7 +44,7 @@ const InternalLink : FC<{
                     className={className ?? 'reference'}
                     slug={slug}
                 >
-                    {children}
+                    {note.title}
             </NoteLink>
                 
         </span>
