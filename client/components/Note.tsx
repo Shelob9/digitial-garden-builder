@@ -79,7 +79,7 @@ const Note: FC<{
 	});
 	const { focusNote, setFocusNote } = useNoteLayout();
 	const outterClassName = useMemo(
-		() => `note-container ${isOpen ? 'note-open' : 'note-closed'} ${focusNote === position ? 'note-focus' : ''}`,
+		() => `md:w-screen note-container ${isOpen ? 'note-open' : 'note-closed'} ${focusNote === position ? 'note-focus' : ''}`,
 		[focusNote, position,isOpen]
 	);
 	if (!note) {
