@@ -61,7 +61,34 @@ export const NoteMarkdown: FC<{
 const NoteTitle: React.FC<{ note: INote,className?:string }> = ({ note,className}) => (
 	<h1 className={className}>{note.title}</h1>
 )
+const NoteToolbar: FC<{ children: any; slug: string; title?: string }> =
+	({ children, slug,title }) =>
+(
+	<div
+		role={'toolbar'}
+		aria-label={`Controls for note ${title??slug}`}
+		aria-controls={`note-${slug}`}
+		className={'border border-gray-500 space-y-0 text-center flex justify-center rounded-lg text-lg mb-4'}
+	>
+		{children}
+	</div>
+	);
 
+const NoteContentWrapper: FC<{
+	children: any,
+	onClick?: () => void,
+	slug?: string;
+	}> = ({children,onClick,slug}) => {
+		return (
+			<div
+				id={slug ? `note-${slug}`:''}
+				className={"note-content"}
+				onClick={onClick}
+			>
+				{children}
+			</div>
+		)
+	}
 
 //Display one note
 const Note: FC<{
@@ -79,19 +106,21 @@ const Note: FC<{
 	});
 	const { focusNote, setFocusNote } = useNoteLayout();
 	const outterClassName = useMemo(
-		() => `sm:w-screen md:w-1/3 overflow-auto note-container ${isOpen ? 'note-open' : 'note-closed'} ${focusNote === position ? 'note-focus' : ''}`,
+		() => `note-container ${isOpen ? 'note-open' : 'note-closed'} ${focusNote === position ? 'note-focus' : ''}`,
 		[focusNote, position,isOpen]
 	);
+	//Note still loading? Use loading animation.
 	if (!note) {
 		return (
 			<div
 				className={`${outterClassName} animate-pulse opacity-40`}
 			>
 				<div className={'note-buttons'}></div>
-				<div
-					className={"note-content"}
+				<NoteContentWrapper
 				>
-					{props.note ? (
+					{
+						//if we have note from props, show it now.
+						props.note ? (
 						<>
 							<NoteTitle note={props.note}
 								className={'animate-pulse'}
@@ -106,28 +135,20 @@ const Note: FC<{
 							</>
 					)}
 					 
-				</div>
+				</NoteContentWrapper>
 			</div>
 		)
 	}
 
-	const Toolbar = ({ children }) => (
-		<div
-			role={'toolbar'}
-			aria-label={`Controls for note ${note.title}`}
-			aria-controls={`note-${note.slug}`}
-			className={'border border-gray-500 space-y-0 text-center flex justify-center rounded-lg text-lg mb-4'}
-				
-		>
-			{children}
-		</div>
-	);
+	
+
 	if (!isOpen) {
 		return (<>
 			<div
 				className={outterClassName}
+				onClick={() => toggleBox()}
 			>
-				<Toolbar>
+				<NoteToolbar slug={note.slug} title={note.title}>
 					<a
 						role={'button'}
 						className="bg-white text-black hover:text-white hover:bg-gray-500  border-green-500 border px-4 py-2 mx-0 outline-none focus:shadow-outline"
@@ -139,19 +160,19 @@ const Note: FC<{
 						>
 							Open
 					</a>
-				</Toolbar>
+				</NoteToolbar>
 			</div>
 		</>);
 	}
 
-
+	
 	let { content } = note;
     return (
         <>
 			<div
 				className={outterClassName}
 			>
-				<Toolbar>
+				<NoteToolbar slug={note.slug} title={note.title}>
 					<a
 						role={'button'}
 						className="bg-white text-black hover:text-white hover:bg-gray-500  border-green-500 border border-r-0 rounded-l-lg px-4 py-2 mx-0 outline-none focus:shadow-outline"
@@ -177,13 +198,12 @@ const Note: FC<{
 					>
 						Share
 					</a>
-				</Toolbar>
+				</NoteToolbar>
                 {isOpen &&
-					<div
-						id={`note-${note.slug}`}
-						className={"note-content"}
+					<NoteContentWrapper
+						slug={note.slug}
 						onClick={() => setFocusNote(position)}
-				>
+					>
 						<NoteTitle note={note} />
 						<NoteMarkdown
 							content={content}
@@ -197,7 +217,7 @@ const Note: FC<{
 						<>
 						{note.references && <ReferencesBlock references={note.references} openPosition={nextPosition(position)} />}
 						</>
-                </div>
+                </NoteContentWrapper>
                 }
             </div>
         </>

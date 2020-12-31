@@ -75,26 +75,18 @@ p {
 }
 
 .layout {
+	@apply flex;
 	height: 100vh;
-	display: flex;
 	flex-direction: column;
 }
 
 .note-columns-scrolling-container {
-	display: flex;
+	@apply md:flex md:flex-grow;
 	overflow-x: auto;
 	overflow-y: hidden;
-	flex-grow: 1;
 }
 
 .note-columns-container {
-	display: flex;
-	flex-grow: 1;
+	@apply md:flex md:flex-grow;
 	transition: width 100ms cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-@media screen and (max-width: 800px) {
-	.note-columns-container {
-		width: unset !important;
-	}
 }
