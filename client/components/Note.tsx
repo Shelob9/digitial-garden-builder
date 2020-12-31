@@ -163,7 +163,7 @@ const Note: FC<{
 					>
 						{isOpen ? 'Close' : 'Open'}
 					</a>
-					{!isLoggedIn && <Link href={`/notes/edit?note=${note.slug}`}>
+					{isLoggedIn && <Link href={`/notes/edit?note=${note.slug}`}>
 							<a
 								className="bg-white text-black hover:text-white hover:bg-gray-500  border-green-500 border px-4 py-2 mx-0 outline-none focus:shadow-outline"
 								title={'Click To Edit'}
