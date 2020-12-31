@@ -83,22 +83,11 @@
 }
 
 .note-closed {
-	width: 25px;
-	max-width: 50px;
+	width: 100px;
+	max-width: 100px;
 }
 
 .note-focus {
 	border: 1px solid var(--text);
 	background-color: var(--shadow);
-}
-
-.note-buttons {
-	float: right;
-	padding-bottom: 6px;
-	border-bottom: 1px solid var(--shadow);
-}
-
-.note-buttons button,
-.note-buttons a {
-	min-width: 30px;
 }
