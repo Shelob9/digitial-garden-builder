@@ -1,4 +1,4 @@
-import { createContext, FC, useContext, useEffect, useReducer, useState } from "react";
+import { createContext, FC, Ref, useContext, useEffect, useReducer, useRef, useState } from "react";
 import noteLayoutReducer, {  notePostions } from "./noteLayoutReducer";
 import { useNoteSettings } from "./useNotes";
 import { useMediaQuery } from 'react-responsive'
@@ -42,6 +42,33 @@ export default function useNoteLayout() {
     focusNote,
     setFocusNote
   } = useContext(NoteLayoutContext);
+
+  let noteOneRef = useRef<HTMLDivElement>();
+  let noteTwoRef = useRef<HTMLDivElement>();
+  let noteThreeRef = useRef<HTMLDivElement>();
+
+  const _scrollToNote = (position: notePostions) => {
+    let ref: Ref<HTMLDivElement>;
+    switch (position) {
+      case 'three':
+          ref = noteThreeRef;
+        break;
+      case 'two':
+          ref = noteTwoRef;
+          break;
+      
+        case 'one':
+        default:
+          ref = noteOneRef;
+        break;
+    }
+    if (!ref || !ref.current) {
+      return;
+    }
+    ref.current.scrollIntoView({
+      behavior: "smooth",
+    });
+  }
   
   const expandBox = (notePosition:notePostions) => {
     dispatchNotesAction({
@@ -56,24 +83,26 @@ export default function useNoteLayout() {
       type:'collapseNote'
     });
   }
-    const toggleBox = (notePosition:notePostions) => {
-        if (! isNoteOpen(notePosition)) {
-          expandBox(
-            notePosition,
-          );
-        } else {
-          collapseBox(
-            notePosition,
-          );
-        }
-    }
-    const addNote = (notePosition: notePostions, noteSlug: string) => {
-        dispatchNotesAction({
-            notePosition,
-            noteSlug,
-            type: 'addNote'
-        })
-    };
+
+  const toggleBox = (notePosition:notePostions) => {
+      if (! isNoteOpen(notePosition)) {
+        expandBox(
+          notePosition,
+        );
+      } else {
+        collapseBox(
+          notePosition,
+        );
+      }
+  }
+  const addNote = (notePosition: notePostions, noteSlug: string) => {
+    dispatchNotesAction({
+      notePosition,
+      noteSlug,
+      type: 'addNote'
+    });
+    _scrollToNote(notePosition)
+  };
 
     const removeNote = (notePosition: notePostions) => {
         dispatchNotesAction({
@@ -122,12 +151,11 @@ export default function useNoteLayout() {
 				)
 				setFocusNote(openPosition);
     }
+    _scrollToNote(openPosition);
     
   }
-  
-
-  
  
+  
   return {
     currentNotes,
     dispatchNotesAction,
@@ -141,6 +169,9 @@ export default function useNoteLayout() {
     focusNote,
     setFocusNote,
     findNotePostion,
-    openInNextPosition
+    openInNextPosition,
+    noteOneRef,
+    noteTwoRef,
+    noteThreeRef
   };
 }

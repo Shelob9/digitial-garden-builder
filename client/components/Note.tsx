@@ -2,7 +2,7 @@ import unified from 'unified'
 import parse from 'remark-parse'
 import remark2react from 'remark-react'
 import ReferencesBlock from "./ReferencesBlock";
-import { FC } from 'react';
+import { FC, Ref } from 'react';
 import useNotes, { useSingleNote } from './useNotes';
 import useNoteLayout from './useNoteLayout';
 import { notePostions } from './noteLayoutReducer';
@@ -92,6 +92,7 @@ const NoteContentWrapper: FC<{
 
 //Display one note
 const Note: FC<{
+	ref: Ref<HTMLDivElement>;
 	note?: INote;
 	slug: string;
 	toggleBox: () => void;
@@ -99,7 +100,7 @@ const Note: FC<{
 	position: notePostions,
 	isLoggedIn: boolean;
 }> = (props) => {
-	const { slug, toggleBox, isOpen, position, isLoggedIn } = props;
+	const { slug, toggleBox, isOpen, position, isLoggedIn,ref } = props;
 	//Even if we got a note from props, get it from network/cache
 	const { note } = useSingleNote({
 		slug, //note
@@ -113,6 +114,7 @@ const Note: FC<{
 	if (!note) {
 		return (
 			<div
+				ref={ref}
 				className={`${outterClassName} animate-pulse opacity-40`}
 			>
 				<div className={'note-buttons'}></div>

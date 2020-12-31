@@ -1,5 +1,5 @@
 
-import React,{ FC, Fragment, useEffect, useMemo} from 'react'
+import React,{ FC, Fragment, useEffect, useMemo, useRef} from 'react'
 import Layout from '../components/Layout';
 import Note from '../components/Note';
 import useNotes from './useNotes';
@@ -28,12 +28,14 @@ const NoteApp: FC<{
   //https://nextjs.org/docs/api-reference/next/router
   const router = useRouter();
   //Controls the three note slots
-  const { currentNotes,toggleBox,isNoteOpen,hasNote,addNote, } = useNoteLayout();
+  const { currentNotes,toggleBox,isNoteOpen,hasNote,addNote,noteOneRef,noteTwoRef,noteThreeRef } = useNoteLayout();
   //The actual notes
   const { notes } = useNotes();
   
   //Show graph instead of notes?
   const [showGraph, setShowGraph] = useState<boolean>(false);
+
+  
 
   //load notes based on url parsing that happend server-side
   useEffect(() => {
@@ -79,6 +81,7 @@ const NoteApp: FC<{
                 {notes ? (
                   <>
                     <Note
+                      ref={noteOneRef}
                       isLoggedIn={isLoggedIn}
                       slug={currentNotes.one.noteSlug}
                       isOpen={isNoteOpen('one')}
@@ -88,6 +91,7 @@ const NoteApp: FC<{
                     />
                     {hasNote('two') &&
                       <Note
+                        ref={noteTwoRef}
                         isLoggedIn={isLoggedIn}
                         slug={currentNotes.two.noteSlug}
                         isOpen={isNoteOpen('two')}
@@ -97,6 +101,7 @@ const NoteApp: FC<{
                     }
                     {hasNote('three') &&
                       <Note
+                        ref={noteThreeRef}
                         isLoggedIn={isLoggedIn}
                         slug={currentNotes.three.noteSlug}
                         isOpen={isNoteOpen('three')}
