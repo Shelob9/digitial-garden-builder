@@ -102,10 +102,9 @@ const Layout: FC<{
   BeforeControls?: () => JSX.Element;
   pageDisplayTitle?: string;
   children: any;
-	statusMessage?: string;
     FirstControl?: () => JSX.Element;
 
-}> = ({ children, BeforeControls,pageDisplayTitle,statusMessage,FirstControl}) => {
+}> = ({ children, BeforeControls,pageDisplayTitle,FirstControl}) => {
   return (
       <>
 		<div className="layout">
@@ -114,7 +113,6 @@ const Layout: FC<{
 					BeforeControls={BeforeControls}
 					FirstControl={FirstControl}
 					pageDisplayTitle={pageDisplayTitle ?? 'Digital Gardens' }
-					statusMessage={statusMessage}
 				/>
 				{children}
 				<Footer />

@@ -66,7 +66,6 @@ const Inner: FC<{
     return (
       <Layout
               pageDisplayTitle={pageTitle}
-              statusMessage={statusMessage}
               BeforeControls={BeforeControls}
             >
                 <div
