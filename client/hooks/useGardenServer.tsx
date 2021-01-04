@@ -11,8 +11,9 @@ export default function useGardenServer(props:{token?:string}) {
 	let loginLink = `${gardenServerUrl}/login?publicKey=${gardenServerPublicKey}`
 	//Create URL with garden server from uri
 	// Provide uris with forward slash - `/api/hi/roy` - please
+	// The publicKey will be added as a query variable
 	function createUrl(uri: string) {
-		let url = `${gardenServerUrl}${uri}`
+		let url = `${gardenServerUrl}${uri}?publicKey=${gardenServerPublicKey}`
 		return url
 	}
 
