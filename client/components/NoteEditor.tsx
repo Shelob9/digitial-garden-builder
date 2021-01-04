@@ -27,19 +27,36 @@ const Inner: FC<{
     saveNote: (note: INote) => Promise<INote>,
     pageTitle: string;
   }>= ({note,saveNote,pageTitle}) => {
-    let [value, setValue] = useState(note.content);
+      let [value, setValue] = useState(note.content);
+      let [statusMessage, setStatusMessage] = useState<string | undefined>(undefined);
     let [isSaving, setIsSaving] = useState(false);
     let titleRef = useRef<HTMLInputElement>();
     
   
     const handleSave = async () => {
-      setIsSaving(true);
+        setStatusMessage('Saving');
       saveNote({
         ...note,
         content: value,
         title: titleRef.current.value
-      }).then(() => setIsSaving(false));
-    }
+      }).then(() => {
+          setIsSaving(false);
+          setStatusMessage('Saved');
+          setTimeout(() => {
+              setStatusMessage(undefined);
+          },2500)
+      })
+          .catch((e) => {
+              console.log(e);
+              setIsSaving(false);
+              setTimeout(() => {
+                setStatusMessage('Error');
+            },1500)
+            
+        })
+      }
+      
+
     const BeforeControls = () => (
         <>
           <Title defaultValue={note.title} ref={titleRef} />
@@ -50,7 +67,7 @@ const Inner: FC<{
     return (
       <Layout
               pageDisplayTitle={pageTitle}
-              statusMessage={isSaving ? 'Saving':undefined}
+              statusMessage={statusMessage}
               BeforeControls={BeforeControls}
             >
                 <div
