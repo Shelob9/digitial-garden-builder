@@ -6,7 +6,7 @@ import MarkdownEditor from "./MarkdownEditor";
 import { INote } from "../../types";
 import useNotes, { useSingleNote,} from "./useNotes";
 import useSaveState from '../hooks/useSaveState';
-import { NoteContentWrapper } from "./Note";
+import Note, { NoteContentWrapper } from "./Note";
 import { NoteCollumnContainer, NoteScrollContainer } from "./NoteApp";
 //editor for the title
 const Title = forwardRef((props: {defaultValue:string}, ref) =>
@@ -29,58 +29,58 @@ const Inner: FC<{
     saveNote: (note: INote) => Promise<INote>,
     pageTitle: string;
   }>= ({note,saveNote,pageTitle}) => {
-      let [value, setValue] = useState(note.content);
-      let { statusMessage, setStatusMessage,isSaving, setIsSaving }= useSaveState();
-    let titleRef = useRef<HTMLInputElement>();
-    
+        let [value, setValue] = useState(note.content);
+        let { setStatusMessage, setIsSaving }= useSaveState();
+        let titleRef = useRef<HTMLInputElement>();
+        const handleSave = async () => {
+            setStatusMessage('Saving');
+            saveNote({
+                ...note,
+                content: value,
+                title: titleRef.current.value
+            })
+                .then(() => {
+                setIsSaving(false);
+                setStatusMessage('Saved');
+                setTimeout(() => {
+                    setStatusMessage(undefined);
+                },2500)
+            })
+                .catch((e) => {
+                    console.log(e);
+                    setIsSaving(false);
+                    setTimeout(() => {
+                        setStatusMessage('Error');
+                    },1500)
+                    
+                })
+        }
   
-    const handleSave = async () => {
-        setStatusMessage('Saving');
-      saveNote({
-        ...note,
-        content: value,
-        title: titleRef.current.value
-      }).then(() => {
-          setIsSaving(false);
-          setStatusMessage('Saved');
-          setTimeout(() => {
-              setStatusMessage(undefined);
-          },2500)
-      })
-          .catch((e) => {
-              console.log(e);
-              setIsSaving(false);
-              setTimeout(() => {
-                setStatusMessage('Error');
-            },1500)
-            
-        })
-      }
-  
-    return (
-        <Layout
-            pageDisplayTitle={pageTitle}     
-        >
-            <NoteScrollContainer>
-                <NoteCollumnContainer>
-                    <NoteContentWrapper slug={note.slug}>
-                        <MarkdownEditor
-                            value={value}
-                            setValue={setValue}
-                        />
-                    </NoteContentWrapper>
-                    <NoteContentWrapper id={'Note editor controls'}>
-                        <>
-                            <button onClick={handleSave}>Save</button>
-                            <Title defaultValue={note.title} ref={titleRef} />
-                        </>  
-                    </NoteContentWrapper>
-               </NoteCollumnContainer>
-                
-            </NoteScrollContainer>
-           
-        </Layout>  
-    )
+        return (
+            <Layout
+                pageDisplayTitle={pageTitle}     
+            >
+                <NoteScrollContainer>
+                    <NoteCollumnContainer>
+                        <NoteContentWrapper slug={note.slug}>
+                            <MarkdownEditor
+                                value={value}
+                                setValue={setValue}
+                            />
+                        </NoteContentWrapper>
+                        <NoteContentWrapper id={'Note editor controls'}>
+                            <>
+                                <section>
+                                    <button onClick={handleSave}>Save</button>
+                                    <a href={`/notes/${note.slug}`} target={'_blank'}>View</a>
+                                </section>
+                                <Title defaultValue={note.title} ref={titleRef} />
+                            </>  
+                        </NoteContentWrapper>
+                    </NoteCollumnContainer>
+                </NoteScrollContainer>
+            </Layout>  
+        )
 }
 
 //Wraps editor with title/ slug creator for new notes
@@ -125,20 +125,20 @@ export const NoteCreator = () => {
             }
         )
     }
-    const BeforeControls = () => (<Fragment />);
     if (!createdTitle) {
         return (
             <Layout
-                    pageDisplayTitle={pageTitle}
-                    BeforeControls={BeforeControls}
-                    >
-                        <div
-                            className={`note-container note-editor-container`}
-                >
-                    <Title defaultValue={''} ref={titleRef} />
-                    <button onClick={onCreateButton}>Create</button>
-                    <p>{message}</p>
-                </div>
+                pageDisplayTitle={pageTitle}
+            >    
+                <NoteScrollContainer>
+                    <NoteCollumnContainer>
+                        <NoteContentWrapper>
+                            <Title defaultValue={''} ref={titleRef} />
+                            <button onClick={onCreateButton}>Create</button>
+                            <p>{message}</p>
+                        </NoteContentWrapper>
+                    </NoteCollumnContainer>
+                </NoteScrollContainer>
             </Layout>
         )
          
