@@ -5,7 +5,7 @@ import Layout from "./Layout";
 import MarkdownEditor from "./MarkdownEditor";
 import { INote } from "../../types";
 import useNotes, { useSingleNote,} from "./useNotes";
-
+import useSaveState from '../hooks/useSaveState';
 //editor for the title
 const Title = forwardRef((props: {defaultValue:string}, ref) =>
     (
@@ -28,8 +28,7 @@ const Inner: FC<{
     pageTitle: string;
   }>= ({note,saveNote,pageTitle}) => {
       let [value, setValue] = useState(note.content);
-      let [statusMessage, setStatusMessage] = useState<string | undefined>(undefined);
-    let [isSaving, setIsSaving] = useState(false);
+      let { statusMessage, setStatusMessage,isSaving, setIsSaving }= useSaveState();
     let titleRef = useRef<HTMLInputElement>();
     
   

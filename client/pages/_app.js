@@ -4,7 +4,7 @@ import { SSRProvider } from '@react-aria/ssr';
 import { CookiesProvider } from 'react-cookie';
 import GardenDefaultSeo from "../components/GardenDefaultSeo";
 import { NotesProvider } from '../components/useNotes';
-
+import { SaveStateProvider } from "../hooks/useSaveState";
 import "../styles/theme.css";
 import "../styles/stacked-layout.css";
 import "../styles/note-layout.css";
@@ -18,15 +18,19 @@ class MyApp extends App {
     let path = asPath.includes('?')
       ? this.props.router.asPath.substr(0, this.props.router.asPath.indexOf('?'))
       : asPath;
-    //After login, do not use ssr provider
+    //After login, do not use:
+    //ssr provider (breaks login on static rendered sites)
+    //save state provider
     if ('/login/after' === path) {
       return (
         <>
           <>
             <CookiesProvider>
               <NotesProvider>
-                  <GardenDefaultSeo />
+                <SaveStateProvider>
+                <GardenDefaultSeo />
                   <Component {...pageProps} />
+                  </SaveStateProvider>
               </NotesProvider>
               </CookiesProvider>
           </>
@@ -38,8 +42,10 @@ class MyApp extends App {
         <SSRProvider>
           <CookiesProvider>
             <NotesProvider>
+              <SaveStateProvider>
                 <GardenDefaultSeo />
                 <Component {...pageProps} />
+              </SaveStateProvider>
             </NotesProvider>
             </CookiesProvider>
         </SSRProvider>
