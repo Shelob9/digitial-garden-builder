@@ -6,6 +6,8 @@ import MarkdownEditor from "./MarkdownEditor";
 import { INote } from "../../types";
 import useNotes, { useSingleNote,} from "./useNotes";
 import useSaveState from '../hooks/useSaveState';
+import { NoteContentWrapper } from "./Note";
+import { NoteCollumnContainer, NoteScrollContainer } from "./NoteApp";
 //editor for the title
 const Title = forwardRef((props: {defaultValue:string}, ref) =>
     (
@@ -54,33 +56,32 @@ const Inner: FC<{
             
         })
       }
-      
-
-    const BeforeControls = () => (
-        <>
-          <Title defaultValue={note.title} ref={titleRef} />
-          <button onClick={handleSave}>Save</button>
-        </>
-    );
   
     return (
-      <Layout
-              pageDisplayTitle={pageTitle}
-              BeforeControls={BeforeControls}
-            >
-                <div
-                    className={`note-container note-editor-container`}
-                >
-                    <MarkdownEditor
-                        value={value}
-                        setValue={setValue}
-                    />
-                </div>
+        <Layout
+            pageDisplayTitle={pageTitle}     
+        >
+            <NoteScrollContainer>
+                <NoteCollumnContainer>
+                    <NoteContentWrapper slug={note.slug}>
+                        <MarkdownEditor
+                            value={value}
+                            setValue={setValue}
+                        />
+                    </NoteContentWrapper>
+                    <NoteContentWrapper id={'Note editor controls'}>
+                        <>
+                            <button onClick={handleSave}>Save</button>
+                            <Title defaultValue={note.title} ref={titleRef} />
+                        </>  
+                    </NoteContentWrapper>
+               </NoteCollumnContainer>
+                
+            </NoteScrollContainer>
+           
         </Layout>  
     )
 }
-  
-
 
 //Wraps editor with title/ slug creator for new notes
 export const NoteCreator = () => {

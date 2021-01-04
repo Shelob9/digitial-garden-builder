@@ -58,10 +58,10 @@ export const NoteMarkdown: FC<{
 	)
 	}
 
-const NoteTitle: React.FC<{ note: INote,className?:string }> = ({ note,className}) => (
+export const NoteTitle: React.FC<{ note: INote,className?:string }> = ({ note,className}) => (
 	<h1 className={className}>{note.title}</h1>
 )
-const NoteToolbar: FC<{ children: any; slug: string; title?: string }> =
+export const NoteToolbar: FC<{ children: any; slug: string; title?: string }> =
 	({ children, slug,title }) =>
 (
 	<div
@@ -74,14 +74,16 @@ const NoteToolbar: FC<{ children: any; slug: string; title?: string }> =
 	</div>
 	);
 
-const NoteContentWrapper: FC<{
+export const NoteContentWrapper: FC<{
 	children: any,
 	onClick?: () => void,
 	slug?: string;
-	}> = ({children,onClick,slug}) => {
+	id?: string;
+}> = ({ children, onClick, slug, id }) => {
+		
 		return (
 			<div
-				id={slug ? `note-${slug}`:''}
+				id={id ? id : slug ? `note-${slug}`:''}
 				className={"note-content"}
 				onClick={onClick}
 			>

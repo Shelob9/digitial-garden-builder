@@ -1,5 +1,5 @@
 
-import React,{ FC, Fragment, useEffect, useMemo, useRef} from 'react'
+import React,{ Children, FC, Fragment, useEffect, useMemo, useRef} from 'react'
 import Layout from '../components/Layout';
 import Note from '../components/Note';
 import useNotes from './useNotes';
@@ -9,9 +9,17 @@ import { INote } from '../../types'
 import { useState } from 'react';
 import NoteGraph from './NoteGraph';
 import GraphButton from './GraphButton';
-import { notePostions } from './noteLayoutReducer';
 
-
+export const NoteScrollContainer = ({ children }) => (
+  <div className={'note-columns-scrolling-container'}>
+    {children}
+  </div>
+);
+export const NoteCollumnContainer = ({ children }) => (
+  <div className={'note-columns-container'}>
+    {children}
+    </div>
+)
 const NoteApp: FC<{
   noteOneSlug?: string;
   noteTwoSlug?: string;
@@ -74,8 +82,8 @@ const NoteApp: FC<{
       <Layout FirstControl={() => (
         <GraphButton showGraph={showGraph} setShowGraph={setShowGraph} />)
       }>
-      <div className={'note-columns-scrolling-container'}>
-          <div className={'note-columns-container'}>
+      <NoteScrollContainer>
+          <NoteCollumnContainer>
             {showGraph ? <NoteGraph closeGraph={() => setShowGraph(false)} /> : (
               <>
                 {notes ? (
@@ -112,8 +120,8 @@ const NoteApp: FC<{
                   </>
                 ) : <div>Loading</div>}
               </>)}
-          </div>
-        </div>
+          </NoteCollumnContainer>
+        </NoteScrollContainer>
         
         </Layout>
     </>
