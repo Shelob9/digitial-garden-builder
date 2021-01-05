@@ -54,7 +54,7 @@ const Footer = () => {
     <footer className="bg-white dark:bg-gray-300 border-t border-gray-500 shadow">
 		<div className="container mx-auto flex py-8">
 			<div className="w-full mx-auto flex flex-wrap">
-				<Box as={'aside'} className="flex w-full lg:w-1/2 ">
+				<Box className="flex w-full lg:w-1/2 ">
 					<Box className="px-8">
 						<Heading level={3} className="font-bold text-gray-900">
 							<Link href={'/about'}>
@@ -68,7 +68,6 @@ const Footer = () => {
 					</Box>
 				</Box>
 				<Box
-					as={'aside'}
 					className="flex w-full lg:w-1/2 lg:justify-end lg:text-right"
 				>
 					<Box className="px-8">
@@ -88,7 +87,6 @@ const Footer = () => {
 					</Box>
 				</Box>
 				<Box
-					as={'aside'}
 					className="flex w-full lg:justify-end lg:text-right"
 				>
 				
@@ -113,8 +111,10 @@ const Layout: FC<{
 					BeforeControls={BeforeControls}
 					FirstControl={FirstControl}
 					pageDisplayTitle={pageDisplayTitle ?? 'Digital Gardens' }
-				/>
-				{children}
+				  />
+				  <main>
+				  	{children}
+				  </main>
 				<Footer />
 			</>
 		</div>
