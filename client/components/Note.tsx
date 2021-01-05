@@ -11,6 +11,7 @@ const { wikiLinkPlugin } = require('remark-wiki-link');
 import {INote} from '../../types'
 import  NoteMarkdownLink  from './NoteMarkdownLink';
 import { useMemo } from 'react';
+import { Heading } from './primatives/layout';
 
 
 const nextPosition = (position: notePostions) => {
@@ -32,15 +33,31 @@ export const NoteMarkdown: FC<{
 }> = ({ content, a }) => {
 	const { allNoteLinks } = useNotes();
 	a = a ? a : ({ href, children }) => <a href={href}>{children}</a>;
-
+	
+	let mb = `mb-4`;
 	return (
-		<>
+		<div className={'prose note-markdown'}>
 			{
 				unified()
 					.use(parse)
-					.use(remark2react,{
+					.use(remark2react, {
 						remarkReactComponents: {
-							a
+							a,
+							ul: ({ children }) => (
+								<ul className={`${mb} list-inside list-disc`}>{children}</ul>
+							),
+							p: ({ children }) => (
+								<p className={mb} > { children }</p>
+							),
+							h1: ({ children }) => (
+								<Heading level={1} className={mb} > { children }</Heading>
+							),
+							h2: ({ children }) => (
+								<Heading level={2} className={mb} > { children }</Heading>
+							),
+							h3: ({ children }) => (
+								<Heading level={3} className={mb} > { children }</Heading>
+							),
 						}
 					})
 					.use(wikiLinkPlugin,
@@ -54,7 +71,7 @@ export const NoteMarkdown: FC<{
 					//.use(doubleBrackets)
 				.processSync(content).result
 			}
-		</>
+		</div>
 	)
 	}
 

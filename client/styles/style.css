@@ -85,9 +85,12 @@
 footer {
 	margin-top: 4px;
 	padding-top: 8px;
-	background-color: var(--shadow);
-	color: var(--text);
 }
+
+footer h3 {
+	@apply text-2xl;
+}
+
 .reference {
 	text-decoration: none;
 }

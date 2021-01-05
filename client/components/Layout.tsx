@@ -51,7 +51,7 @@ const Footer = () => {
   const { userDisplayName } = useIsLoggedInAuthorized();
   const { authorName, authorTwitter, } = useNoteSettings();
   return (
-    <footer className="bg-white dark:bg-gray-500 border-t border-gray-400 shadow">
+    <footer className="bg-white dark:bg-gray-300 border-t border-gray-500 shadow">
 		<div className="container mx-auto flex py-8">
 			<div className="w-full mx-auto flex flex-wrap">
 				<Box as={'aside'} className="flex w-full lg:w-1/2 ">

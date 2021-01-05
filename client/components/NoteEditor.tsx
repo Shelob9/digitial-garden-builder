@@ -156,6 +156,17 @@ const NoteEditor :FC<{
     if (note) {
       return <Inner note={note} saveNote={saveNote} pageTitle={`Edit Note`} />
     }
-    return <div>Loading</div>  
+    return (
+        <Layout
+        pageDisplayTitle={'Note Editor'}
+    >    
+        <NoteScrollContainer>
+            <NoteCollumnContainer>
+                <NoteContentWrapper>
+                    <div className={'animate-pulse'}>Loading</div>
+                </NoteContentWrapper>
+            </NoteCollumnContainer>
+        </NoteScrollContainer>
+    </Layout>) 
 }
 export default NoteEditor;
