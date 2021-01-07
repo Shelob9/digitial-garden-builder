@@ -92,16 +92,12 @@ export const NotesProvider = ({ children }) => {
     const fetchNote = async (slug: string) => {
         let key = `${gardenServerPublicKey}-garden-notes-${slug}`;
         return new Promise(async (resolve) => {
-            let cached = localStorage.getItem(key);
-            if (cached) {
-                resolve(JSON.parse(
-                    cached
-                ))
-            }
+            //let cached = localStorage.getItem(key);
+            
             let note = await singleNoteFetcher(
                 `/api/notes/${slug}`, { method: "GET" }
             );
-            localStorage.setItem(key, JSON.stringify(note));
+            //localStorage.setItem(key, JSON.stringify(note));
             resolve(note);
         })
          
@@ -141,8 +137,6 @@ const useNotes = () => {
 }
 
 export default useNotes;
-
-
  
 export const useNoteSettings = () => {
     //Get token and create a stable fetch function with it.
