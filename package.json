@@ -6,7 +6,8 @@
 	"workspaces": [
 		"client",
 		"server",
-		"builder"
+		"builder",
+		"og"
 	],
 	"scripts": {
 		"client": "yarn workspace @digital-garden-builder/client",
