@@ -13,7 +13,7 @@ import  NoteMarkdownLink  from './NoteMarkdownLink';
 import { useMemo } from 'react';
 import { Heading } from './primatives/layout';
 
-
+//find next position to open in
 const nextPosition = (position: notePostions) => {
 	switch (position) {
 		case "one":
@@ -75,9 +75,10 @@ export const NoteMarkdown: FC<{
 	)
 	}
 
-export const NoteTitle: React.FC<{ note: INote,className?:string }> = ({ note,className}) => (
+export const NoteTitle: React.FC<{ note: INote, className?: string }> = ({ note, className }) => (
 	<h1 className={className}>{note.title}</h1>
-)
+);
+
 export const NoteToolbar: FC<{ children: any; slug: string; title?: string }> =
 	({ children, slug,title }) =>
 (
@@ -89,8 +90,15 @@ export const NoteToolbar: FC<{ children: any; slug: string; title?: string }> =
 	>
 		{children}
 	</div>
-	);
+);
 
+
+const NoteSummary = ({ slug }) => {
+	
+}
+/**
+ * Outermost wrapper for one note
+ */
 export const NoteContentWrapper: FC<{
 	children: any,
 	onClick?: () => void,

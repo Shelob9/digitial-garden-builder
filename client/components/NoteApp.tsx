@@ -1,7 +1,7 @@
 
 import React,{ Children, FC, Fragment, useEffect, useMemo, useRef} from 'react'
 import Layout from '../components/Layout';
-import Note from '../components/Note';
+import Note, { NoteContentWrapper } from '../components/Note';
 import useNotes from './useNotes';
 import useNoteLayout from './useNoteLayout';
 import { useRouter } from 'next/router'
@@ -104,7 +104,7 @@ const NoteApp: FC<{
                       position={"one"}
                       note={note}
                     />
-                    {hasNote('two') &&
+                    {hasNote('two') ?
                       <Note
                         
                         isLoggedIn={isLoggedIn}
@@ -113,7 +113,11 @@ const NoteApp: FC<{
                         toggleBox={() => toggleBox('two')}
                         position={"two"}
                       />
-                    }
+                      : (
+                        <NoteContentWrapper>
+                          Two
+                        </NoteContentWrapper>
+                      )}
                     {hasNote('three') &&
                       <Note
                        
