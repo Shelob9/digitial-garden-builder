@@ -10,16 +10,27 @@ import { useState } from 'react';
 import NoteGraph from './NoteGraph';
 import GraphButton from './GraphButton';
 
+/**
+ * Outermost div for notes layout
+ */
 export const NoteScrollContainer = ({ children }) => (
   <div className={'note-columns-scrolling-container'}>
     {children}
   </div>
 );
+
+/**
+ * Outermost div for note column
+ */
 export const NoteCollumnContainer = ({ children }) => (
   <div className={'note-columns-container'}>
     {children}
-    </div>
-)
+  </div>
+);
+
+/**
+ * The complete note application
+ */
 const NoteApp: FC<{
   noteOneSlug?: string;
   noteTwoSlug?: string;
@@ -42,8 +53,6 @@ const NoteApp: FC<{
   
   //Show graph instead of notes?
   const [showGraph, setShowGraph] = useState<boolean>(false);
-
-  
 
   //load notes based on url parsing that happend server-side
   useEffect(() => {
@@ -75,8 +84,6 @@ const NoteApp: FC<{
     router.push(href);
   }, [currentNotes]);
 
-  
-
   return (
     <>
       <Layout FirstControl={() => (
@@ -84,7 +91,7 @@ const NoteApp: FC<{
       }>
       <NoteScrollContainer>
           <NoteCollumnContainer>
-            {showGraph ? <NoteGraph closeGraph={() => setShowGraph(false)} /> : (
+            {showGraph ? <NoteGraph closeGraph={() => setShowGraph(false)} id={'note-graph-primary'} /> : (
               <>
                 {notes ? (
                   <>
@@ -121,9 +128,8 @@ const NoteApp: FC<{
                 ) : <div>Loading</div>}
               </>)}
           </NoteCollumnContainer>
-        </NoteScrollContainer>
-        
-        </Layout>
+        </NoteScrollContainer> 
+      </Layout>
     </>
   ) 
 }

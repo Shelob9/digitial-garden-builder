@@ -2,9 +2,7 @@ import { FC, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { Graph } from "react-d3-graph";
 import useNotes from "./useNotes";
 import { INote, NoteReference } from '../../types'
-import Link from "next/link";
 import {useRouter} from "next/router";
-import useGardenServer from "hooks/useGardenServer";
 
 // the graph configuration, just override the ones you need
 const myConfig ={
@@ -75,10 +73,8 @@ const myConfig ={
 };
 
 
-const onClickLink = function(source, target) {
-  window.alert(`Clicked link between ${source} and ${target}`);
-};
 
+//Reducer for managing all notes as a collection.
 const noteReducer = (state: INote[], action: { type: 'ADD_NOTE', note: INote }):INote[] => {
   switch (action.type) {
     case 'ADD_NOTE':{
@@ -90,6 +86,11 @@ const noteReducer = (state: INote[], action: { type: 'ADD_NOTE', note: INote }):
   }
 }
 
+const onClickLink = function(source, target) {
+  //
+};
+
+//Hook for managing all notes as a collection
 function useAllNotes() {
   const { notes, fetchNote } = useNotes();
 
@@ -117,8 +118,10 @@ function useAllNotes() {
   }
 }
 
-
-const NoteGraph: FC<{ closeGraph:() => void}>= ({closeGraph}) => {
+/**
+ * Displays all notes as a graph
+ */
+const NoteGraph: FC<{ closeGraph: () => void;id:string}>= ({closeGraph,id}) => {
   const {
     allNotes, notes, allLoaded
   } = useAllNotes();
@@ -169,7 +172,7 @@ const NoteGraph: FC<{ closeGraph:() => void}>= ({closeGraph}) => {
 
 
 return <Graph
-  id="note-graph"
+  id={id}
   data={data}
   config={myConfig}
   onClickNode={onClickNode}
