@@ -19,6 +19,22 @@ This is an experiment [Josh](https://joshpress.net) made.
 
 ## Development
 
+### Workspaces
+
+There are three workspaces. You can run commands in the workspaces by prefixing there name to the command. For example, to install a package in client workspace, you would run `yarn client add cross-env` or to build the server, you would run `yarn server build`
+
+- [Client](./client/README.md)
+  - `yarn client ...`
+  - Generates HTML for each digital garden.
+- [Server](./server/README.md)
+  - `yarn server ...`
+  - Git API server.
+- [Builder](./builder/README.md)
+  - The CLI
+  - Used to build sites and deploy to Github pages.
+
+### Using Workspaces For Development
+
 - Start server and client
   - `yarn dev`
 - Start server:
@@ -29,18 +45,6 @@ This is an experiment [Josh](https://joshpress.net) made.
   - `yarn test dev`
 - Test client:
   - `yarn test dev`
-
-## Workspaces
-
-- Client
-  - `yarn client ...`
-  - Generates HTML for each digital garden.
-- Server
-  - `yarn server ...`
-  - Git API server.
-- Builder
-  - The CLI
-  - Used to build sites and deploy to Github pages.
 
 ## Release To NPM
 
