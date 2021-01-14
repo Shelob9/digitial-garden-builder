@@ -1,7 +1,7 @@
 
 # Digital Garden Builder
 
-Multi-player digital garden builder.
+Source for [digital garden builder](http://docs.digitalgardenbuilder.app/) a multi-player writing tool.
 
 This is an experiment [Josh](https://joshpress.net) made.
 
