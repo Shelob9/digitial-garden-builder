@@ -41,6 +41,9 @@ function html() {
     return true;
 }
 
+/**
+ * Build garden HTML, move to correct location, commit and push
+ */
 function deploy() {
     /** Delete _docs  dir in main branch */
     if (shell.test('-d', '_docs')) {
@@ -49,25 +52,23 @@ function deploy() {
     /** Copy out to _docs */
     shell.echo( '!Copying to output directory!')
     shell.cp('-R', 'digitial-garden-builder/client/out', '_docs');
-    /** Switch to gh-pages branch **/
-    git(
-        'git checkout gh-pages',
-        'Error: Checking out gh-pages branch'
-    )
-    git(
-        'git pull origin gh-pages',
-        'Error: Pulling gh-pages branch from origin'
-    )
 
-    /** Delete docs dir in gh-pages branch*/
+    /** Delete docs dir*/
     if (shell.test('-d', 'docs')) {
         shell.rm('-rf', 'docs');
     }
+
     /** Rename _docs to docs */
     shell.mv('_docs', 'docs')
-    /** Copy Github pages config files back to docs dir */
+    /** Copy .nojekyll from root **/
     shell.cp('.nojekyll', 'docs/.nojekyll')
-    shell.cp( 'CNAME', 'docs/CNAME')
+    /** 
+     * Copy CNAME if it exits
+     * It may not exist if deployment
+     */
+    if (shell.test('-f', 'CNAME')) {
+        shell.cp( 'CNAME', 'docs/CNAME')
+    }
     /**commit and push */
     git(
         //Add all to commit
@@ -80,7 +81,7 @@ function deploy() {
         'Error: committing build'
     )
     git(
-        'git push -u origin gh-pages',
+        'git push -u origin main',
         'Error: push failed'
     );
     return true;
