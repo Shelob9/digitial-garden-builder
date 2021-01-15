@@ -115,18 +115,23 @@ const NoteApp: FC<{
                       />
                       : (
                         <NoteContentWrapper>
-                          Two
+                          {}
                         </NoteContentWrapper>
-                      )}
-                    {hasNote('three') &&
-                      <Note
-                       
+                      )
+                    }
+                    {hasNote('three') ?
+                      <Note         
                         isLoggedIn={isLoggedIn}
                         slug={currentNotes.three.noteSlug}
                         isOpen={isNoteOpen('three')}
                         toggleBox={() => toggleBox('three')}
                         position={"three"}
                       />
+                      : (
+                        <NoteContentWrapper>
+                          {}
+                        </NoteContentWrapper>
+                      )
                     }
                   </>
                 ) : <div>Loading</div>}
