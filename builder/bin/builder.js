@@ -88,10 +88,7 @@ function deploy() {
 }
 
 function after() {
-    git(
-        'git checkout main',
-        'Error: Checking out main branch'
-    )
+    //noop for now
 }
 
 module.exports = {
