@@ -42,9 +42,9 @@ There are three workspaces. You can run commands in the workspaces by prefixing 
 - Start client:
   - `yarn client dev`
 - Test server:
-  - `yarn test dev`
+  - `yarn test server`
 - Test client:
-  - `yarn test dev`
+  - `yarn test client`
 
 ## Release To NPM
 

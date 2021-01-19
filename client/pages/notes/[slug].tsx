@@ -79,11 +79,18 @@ export async function getStaticPaths() {
 //Tells next.js which note to generate with
 export async function getStaticProps({ params }) {
   const {slug} = params
-  const gardenService = gardenServiceFactory()
-  const note = await gardenService.fetchNote(slug);
+  const gardenService = gardenServiceFactory();
 
-  // Pass post data to the page via props
-  return { props: { note: note || {},slug } }
+  try {
+      let note = await gardenService.fetchNote(slug);
+      // Pass post data to the page via props
+      return { props: { note: note || {},slug } }
+  } catch (error) {
+      //No note? Ok, return slug only
+      //May not be availble via API at build time.
+      return { props: { slug } }
+  }
+  
 }
 
 
