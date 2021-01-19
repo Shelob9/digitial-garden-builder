@@ -83,7 +83,7 @@ export async function getStaticProps({ params }) {
   const note = await gardenService.fetchNote(slug);
 
   // Pass post data to the page via props
-  return { props: { note,slug } }
+  return { props: { note: note || {},slug } }
 }
 
 
