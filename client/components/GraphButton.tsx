@@ -8,8 +8,8 @@ const GraphButton: FC<{ showGraph: boolean, setShowGraph:(showGraph:boolean)=> v
   return (
     <React.Fragment>
       <button
-        title="Show Graph visualisation"
-        aria-label="Show Graph visualisation"
+        title="Show Graph Visualization"
+        aria-label="Show Graph Visualization"
         className="graph-button"
         onClick={() => setShowGraph(!showGraph)}
       >
