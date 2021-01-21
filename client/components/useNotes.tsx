@@ -132,8 +132,13 @@ const useNotes = () => {
        return notes.map(({ url }) => url);
     }, [notes]);
 
-    
-    return { notes, getNote,findBySlug,allSlugs,allNoteLinks,addNote,createNote,fetchNote }
+    const isNoteInIndex = (slug: string) => {
+        if (notes.find((f:noteIndexItem)=> f.slug === slug)) {
+            return true;
+        }
+        return false;
+    }    
+    return { notes, getNote,findBySlug,allSlugs,allNoteLinks,addNote,createNote,fetchNote,isNoteInIndex }
 }
 
 export default useNotes;

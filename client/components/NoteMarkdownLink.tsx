@@ -2,12 +2,13 @@ import { FC, useState } from "react";
 import { notePostions } from "./noteLayoutReducer";
 import NoteLink from "./NoteLink";
 import useNoteLayout from "./useNoteLayout";
-import { useSingleNote } from "./useNotes";
+import useNotes, { useSingleNote } from "./useNotes";
 const ExternalLink = ({ href, children }) => <a className={'external'} href={href}>{children}</a>;
 //import { Popover } from 'react-tiny-popover'
 
 const InternalLink : FC<{
 	href: string;
+	slug: string;
 	children: any,
 	openPosition: notePostions
 	className?:string
@@ -15,17 +16,18 @@ const InternalLink : FC<{
 	href,
 	children,
 	openPosition,
-	className
+	className,
+	slug
 }) => {
-    let [isPopoverOpen, setIsPopoverOpen] = useState(false);
-	let slug = href.substr('/notes/'.length);
+	let [isPopoverOpen, setIsPopoverOpen] = useState(false);
+	
 	const { note } = useSingleNote({slug})
 	const {
 		openInNextPosition,
 		setFocusNote,
 		hasNote
 	} = useNoteLayout();
-	if ( note) {
+	if ( note ) {
 		const onClick = () => {
 			if (hasNote(note.slug)) {
 				setFocusNote(note.slug)
@@ -61,9 +63,10 @@ const NoteMarkdownLink: FC<{
 	openPosition: notePostions
 	className?:string
 }> = (props) => {
+	const {isNoteInIndex } = useNotes();
 	let internal = props.href.startsWith('/notes/');
-	if( internal ){
-		return<InternalLink {...props} />
+	if (internal && isNoteInIndex( props.href.substr('/notes/'.length) )) {
+		return<InternalLink {...props} slug={props.href.substr('/notes/'.length)} />
 	}
 	return <ExternalLink href={props.href}>{props.children}</ExternalLink>
 }
