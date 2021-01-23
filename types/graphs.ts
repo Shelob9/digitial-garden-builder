@@ -12,6 +12,7 @@ export interface GraphNode {
 export interface GraphEdge {
 	source: string
 	target: string
+	label?: string
 }
 
 /**

@@ -6,8 +6,11 @@ const toString = require('nlcst-to-string')
 function stringify(value) {
 	return toString(value)
 }
-
-const processKeywords = async (text: string) => {
+export interface ExtractedKeywords {
+	keywords: string[]
+	phrases: string[]
+}
+const processKeywords = async (text: string): Promise<ExtractedKeywords> => {
 	return new Promise(async (resolve, reject) => {
 		retext()
 			.use(pos)
