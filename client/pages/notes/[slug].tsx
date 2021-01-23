@@ -4,29 +4,12 @@ import {  useNoteSettings } from "../../components/useNotes";
 import useIsLoggedInAuthorized from "../../hooks/useIsLoggedAuthorized";
 import { FC } from "react";
 import { INote } from "../../../types";
-
-import { NextSeo } from 'next-seo';
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { gardenServiceFactory } from "services/factory";
+import { NoteSeo } from "components/NoteSeo";
 
-const NoteSeo: FC<{ note: INote }> = ({ note })=> {
-  let description = note.content ? note.content.substring(0, 240) : '';
-  let { authorName } = useNoteSettings();
-  return (
-    <NextSeo
-        title={note.title}
-        description={description}
-        //canonical="https://www.canonical.ie/"
-        openGraph={{
-          //url: 'https://www.url.ie/a',
-          title: note.title,
-          description: `Notes about ${note.title} ${authorName ? `by ${authorName}`:''}`
-        }}
-      />
-  )
 
-}
 
 const Page: FC<
   { note?: INote;slug?:string }
