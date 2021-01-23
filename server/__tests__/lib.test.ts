@@ -3,6 +3,7 @@ import findNoteSlugInLink from '../lib/findNoteSlugInLink'
 import findReferences, { findWikiLinks } from '../lib/findReferences'
 import { encrypt, decrypt } from '../lib/encryptDecrypt'
 import { decodeJwtToken, createJwtToken } from '../lib/jwt'
+
 describe('find note slug', () => {
 	it('Returns if found', () => {
 		expect(findNoteSlugInLink('/notes/fish')).toEqual('fish')

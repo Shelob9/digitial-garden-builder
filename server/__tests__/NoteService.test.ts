@@ -1,17 +1,14 @@
+import { noteIndexItem } from './../../types'
 import { noteIndex } from '../../types'
 import NoteService from '../services/NoteService'
+import { noteIndexItemFactory } from './testUtil'
 
-const item = (slug: string) => {
-	return {
-		slug,
-		path: `/notes/${slug}.md`,
-		name: `${slug}.md`,
-		apiUrl: `/api/notes/${slug}`,
-		url: `/notes/${slug}.md`,
-	}
-}
 describe('NoteService', () => {
-	let notes: noteIndex = [item('eleven'), item('three'), item('seven')]
+	let notes: noteIndex = [
+		noteIndexItemFactory('eleven'),
+		noteIndexItemFactory('three'),
+		noteIndexItemFactory('seven'),
+	]
 	test('Sets and gets notes', () => {
 		let service = new NoteService()
 		service.setNotes(notes)

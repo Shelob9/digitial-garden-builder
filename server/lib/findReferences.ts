@@ -15,9 +15,16 @@ export interface NoteReference {
 
 export type NoteReferences = NoteReference[]
 
-const findReferences = (content, notesIndex: noteIndex): NoteReferences => {
-	let links = findWikiLinks(content)
+const findReferences = (
+	content: string,
+	notesIndex: noteIndex
+): NoteReferences => {
 	let references: NoteReferences = []
+	if (!content || !content.length) {
+		console.log(content, 21)
+		return references
+	}
+	let links = findWikiLinks(content)
 
 	if (links.length) {
 		links.forEach((link) => {
