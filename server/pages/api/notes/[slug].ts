@@ -4,6 +4,7 @@ import factory from '../../../services/serviceFactories'
 import { NextApiResponse } from 'next'
 import { NextApiRequest } from 'next'
 import createCorsMiddleWare from '../../../lib/createCorsMiddleWare'
+import processKeywords from '../../../lib/processKeywords'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const cors = createCorsMiddleWare(['GET', 'OPTIONS'])
@@ -24,9 +25,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 				break
 			case 'GET':
 			default:
-				let { slug } = req.query
+				let { slug, process } = req.query
 				note = await noteService.fetchNote(slug as string)
 				res.setHeader('Cache-Control', 's-maxage=3600')
+				if (process) {
+					let keywords = await processKeywords(note.content)
+					return res.status(200).json({ note, keywords })
+				}
+
 				return res.status(200).json({ note })
 		}
 	} catch (error) {

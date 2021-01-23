@@ -2,6 +2,7 @@ import { FC, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { Graph } from "react-d3-graph";
 import useNotes from "./useNotes";
 import { INote, NoteReference } from '../../types'
+import { NodeGraphData } from '../../types/graphs';
 import {useRouter} from "next/router";
 
 // the graph configuration, just override the ones you need
@@ -132,7 +133,7 @@ const NoteGraph: FC<{ closeGraph: () => void;id:string}>= ({closeGraph,id}) => {
     closeGraph();
   };
   
-  let data = useMemo(() => {
+  let data = useMemo<NodeGraphData>(() => {
     let nodes = [];
     let links = [];
     if (allLoaded) {
