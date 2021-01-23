@@ -29,6 +29,18 @@ class NotesApiService {
 		return this.noteIndex.find((n) => n.slug === slug)
 	}
 
+	fetchAllNotes = async (): Promise<INote[]> => {
+		return new Promise(async (resolve, rejct) => {
+			let promises = this.noteIndex.map(async ({ slug }) => {
+				return await this.fetchNote(slug)
+			})
+
+			Promise.all(promises).then((r) => {
+				resolve(r)
+			})
+		})
+	}
+
 	fetchNoteIndex = async () => {
 		return this.client.getFiles('/notes', 'md').then((r) => {
 			this.noteIndex = r.map((file) => {
