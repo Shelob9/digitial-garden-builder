@@ -15,13 +15,15 @@ export interface NoteReference {
 
 export type NoteReferences = NoteReference[]
 
+/**
+ * Find all notes linked from content of a note.
+ */
 const findReferences = (
 	content: string,
 	notesIndex: noteIndex
 ): NoteReferences => {
 	let references: NoteReferences = []
 	if (!content || !content.length) {
-		console.log(content, 21)
 		return references
 	}
 	let links = findWikiLinks(content)

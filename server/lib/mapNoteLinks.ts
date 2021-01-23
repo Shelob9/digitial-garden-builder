@@ -1,7 +1,14 @@
+import { NodeGraphData } from './../../types/graphs'
 import { INote, NoteReference, noteIndex } from './../../types'
 import findReferences from './findReferences'
 
-export default function mapNoteLinks(notes: INote[], index: noteIndex) {
+/**
+ * Map all links between maps
+ */
+export default function mapNoteLinks(
+	notes: INote[],
+	index: noteIndex
+): NodeGraphData {
 	let nodes = []
 	let links = []
 	notes.forEach((note) => {
