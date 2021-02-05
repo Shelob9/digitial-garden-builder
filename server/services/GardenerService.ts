@@ -64,16 +64,6 @@ let theGardens: gardens = [
 		publicKey: 'm3kEvEYCm7uI4SaWfI1Z9iWTiiSYu4LvGJ32mgrU3BF6p',
 		gardener: josh,
 	},
-	{
-		rootUrl: `https://garden2.joshpress.net`,
-		repo: {
-			owner: 'shelob9',
-			repo: 'josh-garden',
-		},
-		gardenServerUrl: `https://digitalgardenbuilder.app`,
-		publicKey: 'm3SYJ3wHwHvGJ32mgSYJ32SYJ32rU3wHvGJ32mgSYJ32SYJ3',
-		gardener: josh,
-	},
 ].map((g) => {
 	return {
 		...g,
