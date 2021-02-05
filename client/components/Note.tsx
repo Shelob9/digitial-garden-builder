@@ -58,6 +58,13 @@ export const NoteMarkdown: FC<{
 							h3: ({ children }) => (
 								<Heading level={3} className={mb} > { children }</Heading>
 							),
+							blockquote: ({children}) => {
+								return (
+									<blockquote className="border-l-4 border-grey-light pl-4 italic bg-gray-100">
+										{children}
+									</blockquote>
+								)
+							}
 						}
 					})
 					.use(wikiLinkPlugin,
