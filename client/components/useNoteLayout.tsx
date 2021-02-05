@@ -69,14 +69,12 @@ export default function useNoteLayout() {
   const _scrollToNote = (position: notePostions) => {
     let ref = getNoteRef(position);
     //@ts-ignore
-    if (!window||!ref || !ref.current) {
+    if (!ref || !ref.current) {
       return;
     }
-    let yOffset = 100;
+    //https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
     //@ts-ignore
-    const y = ref.current.getBoundingClientRect().top + window.pageYOffset - yOffset;
-    console.log(ref);
-    window.scrollTo({ top: y, behavior: 'smooth' });
+    ref.current.scrollIntoView(false);
   }
   
   const expandBox = (notePosition:notePostions) => {
@@ -111,7 +109,6 @@ export default function useNoteLayout() {
       type: 'addNote'
     });
       _scrollToNote(notePosition)
-    
   };
 
   const removeNote = (notePosition: notePostions) => {
