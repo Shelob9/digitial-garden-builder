@@ -81,8 +81,8 @@ p {
 
 .note-columns-scrolling-container {
 	@apply md:flex md:flex-grow;
-	overflow-x: auto;
-	overflow-y: hidden;
+	overflow-x: scroll;
+	overflow-y: auto;
 }
 
 .note-columns-container {

@@ -1,7 +1,7 @@
 
 import React,{ Children, FC, Fragment, useEffect, useMemo, useRef} from 'react'
 import Layout from '../components/Layout';
-import Note, { NoteContentWrapper } from '../components/Note';
+import Note, { NoteContainer, NoteContentWrapper } from '../components/Note';
 import useNotes from './useNotes';
 import useNoteLayout from './useNoteLayout';
 import { useRouter } from 'next/router'
@@ -47,7 +47,11 @@ const NoteApp: FC<{
   //https://nextjs.org/docs/api-reference/next/router
   const router = useRouter();
   //Controls the three note slots
-  const { currentNotes,toggleBox,isNoteOpen,hasNote,addNote } = useNoteLayout();
+  const { currentNotes, toggleBox, isNoteOpen, hasNote, addNote,
+    noteOneRef,
+    noteTwoRef,
+    noteThreeRef
+  } = useNoteLayout();
   //The actual notes
   const { notes } = useNotes();
   
@@ -95,31 +99,52 @@ const NoteApp: FC<{
               <>
                 {notes ? (
                   <>
-                    <Note
-                     
-                      isLoggedIn={isLoggedIn}
-                      slug={currentNotes.one.noteSlug}
-                      isOpen={isNoteOpen('one')}
-                      toggleBox={() => toggleBox('one')}
-                      position={"one"}
-                      note={note}
-                    />
-                    {hasNote('two') ?
+                    <NoteContainer
+                        onClick={() => toggleBox('one')}
+                        isOpen={isNoteOpen('one')}
+                        position={'one'}
+                        //@ts-ignore
+                        ref={noteOneRef as React.Ref<HTMLDivElement>}
+                    >
                       <Note
-                        
                         isLoggedIn={isLoggedIn}
-                        slug={currentNotes.two.noteSlug}
-                        isOpen={isNoteOpen('two')}
-                        toggleBox={() => toggleBox('two')}
-                        position={"two"}
+                        slug={currentNotes.one.noteSlug}
+                        isOpen={isNoteOpen('one')}
+                        toggleBox={() => toggleBox('one')}
+                        position={"one"}
+                        note={note}
                       />
-                      : (
-                        <NoteContentWrapper>
-                          {}
-                        </NoteContentWrapper>
-                      )
-                    }
-                    {hasNote('three') ?
+                    </NoteContainer>
+                    <NoteContainer
+                      onClick={() => toggleBox('two')}
+                      isOpen={isNoteOpen('two')}
+                      position={'two'}
+                      //@ts-ignore
+                      ref={noteTwoRef as React.Ref<HTMLDivElement>}
+                    >
+                      {hasNote('two') ?
+                        <Note    
+                          isLoggedIn={isLoggedIn}
+                          slug={currentNotes.two.noteSlug}
+                          isOpen={isNoteOpen('two')}
+                          toggleBox={() => toggleBox('two')}
+                          position={"two"}
+                        />
+                        : (
+                          <NoteContentWrapper>
+                            {}
+                          </NoteContentWrapper>
+                        )
+                      }
+                    </NoteContainer>
+                    <NoteContainer
+                      onClick={() => toggleBox('three')}
+                      isOpen={isNoteOpen('three')}
+                      position={'three'}
+                      //@ts-ignore
+                      ref={noteThreeRef as React.Ref<HTMLDivElement>}
+                    >
+                      {hasNote('three') ?
                       <Note         
                         isLoggedIn={isLoggedIn}
                         slug={currentNotes.three.noteSlug}
@@ -133,6 +158,7 @@ const NoteApp: FC<{
                         </NoteContentWrapper>
                       )
                     }
+                    </NoteContainer>
                   </>
                 ) : <div>Loading</div>}
               </>)}

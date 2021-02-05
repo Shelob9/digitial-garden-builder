@@ -1,7 +1,6 @@
 import { createContext, FC, Ref, useContext, useEffect, useReducer, useRef, useState } from "react";
 import noteLayoutReducer, {  notePostions } from "./noteLayoutReducer";
 import { useNoteSettings } from "./useNotes";
-import { useMediaQuery } from 'react-responsive'
 
 const NoteLayoutContext = createContext(null);
 export const NoteLayoutProvider: FC<{
@@ -21,14 +20,19 @@ export const NoteLayoutProvider: FC<{
 
   const [focusNote, setFocusNote] = useState<notePostions>("one");
 
-  
+  let noteOneRef = useRef<HTMLDivElement>();
+  let noteTwoRef = useRef<HTMLDivElement>();
+  let noteThreeRef = useRef<HTMLDivElement>();
   
     return (
         <NoteLayoutContext.Provider value={{
           currentNotes,
           dispatchNotesAction,
           focusNote,
-          setFocusNote
+        setFocusNote,
+        noteOneRef,
+        noteTwoRef,
+        noteThreeRef
         }}>
             {children}
         </NoteLayoutContext.Provider>
@@ -40,13 +44,11 @@ export default function useNoteLayout() {
     currentNotes,
     dispatchNotesAction,
     focusNote,
-    setFocusNote
+    setFocusNote,
+    noteOneRef,
+        noteTwoRef,
+        noteThreeRef
   } = useContext(NoteLayoutContext);
-
-  let noteOneRef = useRef<HTMLDivElement>();
-  let noteTwoRef = useRef<HTMLDivElement>();
-  let noteThreeRef = useRef<HTMLDivElement>();
-
   const getNoteRef = (position: notePostions) => {
     let ref: Ref<HTMLDivElement>;
     switch (position) {
@@ -66,12 +68,15 @@ export default function useNoteLayout() {
   }
   const _scrollToNote = (position: notePostions) => {
     let ref = getNoteRef(position);
-    if (!ref || !ref.current) {
+    //@ts-ignore
+    if (!window||!ref || !ref.current) {
       return;
     }
-    ref.current.scrollIntoView({
-      behavior: "smooth",
-    });
+    let yOffset = 100;
+    //@ts-ignore
+    const y = ref.current.getBoundingClientRect().top + window.pageYOffset - yOffset;
+    console.log(ref);
+    window.scrollTo({ top: y, behavior: 'smooth' });
   }
   
   const expandBox = (notePosition:notePostions) => {
@@ -105,19 +110,19 @@ export default function useNoteLayout() {
       noteSlug,
       type: 'addNote'
     });
-    _scrollToNote(notePosition)
+      _scrollToNote(notePosition)
+    
   };
 
-    const removeNote = (notePosition: notePostions) => {
-        dispatchNotesAction({
-            notePosition,
-            type: 'removeNote'
-        })
-    };
-    const hasNote = (notePosition) => currentNotes.hasOwnProperty(notePosition);
+  const removeNote = (notePosition: notePostions) => {
+      dispatchNotesAction({
+          notePosition,
+          type: 'removeNote'
+      })
+  };
+  const hasNote = (notePosition) => currentNotes.hasOwnProperty(notePosition);
   const isNoteOpen = (notePosition) => hasNote(notePosition) && currentNotes[notePosition].open;
   
-
   const findNotePostion = (noteSlug: string) => {
     let notePosition: notePostions | false= false;
     Object.keys(currentNotes).forEach(
@@ -158,7 +163,6 @@ export default function useNoteLayout() {
     _scrollToNote(openPosition);
     
   }
- 
   
   return {
     currentNotes,
@@ -174,6 +178,9 @@ export default function useNoteLayout() {
     setFocusNote,
     findNotePostion,
     openInNextPosition,
-    getNoteRef
+    getNoteRef,
+    noteOneRef,
+    noteTwoRef,
+    noteThreeRef
   };
 }

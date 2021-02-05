@@ -12,6 +12,7 @@ import {INote} from '../../types'
 import  NoteMarkdownLink  from './NoteMarkdownLink';
 import { useMemo } from 'react';
 import { Heading } from './primatives/layout';
+import { forwardRef } from 'react';
 
 //find next position to open in
 const nextPosition = (position: notePostions) => {
@@ -99,10 +100,33 @@ export const NoteToolbar: FC<{ children: any; slug: string; title?: string }> =
 	</div>
 );
 
+export const NoteContainer: React.FC<{
+	isOpen: boolean,
+	position: notePostions
+	onClick: () => void;
+}> = forwardRef((props, ref: React.Ref<HTMLDivElement>) => {
+	const {
+		children,
+		isOpen,
+		position,
+		onClick
+	} = props;
+	const { focusNote,hasNote } = useNoteLayout();
+	const className = useMemo(
+		() => `note-container ${isOpen ? 'note-open' : 'note-closed'} ${focusNote === position ? 'note-focus' : ''} ${hasNote(position) ? 'visible': 'invisible'} note-position-${position}`,
+		[focusNote, position, isOpen]
+	);
 
-const NoteSummary = ({ slug }) => {
-	
-}
+	return (
+		<div
+			className={className}
+			ref={ref}
+			onClick={() => onClick()}
+		>
+			{children}
+		</div>
+	);
+});
 /**
  * Outermost wrapper for one note
  */
@@ -112,7 +136,6 @@ export const NoteContentWrapper: FC<{
 	slug?: string;
 	id?: string;
 }> = ({ children, onClick, slug, id }) => {
-		
 		return (
 			<div
 				id={id ? id : slug ? `note-${slug}`:''}
@@ -138,18 +161,11 @@ const Note: FC<{
 	const { note } = useSingleNote({
 		slug, //note
 	});
-	const { focusNote, setFocusNote,getNoteRef } = useNoteLayout();
-	const outterClassName = useMemo(
-		() => `note-container ${isOpen ? 'note-open' : 'note-closed'} ${focusNote === position ? 'note-focus' : ''}`,
-		[focusNote, position,isOpen]
-	);
+	const { setFocusNote } = useNoteLayout();
 	//Note still loading? Use loading animation.
 	if (!note) {
 		return (
-			<div
-				ref={getNoteRef(position)}
-				className={`${outterClassName} animate-pulse opacity-40`}
-			>
+			<>
 				<div className={'note-buttons'}></div>
 				<NoteContentWrapper
 				>
@@ -170,16 +186,13 @@ const Note: FC<{
 							</>
 					)}
 				</NoteContentWrapper>
-			</div>
+			</>
 		)
 	}
 
 	if (!isOpen) {
 		return (<>
-			<div
-				className={outterClassName}
-				onClick={() => toggleBox()}
-			>
+			<>
 				<NoteToolbar slug={note.slug} title={note.title}>
 					<a
 						role={'button'}
@@ -193,16 +206,14 @@ const Note: FC<{
 							Open
 					</a>
 				</NoteToolbar>
-			</div>
+			</>
 		</>);
 	}
 
 	let { content } = note;
     return (
         <>
-			<div
-				className={outterClassName}
-			>
+			<>
 				<NoteToolbar slug={note.slug} title={note.title}>
 					<a
 						role={'button'}
@@ -250,7 +261,7 @@ const Note: FC<{
 						</>
                 </NoteContentWrapper>
                 }
-            </div>
+            </>
         </>
     )
 }
