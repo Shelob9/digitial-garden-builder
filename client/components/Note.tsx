@@ -103,13 +103,11 @@ export const NoteToolbar: FC<{ children: any; slug: string; title?: string }> =
 export const NoteContainer: React.FC<{
 	isOpen: boolean,
 	position: notePostions
-	onClick: () => void;
 }> = forwardRef((props, ref: React.Ref<HTMLDivElement>) => {
 	const {
 		children,
 		isOpen,
 		position,
-		onClick
 	} = props;
 	const { focusNote,hasNote } = useNoteLayout();
 	const className = useMemo(
@@ -121,7 +119,6 @@ export const NoteContainer: React.FC<{
 		<div
 			className={className}
 			ref={ref}
-			onClick={() => onClick()}
 		>
 			{children}
 		</div>

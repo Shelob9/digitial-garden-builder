@@ -100,7 +100,6 @@ const NoteApp: FC<{
                 {notes ? (
                   <>
                     <NoteContainer
-                        onClick={() => toggleBox('one')}
                         isOpen={isNoteOpen('one')}
                         position={'one'}
                         //@ts-ignore
@@ -116,7 +115,6 @@ const NoteApp: FC<{
                       />
                     </NoteContainer>
                     <NoteContainer
-                      onClick={() => toggleBox('two')}
                       isOpen={isNoteOpen('two')}
                       position={'two'}
                       //@ts-ignore
@@ -138,7 +136,6 @@ const NoteApp: FC<{
                       }
                     </NoteContainer>
                     <NoteContainer
-                      onClick={() => toggleBox('three')}
                       isOpen={isNoteOpen('three')}
                       position={'three'}
                       //@ts-ignore
