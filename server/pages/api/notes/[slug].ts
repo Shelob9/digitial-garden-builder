@@ -26,7 +26,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			default:
 				let { slug } = req.query
 				note = await noteService.fetchNote(slug as string)
-				res.setHeader('Cache-Control', 's-maxage=3600')
+				res.setHeader('Cache-Control', 's-maxage=599')
 				return res.status(200).json({ note })
 		}
 	} catch (error) {

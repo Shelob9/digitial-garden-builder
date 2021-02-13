@@ -9,7 +9,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		let noteIndex = await noteService.fetchNoteIndex()
 		switch (req.method) {
 			case 'GET':
-				res.setHeader('Cache-Control', 's-maxage=600')
+				res.setHeader('Cache-Control', 's-maxage=60')
 				return res.status(200).json({ noteIndex })
 			case 'PUT':
 				if (!session) {
