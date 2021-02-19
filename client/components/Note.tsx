@@ -13,6 +13,8 @@ import  NoteMarkdownLink  from './NoteMarkdownLink';
 import { useMemo } from 'react';
 import { Heading } from './primatives/layout';
 import { forwardRef } from 'react';
+import absoluteUrl from 'next-absolute-url'
+const { protocol, host } = absoluteUrl(req, 'localhost:8004')
 
 //find next position to open in
 const nextPosition = (position: notePostions) => {
@@ -133,16 +135,32 @@ export const NoteContentWrapper: FC<{
 	slug?: string;
 	id?: string;
 }> = ({ children, onClick, slug, id }) => {
-		return (
-			<div
-				id={id ? id : slug ? `note-${slug}`:''}
-				className={"note-content"}
-				onClick={onClick}
-			>
-				{children}
-			</div>
-		)
-	}
+	return (
+		<div
+			id={id ? id : slug ? `note-${slug}`:''}
+			className={"note-content"}
+			onClick={onClick}
+		>
+			{children}
+		</div>
+	)
+}
+
+/**
+ * Share button for notes
+ */
+const NoteShare : FC<{note:INote}> = ({note}) => {
+	return (
+		<a
+			className="bg-white text-black hover:text-white hover:bg-gray-500  border-green-500 border rounded-r-lg px-4 py-2 mx-0 outline-none focus:shadow-outline"
+			title={'Click To Share'}
+			target={"_blank"}
+			href={`${protocol}//${host}/notes/${note.slug}`}
+		>
+			Share
+		</a>
+	)
+}
 
 //Display one note
 const Note: FC<{
@@ -231,12 +249,7 @@ const Note: FC<{
 									Edit
 							</a>
 						</Link>}
-					<a
-						className="bg-white text-black hover:text-white hover:bg-gray-500  border-green-500 border rounded-r-lg px-4 py-2 mx-0 outline-none focus:shadow-outline"
-						title={'Click To Edit'}
-					>
-						Share
-					</a>
+						<NoteShare note={note} />
 				</NoteToolbar>
                 {isOpen &&
 					<NoteContentWrapper
