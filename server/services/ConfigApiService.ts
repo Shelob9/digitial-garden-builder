@@ -1,5 +1,5 @@
+import { IGitApi } from '@joshpress/git-cms/dist/lib/git/GitApi'
 import { GardenConfig } from '../../types/config'
-import { IGitApi } from '../lib/GitApi'
 
 let configPath = '/garden.json'
 /**

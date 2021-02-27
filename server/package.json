@@ -9,6 +9,7 @@
 		"test": "jest"
 	},
 	"dependencies": {
+		"@joshpress/git-cms": "^0.1.1",
 		"@octokit/auth-app": "^2.10.5",
 		"@octokit/rest": "^18.0.12",
 		"@types/jest": "^26.0.18",
