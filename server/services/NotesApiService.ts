@@ -3,7 +3,7 @@ import { INote, noteIndex, noteIndexItem } from '../../types'
 import findTitle from '../lib/findTitle'
 import NoteService from './NoteService'
 import findReferences from '../lib/findReferences'
-import { IGitApi } from '@joshpress/git-cms/dist/lib/git/GitApi'
+import { IGitApi } from '@digital-garden-builder/git-cms/dist/lib/git/GitApi'
 const fm = require('front-matter')
 
 const maybeUpdateTitle = (content: string) => {

@@ -1,8 +1,7 @@
 import { User, userJwtData, userSession } from '../../types/user'
 import { gitRepoDetails } from '../../types/git'
-import { decrypt, encrypt, hash } from '../lib/encryptDecrypt'
+import { decrypt, encrypt } from '../lib/encryptDecrypt'
 import { createJwtToken, decodeJwtToken } from '../lib/jwt'
-
 export const userFromGithub = (data: any): User => {
 	return {
 		name: data.name,
