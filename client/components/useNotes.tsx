@@ -198,6 +198,11 @@ export const useNoteSettings = () => {
     }, [data]);
     
 
+    const getNoteUrl = (note: INote) => {
+        let root = window && window.location ? window.location.origin : '';
+        return `${root}/notes/${note.slug}`
+    }
+    
     return {
         settings: data as GardenConfig,
         saveSettings,
@@ -206,6 +211,7 @@ export const useNoteSettings = () => {
         authorName,
         authorTwitter,
         defaultNote,
+        getNoteUrl
     }
 }
 

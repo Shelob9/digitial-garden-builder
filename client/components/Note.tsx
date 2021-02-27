@@ -3,7 +3,7 @@ import parse from 'remark-parse'
 import remark2react from 'remark-react'
 import ReferencesBlock from "./ReferencesBlock";
 import { FC, Ref } from 'react';
-import useNotes, { useSingleNote } from './useNotes';
+import useNotes, { useNoteSettings, useSingleNote } from './useNotes';
 import useNoteLayout from './useNoteLayout';
 import { notePostions } from './noteLayoutReducer';
 import Link from 'next/link'
@@ -13,8 +13,7 @@ import  NoteMarkdownLink  from './NoteMarkdownLink';
 import { useMemo } from 'react';
 import { Heading } from './primatives/layout';
 import { forwardRef } from 'react';
-import absoluteUrl from 'next-absolute-url'
-const { protocol, host } = absoluteUrl(req, 'localhost:8004')
+import { useRouter } from 'next/router';
 
 //find next position to open in
 const nextPosition = (position: notePostions) => {
@@ -149,13 +148,15 @@ export const NoteContentWrapper: FC<{
 /**
  * Share button for notes
  */
-const NoteShare : FC<{note:INote}> = ({note}) => {
+const NoteShare: FC<{ note: INote }> = ({ note }) => {
+	let { getNoteUrl } = useNoteSettings();
+	let noteUrl = getNoteUrl(note);
 	return (
 		<a
 			className="bg-white text-black hover:text-white hover:bg-gray-500  border-green-500 border rounded-r-lg px-4 py-2 mx-0 outline-none focus:shadow-outline"
 			title={'Click To Share'}
 			target={"_blank"}
-			href={`${protocol}//${host}/notes/${note.slug}`}
+			href={noteUrl}
 		>
 			Share
 		</a>
