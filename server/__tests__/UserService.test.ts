@@ -1,4 +1,4 @@
-import { encrypt } from '../lib/encryptDecrypt'
+import { encrypt } from '@digital-garden-builder/git-cms'
 import {
 	userFromGithub,
 	encodeUserJwt,
