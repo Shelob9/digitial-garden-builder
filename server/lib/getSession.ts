@@ -1,8 +1,7 @@
 import { userJwtData } from '../../types/user'
-import { decodeJwtToken } from './jwt'
+import { decodeJwtToken } from '@digital-garden-builder/git-cms'
 import { NextApiRequest } from 'next'
 import Cookies from 'universal-cookie'
-
 const getSession = (req: NextApiRequest): userJwtData | false => {
 	let token = ''
 	if (req.headers.authorization) {

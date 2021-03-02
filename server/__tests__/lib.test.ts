@@ -1,8 +1,7 @@
 import { noteIndex } from '../../types'
 import findNoteSlugInLink from '../lib/findNoteSlugInLink'
 import findReferences, { findWikiLinks } from '../lib/findReferences'
-import { encrypt, decrypt } from '../lib/encryptDecrypt'
-import { decodeJwtToken, createJwtToken } from '../lib/jwt'
+
 describe('find note slug', () => {
 	it('Returns if found', () => {
 		expect(findNoteSlugInLink('/notes/fish')).toEqual('fish')
@@ -62,41 +61,5 @@ describe('findReferences', () => {
 		expect(findReferences(`hello [[five]] hello [[roy]]`, notes)).toEqual([
 			{ slug: 'five', url: '/notes/five' },
 		])
-	})
-})
-
-describe('encrypt, decrypt', () => {
-	it('encrypts', () => {
-		let hash = encrypt('Hi Roy')
-		expect(hash.hasOwnProperty('iv')).toBeTruthy()
-		expect(hash.hasOwnProperty('content')).toBeTruthy()
-	})
-
-	it('decrypts', () => {
-		expect(decrypt(encrypt('Hi Roy'))).toEqual('Hi Roy')
-	})
-
-	it('Requires valid iv', () => {
-		let hash = encrypt('Hi Roy')
-		hash.iv = '1234567890123456789012'
-		expect(decrypt(hash)).toBeFalsy()
-	})
-})
-
-describe('jwt', () => {
-	let data = { hi: 'Roy' }
-
-	it('Makes tokens', () => {
-		expect(typeof createJwtToken(data)).toBe('string')
-	})
-
-	it('Decodes tokens', () => {
-		expect(decodeJwtToken(createJwtToken(data))).toEqual(data)
-	})
-
-	it('Returns false for invalid token', () => {
-		expect(
-			decodeJwtToken('space turtles down to invisible turtles')
-		).toEqual(false)
 	})
 })
