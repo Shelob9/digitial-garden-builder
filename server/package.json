@@ -24,6 +24,7 @@
 		"next": "^10.0.7",
 		"postcss": "^8.2.2",
 		"react": "17",
+		"react-cookie": "4.0.3",
 		"react-dom": "17",
 		"tailwindcss": "^2.0.2",
 		"universal-cookie": "^4.0.4"
