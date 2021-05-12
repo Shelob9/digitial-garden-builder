@@ -22,7 +22,7 @@
 		"dotenv": "^8.2.0",
 		"front-matter": "^4.0.2",
 		"next": "^10.0.7",
-		"postcss": "^8.2.2",
+		"postcss": "^8.2.10",
 		"react": "17",
 		"react-cookie": "4.0.3",
 		"react-dom": "17",
