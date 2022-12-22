@@ -29,7 +29,7 @@
 		"downshift": "^6.0.6",
 		"front-matter": "^4.0.2",
 		"jest": "^26.6.3",
-		"jsonwebtoken": "^8.5.1",
+		"jsonwebtoken": "^9.0.0",
 		"lodash.throttle": "^4.1.1",
 		"next": "^10.0.7",
 		"next-absolute-url": "^1.2.2",
